@@ -1,54 +1,97 @@
 {% macro staging_from_source(source_name, table_name) %}
+{#
+YAML-driven staging macro that generates staging models from source tables
+with optional column mappings and transformations defined in source metadata.
+
+Usage:
+    {{ staging_from_source('crm_vendor', 'amos_crm_companies') }}
+
+Supports metadata configuration in sources.yml:
+- column_mappings: Map source columns to target columns
+- column_transformations: Apply transformations (trim, upper, cast, etc.)
+- exclude_columns: List of columns to exclude
+- include_columns: List of columns to include (if specified, only these are included)
+- add_metadata: Boolean to add source system metadata columns (default: true)
+#}
+
 {%- set source_relation = source(source_name, table_name) -%}
 
-{# Find the source metadata from the graph - only during execution #}
-{%- if execute -%}
-    {%- set source_meta = none -%}
-    {%- for source_node in graph.sources.values() -%}
-        {%- if source_node.source_name == source_name and source_node.name == table_name -%}
-            {%- set source_meta = source_node -%}
-        {%- endif -%}
-    {%- endfor -%}
-
-    {%- if not source_meta -%}
-        {{ exceptions.raise_compiler_error("Source '" ~ source_name ~ "." ~ table_name ~ "' not found in project") }}
-    {%- endif -%}
-
-    {# Extract metadata configuration #}
-    {%- set add_metadata = source_meta.meta.get('add_metadata', false) -%}
-    {%- set column_transformations = source_meta.meta.get('column_transformations', {}) -%}
-    {%- set column_mappings = source_meta.meta.get('column_mappings', {}) -%}
-
-    {# Get columns from the source relation #}
-    {%- set columns = adapter.get_columns_in_relation(source_relation) -%}
-
-    select
-        {%- for column in columns %}
-        {%- set column_name = column.name | lower -%}
-        {%- set target_column_name = column_mappings.get(column_name, column_name) -%}
-        
-        {%- if column_name in column_transformations %}
-        {{ column_transformations[column_name] }} as {{ target_column_name }}
-        {%- else %}
-        {{ column_name }} as {{ target_column_name }}
-        {%- endif -%}
-        
-        {%- if not loop.last or add_metadata %},{% endif %}
-        {%- endfor %}
-        
-        {%- if add_metadata %}
-        '{{ source_name | upper }}' as _source_system,
-        current_timestamp as _source_loaded_at
-        {%- endif %}
-
-    from {{ source_relation }}
-{%- else -%}
-    {# During parse phase, return a placeholder query #}
+{# During parse phase, return a simple placeholder query #}
+{%- if not execute -%}
     select
         *,
-        '{{ source_name | upper }}' as _source_system,
-        current_timestamp as _source_loaded_at
+        '{{ source_name | upper }}' as source_system,
+        '{{ table_name }}' as source_table,
+        current_timestamp() as loaded_at
     from {{ source_relation }}
-{%- endif -%}
+{%- else -%}
 
+{# Find source metadata #}
+{%- set source_meta = graph.sources.values() | selectattr('source_name', 'equalto', source_name) | selectattr('name', 'equalto', table_name) | first -%}
+{%- set meta = source_meta.meta if source_meta else {} -%}
+
+{# Get configuration from metadata #}
+{%- set column_mappings = meta.get('column_mappings', {}) -%}
+{%- set column_transformations = meta.get('column_transformations', {}) -%}
+{%- set exclude_columns = meta.get('exclude_columns', []) -%}
+{%- set include_columns = meta.get('include_columns', []) -%}
+{%- set add_metadata = meta.get('add_metadata', true) -%}
+
+{# Get source columns #}
+{%- set source_columns = adapter.get_columns_in_relation(source_relation) -%}
+
+with source as (
+    select * from {{ source_relation }}
+),
+
+transformed as (
+    select
+        {% for column in source_columns %}
+        {%- set col_name = column.name | lower -%}
+        
+        {# Skip excluded columns #}
+        {%- if col_name in exclude_columns -%}
+            {%- continue -%}
+        {%- endif -%}
+        
+        {# If include_columns is specified, only include those columns #}
+        {%- if include_columns | length > 0 and col_name not in include_columns -%}
+            {%- continue -%}
+        {%- endif -%}
+        
+        {# Apply transformation if specified #}
+        {%- if col_name in column_transformations -%}
+            {%- set transformation = column_transformations[col_name] -%}
+        {{ transformation }} as {{ column_mappings.get(col_name, col_name) }}
+        {%- else -%}
+            {# Apply default transformation (trim for strings) #}
+            {%- if column.dtype in ('TEXT', 'VARCHAR', 'STRING', 'CHAR') -%}
+        trim({{ col_name }}) as {{ column_mappings.get(col_name, col_name) }}
+            {%- else -%}
+        {{ col_name }} as {{ column_mappings.get(col_name, col_name) }}
+            {%- endif -%}
+        {%- endif -%}
+        {%- if not loop.last -%},{%- endif %}
+        {% endfor %}
+        
+        {%- if add_metadata %}
+        {%- set col_names_lower = source_columns | map(attribute='name') | map('lower') | list %}
+        {%- if 'source_system' not in col_names_lower %}
+        ,-- Source system metadata
+        '{{ source_name | upper }}' as source_system
+        {% endif %}
+        {%- if 'source_table' not in col_names_lower %}
+        ,'{{ table_name }}' as source_table
+        {% endif %}
+        {%- if 'loaded_at' not in col_names_lower %}
+        ,current_timestamp() as loaded_at
+        {% endif %}
+        {%- endif %}
+    
+    from source
+)
+
+select * from transformed
+
+{%- endif -%}
 {% endmacro %}
