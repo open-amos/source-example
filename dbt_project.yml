@@ -1,0 +1,21 @@
+name: "amos_source_example"
+version: "0.0.1"
+config-version: 2
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+models:
+  amos_source_example:
+    staging:
+      +materialized: view
+      +database: "{{ env_var('DBT_STAGING_DATABASE', 'STAGING') }}"
+      +schema: staging
+      +tags: ["staging"]
+    
+    intermediate:
+      +materialized: table
+      +database: "{{ env_var('DBT_INTERMEDIATE_DATABASE', 'INTERMEDIATE') }}"
+      +schema: intermediate
+      +tags: ["intermediate"]
