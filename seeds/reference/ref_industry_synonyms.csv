@@ -1,0 +1,13 @@
+synonym,normalized_synonym,source_system,industry_id,confidence,effective_from,effective_to,created_at,updated_at
+Agriculture,agriculture,ADMIN,ind_96c842e9da8fd2e3,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Agriculture,agriculture,PM,ind_96c842e9da8fd2e3,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Consumer,consumer,ADMIN,ind_cb7a82c317871051,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Consumer,consumer,PM,ind_cb7a82c317871051,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Financial Services,financial services,ADMIN,ind_5dd6ec8df562f24a,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Financial Services,financial services,PM,ind_5dd6ec8df562f24a,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Healthcare,healthcare,ADMIN,ind_1e8f514d4ca2a317,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Healthcare,healthcare,PM,ind_1e8f514d4ca2a317,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Infrastructure,infrastructure,ADMIN,ind_35f8b7463f1ec720,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Infrastructure,infrastructure,PM,ind_35f8b7463f1ec720,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Technology,technology,ADMIN,ind_30f7a16c51a35741,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Technology,technology,PM,ind_30f7a16c51a35741,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
