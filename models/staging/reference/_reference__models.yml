@@ -1,0 +1,175 @@
+version: 2
+
+models:
+  - name: stg_ref__industries
+    description: "Staging model for industry reference data with mechanical cleanup applied"
+    columns:
+      - name: industry_id
+        description: "Unique industry identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: canonical_name
+        description: "Canonical industry name (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last modification timestamp"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_ref__investor_types
+    description: "Staging model for investor type reference data with mechanical cleanup applied"
+    columns:
+      - name: investor_type_id
+        description: "Unique investor type identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Investor type name (trimmed)"
+        tests:
+          - not_null
+      - name: description
+        description: "Investor type description (trimmed)"
+      - name: kyc_category
+        description: "KYC category classification (trimmed)"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_ref__fx_rates
+    description: "Staging model for foreign exchange rate data with mechanical cleanup applied"
+    columns:
+      - name: rate_date
+        description: "Date of the exchange rate"
+        tests:
+          - not_null
+      - name: base_currency
+        description: "Base currency code (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: quote_currency
+        description: "Quote currency code (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: exchange_rate
+        description: "Exchange rate from base to quote currency"
+        tests:
+          - not_null
+      - name: rate_source
+        description: "Source of the exchange rate (trimmed)"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_ref__industry_synonyms
+    description: "Staging model for industry synonym mapping with mechanical cleanup applied"
+    columns:
+      - name: synonym
+        description: "Industry synonym from source system (trimmed)"
+        tests:
+          - not_null
+      - name: normalized_synonym
+        description: "Normalized version of synonym (lowercased and trimmed)"
+        tests:
+          - not_null
+      - name: source_system
+        description: "Source system providing the synonym (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: industry_id
+        description: "Canonical industry ID (trimmed)"
+        tests:
+          - not_null
+      - name: confidence
+        description: "Confidence score for mapping"
+      - name: effective_from
+        description: "Effective start date"
+      - name: effective_to
+        description: "Effective end date"
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last modification timestamp"
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_ref__xref_entities
+    description: "Staging model for entity cross-reference mapping with mechanical cleanup applied"
+    columns:
+      - name: SOURCE_SYSTEM
+        description: "Source system name (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: ENTITY_TYPE
+        description: "Type of entity being mapped (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: SOURCE_ID
+        description: "Source system entity ID (trimmed)"
+        tests:
+          - not_null
+      - name: CANONICAL_ID
+        description: "Canonical entity ID (trimmed)"
+        tests:
+          - not_null
+      - name: NAME
+        description: "Entity name (trimmed)"
+      - name: CREATED_DATE
+        description: "Record creation date"
+      - name: LAST_MODIFIED_DATE
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null

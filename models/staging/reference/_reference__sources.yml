@@ -1,0 +1,125 @@
+version: 2
+
+sources:
+  - name: reference
+    description: "Shared reference data for industries, investor types, FX rates, and entity cross-references"
+    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    schema: "{{ target.schema }}_AMOS_SHARED_DATA_EXAMPLE"
+    meta:
+      system_name: "Reference Data"
+    
+    tables:
+      - name: shared_industries
+        description: "Industry reference data for classification"
+        meta:
+          add_metadata: true
+          column_transformations:
+            industry_id: "trim(industry_id)"
+            canonical_name: "trim(canonical_name)"
+        columns:
+          - name: industry_id
+            description: "Unique industry identifier"
+          - name: canonical_name
+            description: "Canonical industry name"
+          - name: created_at
+            description: "Record creation timestamp"
+          - name: updated_at
+            description: "Last modification timestamp"
+      
+      - name: shared_investor_types
+        description: "Investor type reference data"
+        meta:
+          add_metadata: true
+          column_transformations:
+            investor_type_id: "trim(investor_type_id)"
+            name: "trim(name)"
+            description: "trim(description)"
+            kyc_category: "trim(kyc_category)"
+        columns:
+          - name: investor_type_id
+            description: "Unique investor type identifier"
+          - name: name
+            description: "Investor type name"
+          - name: description
+            description: "Investor type description"
+          - name: kyc_category
+            description: "KYC category classification"
+      
+      - name: shared_fx_rates
+        description: "Foreign exchange rate data"
+        meta:
+          add_metadata: true
+          column_transformations:
+            base_currency: "upper(trim(base_currency))"
+            quote_currency: "upper(trim(quote_currency))"
+            rate_source: "trim(rate_source)"
+        columns:
+          - name: rate_date
+            description: "Date of the exchange rate"
+          - name: base_currency
+            description: "Base currency code"
+          - name: quote_currency
+            description: "Quote currency code"
+          - name: exchange_rate
+            description: "Exchange rate from base to quote currency"
+          - name: rate_source
+            description: "Source of the exchange rate"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: shared_industry_synonyms
+        description: "Industry synonym mapping for entity resolution"
+        meta:
+          add_metadata: true
+          column_transformations:
+            synonym: "trim(synonym)"
+            normalized_synonym: "trim(lower(normalized_synonym))"
+            source_system: "upper(trim(source_system))"
+            industry_id: "trim(industry_id)"
+        columns:
+          - name: synonym
+            description: "Industry synonym from source system"
+          - name: normalized_synonym
+            description: "Normalized version of synonym"
+          - name: source_system
+            description: "Source system providing the synonym"
+          - name: industry_id
+            description: "Canonical industry ID"
+          - name: confidence
+            description: "Confidence score for mapping"
+          - name: effective_from
+            description: "Effective start date"
+          - name: effective_to
+            description: "Effective end date"
+          - name: created_at
+            description: "Record creation timestamp"
+          - name: updated_at
+            description: "Last modification timestamp"
+      
+      - name: xref_entities
+        description: "Cross-reference table mapping source system IDs to canonical IDs"
+        meta:
+          add_metadata: true
+          column_transformations:
+            SOURCE_SYSTEM: "upper(trim(SOURCE_SYSTEM))"
+            ENTITY_TYPE: "upper(trim(ENTITY_TYPE))"
+            SOURCE_ID: "trim(SOURCE_ID)"
+            CANONICAL_ID: "trim(CANONICAL_ID)"
+            NAME: "trim(NAME)"
+        columns:
+          - name: SOURCE_SYSTEM
+            description: "Source system name"
+          - name: ENTITY_TYPE
+            description: "Type of entity being mapped"
+          - name: SOURCE_ID
+            description: "Source system entity ID"
+          - name: CANONICAL_ID
+            description: "Canonical entity ID"
+          - name: NAME
+            description: "Entity name"
+          - name: CREATED_DATE
+            description: "Record creation date"
+          - name: LAST_MODIFIED_DATE
+            description: "Last modification date"
