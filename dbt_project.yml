@@ -27,9 +27,9 @@ seeds:
       +schema: AMOS_ACCOUNTING_EXAMPLE
       +tags: ["accounting", "seed", "raw"]
     
-    shared_example:
-      +schema: AMOS_SHARED_EXAMPLE
-      +tags: ["shared", "seed", "raw"]
+    shared_data_example:
+      +schema: AMOS_SHARED_DATA_EXAMPLE
+      +tags: ["shared_data", "seed", "raw"]
 
 models:
   amos_source_example:
