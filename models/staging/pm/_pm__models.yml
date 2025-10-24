@@ -1,0 +1,247 @@
+version: 2
+
+models:
+  - name: stg_pm__investments
+    description: "Staging model for Portfolio Management investment data with mechanical cleanup applied"
+    columns:
+      - name: investment_code
+        description: "Unique investment identifier from PM system (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: investment_name
+        description: "Investment name (trimmed)"
+        tests:
+          - not_null
+      - name: company_name
+        description: "Company name (trimmed and uppercased)"
+      - name: company_id
+        description: "Company identifier (trimmed)"
+      - name: fund_name
+        description: "Fund name (trimmed)"
+      - name: fund_id
+        description: "Fund identifier (trimmed)"
+        tests:
+          - not_null
+      - name: investment_date
+        description: "Date of investment"
+      - name: initial_investment_amount
+        description: "Initial investment amount"
+      - name: initial_investment_currency
+        description: "Currency code for initial investment (uppercased and trimmed)"
+      - name: total_invested_amount
+        description: "Total invested amount"
+      - name: total_invested_currency
+        description: "Currency code for total invested (uppercased and trimmed)"
+      - name: ownership_percentage
+        description: "Ownership percentage"
+      - name: investment_type
+        description: "Type of investment (trimmed)"
+      - name: investment_stage
+        description: "Investment stage (trimmed)"
+      - name: sector
+        description: "Sector classification (trimmed)"
+      - name: geography
+        description: "Geographic region (trimmed)"
+      - name: board_seats
+        description: "Number of board seats"
+      - name: liquidation_preference
+        description: "Liquidation preference terms (trimmed)"
+      - name: anti_dilution_protection
+        description: "Anti-dilution protection terms (trimmed)"
+      - name: drag_along_rights
+        description: "Drag-along rights indicator (trimmed)"
+      - name: tag_along_rights
+        description: "Tag-along rights indicator (trimmed)"
+      - name: investment_thesis
+        description: "Investment thesis (trimmed)"
+      - name: key_risks
+        description: "Key risk factors (trimmed)"
+      - name: exit_strategy
+        description: "Exit strategy (trimmed)"
+      - name: target_exit_date
+        description: "Target exit date"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_pm__valuations
+    description: "Staging model for Portfolio Management valuation data with mechanical cleanup applied"
+    columns:
+      - name: valuation_id
+        description: "Unique valuation identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: company_id
+        description: "Company identifier (trimmed)"
+        tests:
+          - not_null
+      - name: company_name
+        description: "Company name (trimmed and uppercased)"
+      - name: investment_id
+        description: "Investment identifier (trimmed)"
+      - name: valuation_date
+        description: "Valuation date"
+        tests:
+          - not_null
+      - name: valuation_method
+        description: "Valuation methodology (trimmed)"
+      - name: enterprise_value
+        description: "Enterprise value"
+      - name: enterprise_value_currency
+        description: "Currency code for enterprise value (uppercased and trimmed)"
+      - name: equity_value
+        description: "Equity value"
+      - name: equity_value_currency
+        description: "Currency code for equity value (uppercased and trimmed)"
+      - name: revenue_multiple
+        description: "Revenue multiple"
+      - name: ebitda_multiple
+        description: "EBITDA multiple"
+      - name: book_multiple
+        description: "Book value multiple (trimmed)"
+      - name: comparable_companies
+        description: "Comparable companies used (trimmed)"
+      - name: discount_rate
+        description: "Discount rate used (trimmed)"
+      - name: terminal_growth_rate
+        description: "Terminal growth rate (trimmed)"
+      - name: valuation_notes
+        description: "Valuation notes (trimmed)"
+      - name: valuation_source
+        description: "Source of valuation (trimmed)"
+      - name: confidence_level
+        description: "Confidence level in valuation (trimmed)"
+      - name: last_financing_round_valuation
+        description: "Last financing round valuation"
+      - name: last_financing_date
+        description: "Last financing date"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_pm__company_financials
+    description: "Staging model for Portfolio Management company financial data with mechanical cleanup applied"
+    columns:
+      - name: id
+        description: "Unique financial record identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: company_id
+        description: "Company identifier (trimmed)"
+        tests:
+          - not_null
+      - name: end_date
+        description: "Period end date"
+        tests:
+          - not_null
+      - name: start_date
+        description: "Period start date"
+      - name: period
+        description: "Period type (ANNUAL, QUARTERLY) (trimmed)"
+      - name: accounts_type
+        description: "Accounts type (AUDITED, MANAGEMENT) (trimmed)"
+      - name: currency_code
+        description: "Currency code (uppercased and trimmed)"
+      - name: revenue
+        description: "Revenue"
+      - name: cost_of_goods_sold
+        description: "Cost of goods sold"
+      - name: gross_profit
+        description: "Gross profit"
+      - name: operating_expenses
+        description: "Operating expenses"
+      - name: ebitda
+        description: "EBITDA"
+      - name: depreciation_amortization
+        description: "Depreciation and amortization"
+      - name: ebit
+        description: "EBIT"
+      - name: net_income
+        description: "Net income"
+      - name: cash
+        description: "Cash balance"
+      - name: total_assets
+        description: "Total assets"
+      - name: total_liabilities
+        description: "Total liabilities"
+      - name: equity
+        description: "Equity"
+      - name: operating_cash_flow
+        description: "Operating cash flow"
+      - name: investing_cash_flow
+        description: "Investing cash flow"
+      - name: financing_cash_flow
+        description: "Financing cash flow"
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_pm__investment_countries
+    description: "Staging model for Portfolio Management investment country allocations with mechanical cleanup applied"
+    columns:
+      - name: investment_id
+        description: "Investment identifier (trimmed)"
+        tests:
+          - not_null
+      - name: country_code
+        description: "ISO country code (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: percentage
+        description: "Allocation percentage"
+        tests:
+          - not_null
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null

@@ -1,0 +1,232 @@
+version: 2
+
+sources:
+  - name: pm
+    description: "Portfolio Management system source data for investments, valuations, and company financials"
+    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    schema: "{{ target.schema }}_AMOS_PM_EXAMPLE"
+    meta:
+      system_name: "Portfolio Management Vendor"
+    
+    tables:
+      - name: pm_investments
+        description: "Investment master data from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            investment_code: "trim(investment_code)"
+            investment_name: "trim(investment_name)"
+            company_name: "trim(upper(company_name))"
+            company_id: "trim(company_id)"
+            fund_name: "trim(fund_name)"
+            fund_id: "trim(fund_id)"
+            initial_investment_currency: "upper(trim(initial_investment_currency))"
+            total_invested_currency: "upper(trim(total_invested_currency))"
+            investment_type: "trim(investment_type)"
+            investment_stage: "trim(investment_stage)"
+            sector: "trim(sector)"
+            geography: "trim(geography)"
+            liquidation_preference: "trim(liquidation_preference)"
+            anti_dilution_protection: "trim(anti_dilution_protection)"
+            drag_along_rights: "trim(drag_along_rights)"
+            tag_along_rights: "trim(tag_along_rights)"
+            investment_thesis: "trim(investment_thesis)"
+            key_risks: "trim(key_risks)"
+            exit_strategy: "trim(exit_strategy)"
+        columns:
+          - name: investment_code
+            description: "Unique investment identifier from PM system"
+          - name: investment_name
+            description: "Investment name"
+          - name: company_name
+            description: "Company name"
+          - name: company_id
+            description: "Company identifier"
+          - name: fund_name
+            description: "Fund name"
+          - name: fund_id
+            description: "Fund identifier"
+          - name: investment_date
+            description: "Date of investment"
+          - name: initial_investment_amount
+            description: "Initial investment amount"
+          - name: initial_investment_currency
+            description: "Currency code for initial investment"
+          - name: total_invested_amount
+            description: "Total invested amount"
+          - name: total_invested_currency
+            description: "Currency code for total invested"
+          - name: ownership_percentage
+            description: "Ownership percentage"
+          - name: investment_type
+            description: "Type of investment"
+          - name: investment_stage
+            description: "Investment stage"
+          - name: sector
+            description: "Sector classification"
+          - name: geography
+            description: "Geographic region"
+          - name: board_seats
+            description: "Number of board seats"
+          - name: liquidation_preference
+            description: "Liquidation preference terms"
+          - name: anti_dilution_protection
+            description: "Anti-dilution protection terms"
+          - name: drag_along_rights
+            description: "Drag-along rights indicator"
+          - name: tag_along_rights
+            description: "Tag-along rights indicator"
+          - name: investment_thesis
+            description: "Investment thesis"
+          - name: key_risks
+            description: "Key risk factors"
+          - name: exit_strategy
+            description: "Exit strategy"
+          - name: target_exit_date
+            description: "Target exit date"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: pm_valuations
+        description: "Company valuations from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            valuation_id: "trim(valuation_id)"
+            company_id: "trim(company_id)"
+            company_name: "trim(upper(company_name))"
+            investment_id: "trim(investment_id)"
+            valuation_method: "trim(valuation_method)"
+            enterprise_value_currency: "upper(trim(enterprise_value_currency))"
+            equity_value_currency: "upper(trim(equity_value_currency))"
+            book_multiple: "trim(book_multiple)"
+            comparable_companies: "trim(comparable_companies)"
+            discount_rate: "trim(discount_rate)"
+            terminal_growth_rate: "trim(terminal_growth_rate)"
+            valuation_notes: "trim(valuation_notes)"
+            valuation_source: "trim(valuation_source)"
+            confidence_level: "trim(confidence_level)"
+        columns:
+          - name: valuation_id
+            description: "Unique valuation identifier"
+          - name: company_id
+            description: "Company identifier"
+          - name: company_name
+            description: "Company name"
+          - name: investment_id
+            description: "Investment identifier"
+          - name: valuation_date
+            description: "Valuation date"
+          - name: valuation_method
+            description: "Valuation methodology"
+          - name: enterprise_value
+            description: "Enterprise value"
+          - name: enterprise_value_currency
+            description: "Currency code for enterprise value"
+          - name: equity_value
+            description: "Equity value"
+          - name: equity_value_currency
+            description: "Currency code for equity value"
+          - name: revenue_multiple
+            description: "Revenue multiple"
+          - name: ebitda_multiple
+            description: "EBITDA multiple"
+          - name: book_multiple
+            description: "Book value multiple"
+          - name: comparable_companies
+            description: "Comparable companies used"
+          - name: discount_rate
+            description: "Discount rate used"
+          - name: terminal_growth_rate
+            description: "Terminal growth rate"
+          - name: valuation_notes
+            description: "Valuation notes"
+          - name: valuation_source
+            description: "Source of valuation"
+          - name: confidence_level
+            description: "Confidence level in valuation"
+          - name: last_financing_round_valuation
+            description: "Last financing round valuation"
+          - name: last_financing_date
+            description: "Last financing date"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: pm_company_financials
+        description: "Company financial statements from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            id: "trim(id)"
+            company_id: "trim(company_id)"
+            period: "trim(period)"
+            accounts_type: "trim(accounts_type)"
+            currency_code: "upper(trim(currency_code))"
+        columns:
+          - name: id
+            description: "Unique financial record identifier"
+          - name: company_id
+            description: "Company identifier"
+          - name: end_date
+            description: "Period end date"
+          - name: start_date
+            description: "Period start date"
+          - name: period
+            description: "Period type (ANNUAL, QUARTERLY)"
+          - name: accounts_type
+            description: "Accounts type (AUDITED, MANAGEMENT)"
+          - name: currency_code
+            description: "Currency code"
+          - name: revenue
+            description: "Revenue"
+          - name: cost_of_goods_sold
+            description: "Cost of goods sold"
+          - name: gross_profit
+            description: "Gross profit"
+          - name: operating_expenses
+            description: "Operating expenses"
+          - name: ebitda
+            description: "EBITDA"
+          - name: depreciation_amortization
+            description: "Depreciation and amortization"
+          - name: ebit
+            description: "EBIT"
+          - name: net_income
+            description: "Net income"
+          - name: cash
+            description: "Cash balance"
+          - name: total_assets
+            description: "Total assets"
+          - name: total_liabilities
+            description: "Total liabilities"
+          - name: equity
+            description: "Equity"
+          - name: operating_cash_flow
+            description: "Operating cash flow"
+          - name: investing_cash_flow
+            description: "Investing cash flow"
+          - name: financing_cash_flow
+            description: "Financing cash flow"
+          - name: created_at
+            description: "Record creation timestamp"
+          - name: updated_at
+            description: "Last update timestamp"
+      
+      - name: pm_investment_countries
+        description: "Investment to country allocations from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            investment_id: "trim(investment_id)"
+            country_code: "upper(trim(country_code))"
+        columns:
+          - name: investment_id
+            description: "Investment identifier"
+          - name: country_code
+            description: "ISO country code"
+          - name: percentage
+            description: "Allocation percentage"
