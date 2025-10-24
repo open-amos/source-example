@@ -1,9 +1,9 @@
 version: 2
 
 seeds:
-  # Reference Seeds
-  - name: ref_industries
-    description: "Industry reference data for classification"
+  # Shared Example Seeds
+  - name: shared_industries
+    description: "Shared industry reference data for classification"
     config:
       column_types:
         industry_id: varchar(64)
@@ -22,8 +22,8 @@ seeds:
           - unique
           - not_null
 
-  - name: ref_investor_types
-    description: "Investor type reference data"
+  - name: shared_investor_types
+    description: "Shared investor type reference data"
     config:
       column_types:
         investor_type_id: varchar(64)
@@ -41,8 +41,8 @@ seeds:
         tests:
           - not_null
 
-  - name: ref_fx_rates
-    description: "Foreign exchange rate reference data"
+  - name: shared_fx_rates
+    description: "Shared foreign exchange rate data"
     config:
       column_types:
         rate_date: date
@@ -70,8 +70,8 @@ seeds:
         tests:
           - not_null
 
-  - name: ref_industry_synonyms
-    description: "Industry synonym mapping for entity resolution"
+  - name: shared_industry_synonyms
+    description: "Shared industry synonym mapping for entity resolution"
     config:
       column_types:
         synonym: varchar(255)
