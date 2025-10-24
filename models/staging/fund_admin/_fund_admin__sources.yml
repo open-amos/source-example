@@ -1,0 +1,474 @@
+version: 2
+
+sources:
+  - name: fund_admin
+    description: "Fund administration system source data for funds, investors, capital calls, distributions, expenses, fees, and NAV reporting"
+    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    schema: "{{ target.schema }}_AMOS_FUND_ADMIN_EXAMPLE"
+    meta:
+      system_name: "Fund Admin Vendor"
+    
+    tables:
+      - name: admin_funds
+        description: "Fund master data from fund administration system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            fund_code: "trim(fund_code)"
+            fund_name: "trim(fund_name)"
+            fund_legal_name: "trim(fund_legal_name)"
+            target_size_currency: "upper(trim(target_size_currency))"
+            final_size_currency: "upper(trim(final_size_currency))"
+            base_currency_code: "upper(trim(base_currency_code))"
+            fund_type: "trim(fund_type)"
+            strategy: "trim(strategy)"
+            geography_focus: "trim(geography_focus)"
+            sector_focus: "trim(sector_focus)"
+            catch_up_provision: "trim(catch_up_provision)"
+            distribution_policy: "trim(distribution_policy)"
+            status: "trim(status)"
+        columns:
+          - name: fund_code
+            description: "Unique fund identifier from admin system"
+          - name: fund_name
+            description: "Fund name"
+          - name: fund_legal_name
+            description: "Legal entity name"
+          - name: vintage_year
+            description: "Fund vintage year"
+          - name: target_size
+            description: "Target fund size"
+          - name: target_size_currency
+            description: "Currency for target size"
+          - name: final_size
+            description: "Final fund size"
+          - name: final_size_currency
+            description: "Currency for final size"
+          - name: base_currency_code
+            description: "Base currency code"
+          - name: fund_type
+            description: "Fund type classification"
+          - name: strategy
+            description: "Investment strategy"
+          - name: geography_focus
+            description: "Geographic focus"
+          - name: sector_focus
+            description: "Sector focus"
+          - name: investment_period_start
+            description: "Investment period start date"
+          - name: investment_period_end
+            description: "Investment period end date"
+          - name: fund_life_years
+            description: "Fund life in years"
+          - name: management_fee_rate
+            description: "Management fee rate"
+          - name: carried_interest_rate
+            description: "Carried interest rate"
+          - name: hurdle_rate
+            description: "Hurdle rate"
+          - name: catch_up_provision
+            description: "Catch-up provision indicator"
+          - name: distribution_policy
+            description: "Distribution policy"
+          - name: status
+            description: "Fund status"
+          - name: first_close_date
+            description: "First close date"
+          - name: final_close_date
+            description: "Final close date"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: admin_investors
+        description: "Investor master data from fund administration system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            investor_code: "trim(investor_code)"
+            investor_name: "trim(investor_name)"
+            investor_legal_name: "trim(investor_legal_name)"
+            investor_type: "trim(investor_type)"
+            investor_type_id: "trim(investor_type_id)"
+            country_code: "upper(trim(country_code))"
+            state_province: "trim(state_province)"
+            city: "trim(city)"
+            contact_person: "trim(contact_person)"
+            contact_email: "lower(trim(contact_email))"
+            contact_phone: "trim(contact_phone)"
+            kyc_status: "trim(kyc_status)"
+            aml_status: "trim(aml_status)"
+            accredited_status: "trim(accredited_status)"
+            tax_id: "trim(tax_id)"
+            tax_jurisdiction: "upper(trim(tax_jurisdiction))"
+            investment_capacity: "trim(investment_capacity)"
+            risk_tolerance: "trim(risk_tolerance)"
+            liquidity_preference: "trim(liquidity_preference)"
+            esg_requirements: "trim(esg_requirements)"
+        columns:
+          - name: investor_code
+            description: "Unique investor identifier from admin system"
+          - name: investor_name
+            description: "Investor name"
+          - name: investor_legal_name
+            description: "Legal entity name"
+          - name: investor_type
+            description: "Investor type classification"
+          - name: investor_type_id
+            description: "Investor type identifier"
+          - name: country_code
+            description: "ISO country code"
+          - name: state_province
+            description: "State or province"
+          - name: city
+            description: "City location"
+          - name: contact_person
+            description: "Primary contact person"
+          - name: contact_email
+            description: "Contact email address"
+          - name: contact_phone
+            description: "Contact phone number"
+          - name: kyc_status
+            description: "KYC status"
+          - name: aml_status
+            description: "AML status"
+          - name: accredited_status
+            description: "Accredited investor status"
+          - name: tax_id
+            description: "Tax identification number"
+          - name: tax_jurisdiction
+            description: "Tax jurisdiction"
+          - name: investment_capacity
+            description: "Investment capacity level"
+          - name: risk_tolerance
+            description: "Risk tolerance level"
+          - name: liquidity_preference
+            description: "Liquidity preference"
+          - name: esg_requirements
+            description: "ESG requirements indicator"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: admin_capital_calls
+        description: "Capital call transactions from fund administration system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            capital_call_id: "trim(capital_call_id)"
+            fund_code: "trim(fund_code)"
+            investor_code: "trim(investor_code)"
+            call_currency: "upper(trim(call_currency))"
+            commitment_currency: "upper(trim(commitment_currency))"
+            purpose: "trim(purpose)"
+            status: "trim(status)"
+            payment_currency: "upper(trim(payment_currency))"
+        columns:
+          - name: capital_call_id
+            description: "Unique capital call identifier"
+          - name: fund_code
+            description: "Fund identifier"
+          - name: investor_code
+            description: "Investor identifier"
+          - name: call_number
+            description: "Sequential call number"
+          - name: call_date
+            description: "Capital call date"
+          - name: due_date
+            description: "Payment due date"
+          - name: call_amount
+            description: "Total call amount"
+          - name: call_currency
+            description: "Currency for call amount"
+          - name: commitment_amount
+            description: "Total commitment amount"
+          - name: commitment_currency
+            description: "Currency for commitment"
+          - name: call_percentage
+            description: "Percentage of commitment called"
+          - name: purpose
+            description: "Purpose of capital call"
+          - name: management_fee_amount
+            description: "Management fee portion"
+          - name: investment_amount
+            description: "Investment portion"
+          - name: expense_amount
+            description: "Expense portion"
+          - name: status
+            description: "Payment status"
+          - name: payment_date
+            description: "Actual payment date"
+          - name: payment_amount
+            description: "Actual payment amount"
+          - name: payment_currency
+            description: "Currency for payment"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: admin_distributions
+        description: "Distribution transactions from fund administration system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            distribution_id: "trim(distribution_id)"
+            fund_code: "trim(fund_code)"
+            investor_code: "trim(investor_code)"
+            distribution_currency: "upper(trim(distribution_currency))"
+            distribution_type: "trim(distribution_type)"
+            source_investment: "trim(source_investment)"
+            status: "trim(status)"
+        columns:
+          - name: distribution_id
+            description: "Unique distribution identifier"
+          - name: fund_code
+            description: "Fund identifier"
+          - name: investor_code
+            description: "Investor identifier"
+          - name: distribution_number
+            description: "Sequential distribution number"
+          - name: distribution_date
+            description: "Distribution date"
+          - name: record_date
+            description: "Record date for distribution"
+          - name: distribution_amount
+            description: "Distribution amount"
+          - name: distribution_currency
+            description: "Currency for distribution"
+          - name: distribution_type
+            description: "Type of distribution"
+          - name: source_investment
+            description: "Source investment for distribution"
+          - name: tax_year
+            description: "Tax year"
+          - name: withholding_tax_amount
+            description: "Withholding tax amount"
+          - name: net_distribution_amount
+            description: "Net distribution amount"
+          - name: cumulative_distributions
+            description: "Cumulative distributions to date"
+          - name: status
+            description: "Payment status"
+          - name: payment_date
+            description: "Actual payment date"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: admin_expenses
+        description: "Fund expense transactions from fund administration system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            expense_id: "trim(expense_id)"
+            fund_code: "trim(fund_code)"
+            expense_type: "trim(expense_type)"
+            expense_category: "trim(expense_category)"
+            vendor_name: "trim(vendor_name)"
+            expense_currency: "upper(trim(expense_currency))"
+            description: "trim(description)"
+            invoice_number: "trim(invoice_number)"
+            approval_status: "trim(approval_status)"
+            payment_status: "trim(payment_status)"
+            allocated_to_investments: "trim(allocated_to_investments)"
+        columns:
+          - name: expense_id
+            description: "Unique expense identifier"
+          - name: fund_code
+            description: "Fund identifier"
+          - name: expense_type
+            description: "Type of expense"
+          - name: expense_category
+            description: "Expense category"
+          - name: vendor_name
+            description: "Vendor name"
+          - name: expense_date
+            description: "Expense date"
+          - name: expense_amount
+            description: "Expense amount"
+          - name: expense_currency
+            description: "Currency for expense"
+          - name: description
+            description: "Expense description"
+          - name: invoice_number
+            description: "Invoice number"
+          - name: approval_status
+            description: "Approval status"
+          - name: payment_status
+            description: "Payment status"
+          - name: payment_date
+            description: "Payment date"
+          - name: allocated_to_investments
+            description: "Investment allocation"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: admin_fees
+        description: "Management fee calculations from fund administration system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            fee_id: "trim(fee_id)"
+            fund_code: "trim(fund_code)"
+            fee_type: "trim(fee_type)"
+            fee_base_currency: "upper(trim(fee_base_currency))"
+            fee_currency: "upper(trim(fee_currency))"
+            payment_status: "trim(payment_status)"
+        columns:
+          - name: fee_id
+            description: "Unique fee identifier"
+          - name: fund_code
+            description: "Fund identifier"
+          - name: fee_type
+            description: "Type of fee"
+          - name: fee_period_start
+            description: "Fee period start date"
+          - name: fee_period_end
+            description: "Fee period end date"
+          - name: fee_calculation_date
+            description: "Fee calculation date"
+          - name: fee_base_amount
+            description: "Base amount for fee calculation"
+          - name: fee_base_currency
+            description: "Currency for fee base"
+          - name: fee_rate
+            description: "Fee rate"
+          - name: fee_amount
+            description: "Calculated fee amount"
+          - name: fee_currency
+            description: "Currency for fee"
+          - name: accrued_amount
+            description: "Accrued fee amount"
+          - name: paid_amount
+            description: "Paid fee amount"
+          - name: outstanding_amount
+            description: "Outstanding fee amount"
+          - name: payment_due_date
+            description: "Payment due date"
+          - name: payment_status
+            description: "Payment status"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: admin_nav_fund
+        description: "Fund-level NAV snapshots from fund administration system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            nav_id: "trim(nav_id)"
+            fund_code: "trim(fund_code)"
+            total_nav_currency: "upper(trim(total_nav_currency))"
+        columns:
+          - name: nav_id
+            description: "Unique NAV snapshot identifier"
+          - name: fund_code
+            description: "Fund identifier"
+          - name: valuation_date
+            description: "Valuation date"
+          - name: nav_per_share
+            description: "NAV per share"
+          - name: total_nav
+            description: "Total NAV"
+          - name: total_nav_currency
+            description: "Currency for NAV"
+          - name: committed_capital
+            description: "Total committed capital"
+          - name: called_capital
+            description: "Total called capital"
+          - name: distributed_capital
+            description: "Total distributed capital"
+          - name: remaining_value
+            description: "Remaining value"
+          - name: total_value
+            description: "Total value (DPI + RVPI)"
+          - name: dpi_ratio
+            description: "DPI ratio"
+          - name: rvpi_ratio
+            description: "RVPI ratio"
+          - name: tvpi_ratio
+            description: "TVPI ratio"
+          - name: irr_gross
+            description: "Gross IRR"
+          - name: irr_net
+            description: "Net IRR"
+          - name: management_fees_paid
+            description: "Cumulative management fees paid"
+          - name: carried_interest_paid
+            description: "Cumulative carried interest paid"
+          - name: fund_expenses
+            description: "Cumulative fund expenses"
+          - name: number_of_investments
+            description: "Number of active investments"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: admin_nav_investment
+        description: "Investment-level NAV snapshots from fund administration system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            nav_investment_id: "trim(nav_investment_id)"
+            fund_code: "trim(fund_code)"
+            investment_name: "trim(investment_name)"
+            investment_id: "trim(investment_id)"
+            cost_basis_currency: "upper(trim(cost_basis_currency))"
+            fair_value_currency: "upper(trim(fair_value_currency))"
+            valuation_method: "trim(valuation_method)"
+            investment_stage: "trim(investment_stage)"
+            sector: "trim(sector)"
+            geography: "trim(geography)"
+        columns:
+          - name: nav_investment_id
+            description: "Unique investment NAV snapshot identifier"
+          - name: fund_code
+            description: "Fund identifier"
+          - name: investment_name
+            description: "Investment name"
+          - name: investment_id
+            description: "Investment identifier"
+          - name: valuation_date
+            description: "Valuation date"
+          - name: cost_basis
+            description: "Cost basis"
+          - name: cost_basis_currency
+            description: "Currency for cost basis"
+          - name: fair_value
+            description: "Fair value"
+          - name: fair_value_currency
+            description: "Currency for fair value"
+          - name: unrealized_gain_loss
+            description: "Unrealized gain/loss"
+          - name: valuation_method
+            description: "Valuation method"
+          - name: valuation_multiple
+            description: "Valuation multiple"
+          - name: last_financing_valuation
+            description: "Last financing valuation"
+          - name: investment_date
+            description: "Investment date"
+          - name: investment_stage
+            description: "Investment stage"
+          - name: sector
+            description: "Sector classification"
+          - name: geography
+            description: "Geographic region"
+          - name: ownership_percentage
+            description: "Ownership percentage"
+          - name: board_seats
+            description: "Number of board seats"
+          - name: liquidation_preference
+            description: "Liquidation preference"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"

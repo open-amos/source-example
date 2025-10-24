@@ -1,0 +1,520 @@
+version: 2
+
+models:
+  - name: stg_fund_admin__funds
+    description: "Staging model for fund administration fund data with mechanical cleanup applied"
+    columns:
+      - name: fund_code
+        description: "Unique fund identifier from admin system (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: fund_name
+        description: "Fund name (trimmed)"
+        tests:
+          - not_null
+      - name: fund_legal_name
+        description: "Legal entity name (trimmed)"
+      - name: vintage_year
+        description: "Fund vintage year"
+      - name: target_size
+        description: "Target fund size"
+      - name: target_size_currency
+        description: "Currency for target size (uppercased and trimmed)"
+      - name: final_size
+        description: "Final fund size"
+      - name: final_size_currency
+        description: "Currency for final size (uppercased and trimmed)"
+      - name: base_currency_code
+        description: "Base currency code (uppercased and trimmed)"
+      - name: fund_type
+        description: "Fund type classification (trimmed)"
+      - name: strategy
+        description: "Investment strategy (trimmed)"
+      - name: geography_focus
+        description: "Geographic focus (trimmed)"
+      - name: sector_focus
+        description: "Sector focus (trimmed)"
+      - name: investment_period_start
+        description: "Investment period start date"
+      - name: investment_period_end
+        description: "Investment period end date"
+      - name: fund_life_years
+        description: "Fund life in years"
+      - name: management_fee_rate
+        description: "Management fee rate"
+      - name: carried_interest_rate
+        description: "Carried interest rate"
+      - name: hurdle_rate
+        description: "Hurdle rate"
+      - name: catch_up_provision
+        description: "Catch-up provision indicator (trimmed)"
+      - name: distribution_policy
+        description: "Distribution policy (trimmed)"
+      - name: status
+        description: "Fund status (trimmed)"
+      - name: first_close_date
+        description: "First close date"
+      - name: final_close_date
+        description: "Final close date"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_fund_admin__investors
+    description: "Staging model for fund administration investor data with mechanical cleanup applied"
+    columns:
+      - name: investor_code
+        description: "Unique investor identifier from admin system (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: investor_name
+        description: "Investor name (trimmed)"
+        tests:
+          - not_null
+      - name: investor_legal_name
+        description: "Legal entity name (trimmed)"
+      - name: investor_type
+        description: "Investor type classification (trimmed)"
+      - name: investor_type_id
+        description: "Investor type identifier (trimmed)"
+      - name: country_code
+        description: "ISO country code (uppercased and trimmed)"
+      - name: state_province
+        description: "State or province (trimmed)"
+      - name: city
+        description: "City location (trimmed)"
+      - name: contact_person
+        description: "Primary contact person (trimmed)"
+      - name: contact_email
+        description: "Contact email address (lowercased and trimmed)"
+      - name: contact_phone
+        description: "Contact phone number (trimmed)"
+      - name: kyc_status
+        description: "KYC status (trimmed)"
+      - name: aml_status
+        description: "AML status (trimmed)"
+      - name: accredited_status
+        description: "Accredited investor status (trimmed)"
+      - name: tax_id
+        description: "Tax identification number (trimmed)"
+      - name: tax_jurisdiction
+        description: "Tax jurisdiction (uppercased and trimmed)"
+      - name: investment_capacity
+        description: "Investment capacity level (trimmed)"
+      - name: risk_tolerance
+        description: "Risk tolerance level (trimmed)"
+      - name: liquidity_preference
+        description: "Liquidity preference (trimmed)"
+      - name: esg_requirements
+        description: "ESG requirements indicator (trimmed)"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_fund_admin__capital_calls
+    description: "Staging model for fund administration capital call transactions with mechanical cleanup applied"
+    columns:
+      - name: capital_call_id
+        description: "Unique capital call identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier (trimmed)"
+        tests:
+          - not_null
+      - name: investor_code
+        description: "Investor identifier (trimmed)"
+        tests:
+          - not_null
+      - name: call_number
+        description: "Sequential call number"
+      - name: call_date
+        description: "Capital call date"
+        tests:
+          - not_null
+      - name: due_date
+        description: "Payment due date"
+      - name: call_amount
+        description: "Total call amount"
+      - name: call_currency
+        description: "Currency for call amount (uppercased and trimmed)"
+      - name: commitment_amount
+        description: "Total commitment amount"
+      - name: commitment_currency
+        description: "Currency for commitment (uppercased and trimmed)"
+      - name: call_percentage
+        description: "Percentage of commitment called"
+      - name: purpose
+        description: "Purpose of capital call (trimmed)"
+      - name: management_fee_amount
+        description: "Management fee portion"
+      - name: investment_amount
+        description: "Investment portion"
+      - name: expense_amount
+        description: "Expense portion"
+      - name: status
+        description: "Payment status (trimmed)"
+      - name: payment_date
+        description: "Actual payment date"
+      - name: payment_amount
+        description: "Actual payment amount"
+      - name: payment_currency
+        description: "Currency for payment (uppercased and trimmed)"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_fund_admin__distributions
+    description: "Staging model for fund administration distribution transactions with mechanical cleanup applied"
+    columns:
+      - name: distribution_id
+        description: "Unique distribution identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier (trimmed)"
+        tests:
+          - not_null
+      - name: investor_code
+        description: "Investor identifier (trimmed)"
+        tests:
+          - not_null
+      - name: distribution_number
+        description: "Sequential distribution number"
+      - name: distribution_date
+        description: "Distribution date"
+        tests:
+          - not_null
+      - name: record_date
+        description: "Record date for distribution"
+      - name: distribution_amount
+        description: "Distribution amount"
+      - name: distribution_currency
+        description: "Currency for distribution (uppercased and trimmed)"
+      - name: distribution_type
+        description: "Type of distribution (trimmed)"
+      - name: source_investment
+        description: "Source investment for distribution (trimmed)"
+      - name: tax_year
+        description: "Tax year"
+      - name: withholding_tax_amount
+        description: "Withholding tax amount"
+      - name: net_distribution_amount
+        description: "Net distribution amount"
+      - name: cumulative_distributions
+        description: "Cumulative distributions to date"
+      - name: status
+        description: "Payment status (trimmed)"
+      - name: payment_date
+        description: "Actual payment date"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_fund_admin__expenses
+    description: "Staging model for fund administration expense transactions with mechanical cleanup applied"
+    columns:
+      - name: expense_id
+        description: "Unique expense identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier (trimmed)"
+        tests:
+          - not_null
+      - name: expense_type
+        description: "Type of expense (trimmed)"
+      - name: expense_category
+        description: "Expense category (trimmed)"
+      - name: vendor_name
+        description: "Vendor name (trimmed)"
+      - name: expense_date
+        description: "Expense date"
+        tests:
+          - not_null
+      - name: expense_amount
+        description: "Expense amount"
+      - name: expense_currency
+        description: "Currency for expense (uppercased and trimmed)"
+      - name: description
+        description: "Expense description (trimmed)"
+      - name: invoice_number
+        description: "Invoice number (trimmed)"
+      - name: approval_status
+        description: "Approval status (trimmed)"
+      - name: payment_status
+        description: "Payment status (trimmed)"
+      - name: payment_date
+        description: "Payment date"
+      - name: allocated_to_investments
+        description: "Investment allocation (trimmed)"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_fund_admin__fees
+    description: "Staging model for fund administration management fee calculations with mechanical cleanup applied"
+    columns:
+      - name: fee_id
+        description: "Unique fee identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier (trimmed)"
+        tests:
+          - not_null
+      - name: fee_type
+        description: "Type of fee (trimmed)"
+      - name: fee_period_start
+        description: "Fee period start date"
+        tests:
+          - not_null
+      - name: fee_period_end
+        description: "Fee period end date"
+        tests:
+          - not_null
+      - name: fee_calculation_date
+        description: "Fee calculation date"
+      - name: fee_base_amount
+        description: "Base amount for fee calculation"
+      - name: fee_base_currency
+        description: "Currency for fee base (uppercased and trimmed)"
+      - name: fee_rate
+        description: "Fee rate"
+      - name: fee_amount
+        description: "Calculated fee amount"
+      - name: fee_currency
+        description: "Currency for fee (uppercased and trimmed)"
+      - name: accrued_amount
+        description: "Accrued fee amount"
+      - name: paid_amount
+        description: "Paid fee amount"
+      - name: outstanding_amount
+        description: "Outstanding fee amount"
+      - name: payment_due_date
+        description: "Payment due date"
+      - name: payment_status
+        description: "Payment status (trimmed)"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_fund_admin__nav_fund
+    description: "Staging model for fund administration fund-level NAV snapshots with mechanical cleanup applied"
+    columns:
+      - name: nav_id
+        description: "Unique NAV snapshot identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier (trimmed)"
+        tests:
+          - not_null
+      - name: valuation_date
+        description: "Valuation date"
+        tests:
+          - not_null
+      - name: nav_per_share
+        description: "NAV per share"
+      - name: total_nav
+        description: "Total NAV"
+      - name: total_nav_currency
+        description: "Currency for NAV (uppercased and trimmed)"
+      - name: committed_capital
+        description: "Total committed capital"
+      - name: called_capital
+        description: "Total called capital"
+      - name: distributed_capital
+        description: "Total distributed capital"
+      - name: remaining_value
+        description: "Remaining value"
+      - name: total_value
+        description: "Total value (DPI + RVPI)"
+      - name: dpi_ratio
+        description: "DPI ratio"
+      - name: rvpi_ratio
+        description: "RVPI ratio"
+      - name: tvpi_ratio
+        description: "TVPI ratio"
+      - name: irr_gross
+        description: "Gross IRR"
+      - name: irr_net
+        description: "Net IRR"
+      - name: management_fees_paid
+        description: "Cumulative management fees paid"
+      - name: carried_interest_paid
+        description: "Cumulative carried interest paid"
+      - name: fund_expenses
+        description: "Cumulative fund expenses"
+      - name: number_of_investments
+        description: "Number of active investments"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_fund_admin__nav_investment
+    description: "Staging model for fund administration investment-level NAV snapshots with mechanical cleanup applied"
+    columns:
+      - name: nav_investment_id
+        description: "Unique investment NAV snapshot identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier (trimmed)"
+        tests:
+          - not_null
+      - name: investment_name
+        description: "Investment name (trimmed)"
+      - name: investment_id
+        description: "Investment identifier (trimmed)"
+        tests:
+          - not_null
+      - name: valuation_date
+        description: "Valuation date"
+        tests:
+          - not_null
+      - name: cost_basis
+        description: "Cost basis"
+      - name: cost_basis_currency
+        description: "Currency for cost basis (uppercased and trimmed)"
+      - name: fair_value
+        description: "Fair value"
+      - name: fair_value_currency
+        description: "Currency for fair value (uppercased and trimmed)"
+      - name: unrealized_gain_loss
+        description: "Unrealized gain/loss"
+      - name: valuation_method
+        description: "Valuation method (trimmed)"
+      - name: valuation_multiple
+        description: "Valuation multiple"
+      - name: last_financing_valuation
+        description: "Last financing valuation"
+      - name: investment_date
+        description: "Investment date"
+      - name: investment_stage
+        description: "Investment stage (trimmed)"
+      - name: sector
+        description: "Sector classification (trimmed)"
+      - name: geography
+        description: "Geographic region (trimmed)"
+      - name: ownership_percentage
+        description: "Ownership percentage"
+      - name: board_seats
+        description: "Number of board seats"
+      - name: liquidation_preference
+        description: "Liquidation preference"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
