@@ -1,0 +1,154 @@
+version: 2
+
+models:
+  - name: int_instruments_resolved
+    description: "Resolved instruments from PM source system using cross-reference table to map to canonical instrument_id, company_id, and fund_id"
+    columns:
+      - name: instrument_id
+        description: "Canonical instrument identifier from xref_entities"
+        tests:
+          - unique
+          - not_null
+      - name: source_system
+        description: "Source system identifier (PM)"
+        tests:
+          - not_null
+      - name: source_id
+        description: "Source system instrument identifier"
+        tests:
+          - not_null
+      - name: name
+        description: "Investment name from source system"
+      - name: fund_id
+        description: "Canonical fund identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_funds_unified')
+              field: fund_id
+      - name: company_id
+        description: "Canonical company identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_companies_unified')
+              field: company_id
+      - name: investment_type
+        description: "Investment type from source system"
+      - name: currency_code
+        description: "Currency code for the instrument"
+      - name: inception_date
+        description: "Instrument inception date"
+      - name: termination_date
+        description: "Instrument termination date (null for ongoing)"
+      - name: description
+        description: "Investment thesis or description"
+      - name: created_date
+        description: "Record creation date from source"
+      - name: last_modified_date
+        description: "Last modification date from source"
+
+  - name: int_instruments_unified
+    description: "Unified instrument data with canonical instrument_type enum and standardized attributes matching canonical DBML structure"
+    columns:
+      - name: instrument_id
+        description: "Canonical instrument identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_id
+        description: "Canonical fund identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_funds_unified')
+              field: fund_id
+      - name: company_id
+        description: "Canonical company identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_companies_unified')
+              field: company_id
+      - name: instrument_type
+        description: "Canonical instrument type enum"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['EQUITY', 'LOAN', 'CONVERTIBLE', 'WARRANT', 'FUND_INTEREST']
+      - name: currency_code
+        description: "Currency code for the instrument"
+      - name: inception_date
+        description: "Instrument inception date"
+      - name: termination_date
+        description: "Instrument termination date (null for ongoing)"
+      - name: description
+        description: "Investment thesis or description"
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: int_instrument_countries_mapped
+    description: "Instrument to country allocations with temporal validity for bridge table br_instrument_countries"
+    columns:
+      - name: instrument_id
+        description: "Canonical instrument identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_instruments_unified')
+              field: instrument_id
+      - name: country_code
+        description: "ISO 3166-1 alpha-2 country code"
+        tests:
+          - not_null
+      - name: allocation_pct
+        description: "Allocation percentage to this country"
+      - name: valid_from
+        description: "Start date of validity period"
+        tests:
+          - not_null
+      - name: valid_to
+        description: "End date of validity period (null for ongoing)"
+      - name: primary_flag
+        description: "Indicates if this is the primary country for the instrument"
+        tests:
+          - not_null
+      - name: role
+        description: "Role of the country relationship (e.g., headquarters, operations)"
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: int_instrument_industries_mapped
+    description: "Instrument to industry allocations with temporal validity for bridge table br_instrument_industries"
+    columns:
+      - name: instrument_id
+        description: "Canonical instrument identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_instruments_unified')
+              field: instrument_id
+      - name: industry_id
+        description: "Canonical industry identifier"
+        tests:
+          - not_null
+      - name: allocation_pct
+        description: "Allocation percentage to this industry"
+      - name: primary_flag
+        description: "Indicates if this is the primary industry for the instrument"
+        tests:
+          - not_null
+      - name: valid_from
+        description: "Start date of validity period"
+        tests:
+          - not_null
+      - name: valid_to
+        description: "End date of validity period (null for ongoing)"
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
