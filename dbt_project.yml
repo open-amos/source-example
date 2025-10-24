@@ -6,6 +6,31 @@ model-paths: ["models"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
 
+seeds:
+  amos_source_example:
+    +database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    +quote_columns: false
+    
+    crm_example:
+      +schema: AMOS_CRM_EXAMPLE
+      +tags: ["crm", "seed", "raw"]
+    
+    fund_admin_example:
+      +schema: AMOS_FUND_ADMIN_EXAMPLE
+      +tags: ["fund_admin", "seed", "raw"]
+    
+    portfolio_management_example:
+      +schema: AMOS_PM_EXAMPLE
+      +tags: ["portfolio_mgmt", "seed", "raw"]
+    
+    accounting_example:
+      +schema: AMOS_ACCOUNTING_EXAMPLE
+      +tags: ["accounting", "seed", "raw"]
+    
+    reference:
+      +schema: AMOS_REFERENCE
+      +tags: ["reference", "seed", "raw"]
+
 models:
   amos_source_example:
     staging:
