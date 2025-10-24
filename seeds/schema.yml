@@ -1,0 +1,727 @@
+version: 2
+
+seeds:
+  # Reference Seeds
+  - name: ref_industries
+    description: "Industry reference data for classification"
+    config:
+      column_types:
+        industry_id: varchar(64)
+        canonical_name: varchar(255)
+        created_at: timestamp
+        updated_at: timestamp
+    columns:
+      - name: industry_id
+        description: "Unique industry identifier"
+        tests:
+          - unique
+          - not_null
+      - name: canonical_name
+        description: "Canonical industry name"
+        tests:
+          - unique
+          - not_null
+
+  - name: ref_investor_types
+    description: "Investor type reference data"
+    config:
+      column_types:
+        investor_type_id: varchar(64)
+        name: varchar(255)
+        description: varchar(1000)
+        kyc_category: varchar(50)
+    columns:
+      - name: investor_type_id
+        description: "Unique investor type identifier"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Investor type name"
+        tests:
+          - not_null
+
+  - name: ref_fx_rates
+    description: "Foreign exchange rate reference data"
+    config:
+      column_types:
+        rate_date: date
+        base_currency: char(3)
+        quote_currency: char(3)
+        exchange_rate: numeric(18,6)
+        rate_source: varchar(100)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: rate_date
+        description: "Date of the exchange rate"
+        tests:
+          - not_null
+      - name: base_currency
+        description: "Base currency code"
+        tests:
+          - not_null
+      - name: quote_currency
+        description: "Quote currency code"
+        tests:
+          - not_null
+      - name: exchange_rate
+        description: "Exchange rate from base to quote currency"
+        tests:
+          - not_null
+
+  - name: ref_industry_synonyms
+    description: "Industry synonym mapping for entity resolution"
+    config:
+      column_types:
+        synonym: varchar(255)
+        normalized_synonym: varchar(255)
+        source_system: varchar(50)
+        industry_id: varchar(64)
+        confidence: numeric(5,2)
+        effective_from: date
+        effective_to: date
+        created_at: timestamp
+        updated_at: timestamp
+    columns:
+      - name: synonym
+        description: "Industry synonym from source system"
+        tests:
+          - not_null
+      - name: normalized_synonym
+        description: "Normalized version of synonym"
+        tests:
+          - not_null
+      - name: source_system
+        description: "Source system providing the synonym"
+        tests:
+          - not_null
+      - name: industry_id
+        description: "Canonical industry ID"
+        tests:
+          - not_null
+
+  - name: xref_entities
+    description: "Cross-reference table mapping source system IDs to canonical IDs"
+    config:
+      column_types:
+        SOURCE_SYSTEM: varchar(50)
+        ENTITY_TYPE: varchar(50)
+        SOURCE_ID: varchar(255)
+        CANONICAL_ID: varchar(255)
+        NAME: varchar(500)
+        CREATED_DATE: date
+        LAST_MODIFIED_DATE: date
+    columns:
+      - name: SOURCE_SYSTEM
+        description: "Source system name"
+        tests:
+          - not_null
+      - name: ENTITY_TYPE
+        description: "Type of entity being mapped"
+        tests:
+          - not_null
+      - name: SOURCE_ID
+        description: "Source system entity ID"
+        tests:
+          - not_null
+      - name: CANONICAL_ID
+        description: "Canonical entity ID"
+        tests:
+          - not_null
+
+  # CRM Vendor Seeds
+  - name: crm_companies
+    description: "CRM system company data"
+    config:
+      column_types:
+        company_id: varchar(64)
+        company_name: varchar(255)
+        legal_name: varchar(255)
+        industry_primary: varchar(255)
+        industry_secondary: varchar(255)
+        country_code: char(2)
+        state_province: varchar(100)
+        city: varchar(100)
+        founded_year: numeric(4,0)
+        employee_count: numeric(10,0)
+        revenue_range: varchar(50)
+        website: varchar(500)
+        description: varchar(2000)
+        business_model: varchar(255)
+        competitive_position: varchar(255)
+        key_risks: varchar(1000)
+        esg_score: numeric(5,2)
+        base_currency_code: char(3)
+        industry_id: varchar(64)
+        created_date: date
+        last_modified_date: date
+        data_quality_score: numeric(5,2)
+    columns:
+      - name: company_id
+        description: "Unique company identifier in CRM system"
+        tests:
+          - unique
+          - not_null
+      - name: company_name
+        description: "Company name"
+        tests:
+          - not_null
+
+  - name: crm_opportunities
+    description: "CRM system opportunity/deal pipeline data"
+    config:
+      column_types:
+        opportunity_id: varchar(64)
+        opportunity_name: varchar(255)
+        company_name: varchar(255)
+        company_id: varchar(64)
+        stage: varchar(100)
+        expected_close_date: date
+        amount: numeric(18,2)
+        currency_code: char(3)
+        probability: numeric(5,2)
+        source: varchar(100)
+        owner_name: varchar(255)
+        created_date: date
+        last_modified_date: date
+        description: varchar(2000)
+        industry: varchar(255)
+        geography: varchar(255)
+        deal_type: varchar(100)
+        investment_thesis: varchar(2000)
+    columns:
+      - name: opportunity_id
+        description: "Unique opportunity identifier"
+        tests:
+          - unique
+          - not_null
+      - name: opportunity_name
+        description: "Opportunity name"
+        tests:
+          - not_null
+
+  - name: crm_opportunity_countries
+    description: "CRM opportunity to country mapping"
+    config:
+      column_types:
+        opportunity_id: varchar(64)
+        country_code: char(2)
+        percentage: numeric(5,2)
+    columns:
+      - name: opportunity_id
+        description: "Opportunity identifier"
+        tests:
+          - not_null
+      - name: country_code
+        description: "Country code"
+        tests:
+          - not_null
+
+  - name: crm_stages
+    description: "CRM pipeline stage definitions"
+    config:
+      column_types:
+        stage_id: varchar(64)
+        name: varchar(255)
+        pipeline_type: varchar(50)
+        stage_order: numeric(5,0)
+    columns:
+      - name: stage_id
+        description: "Unique stage identifier"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Stage name"
+        tests:
+          - not_null
+
+  # Fund Admin Vendor Seeds
+  - name: admin_funds
+    description: "Fund administrator fund master data"
+    config:
+      column_types:
+        fund_code: varchar(64)
+        fund_name: varchar(255)
+        fund_legal_name: varchar(500)
+        vintage_year: numeric(4,0)
+        target_size: numeric(18,2)
+        target_size_currency: char(3)
+        final_size: numeric(18,2)
+        final_size_currency: char(3)
+        base_currency_code: char(3)
+        fund_type: varchar(100)
+        strategy: varchar(255)
+        geography_focus: varchar(255)
+        sector_focus: varchar(255)
+        investment_period_start: date
+        investment_period_end: date
+        fund_life_years: numeric(3,0)
+        management_fee_rate: numeric(6,4)
+        carried_interest_rate: numeric(6,4)
+        hurdle_rate: numeric(6,4)
+        catch_up_provision: varchar(10)
+        distribution_policy: varchar(100)
+        status: varchar(50)
+        first_close_date: date
+        final_close_date: date
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: fund_code
+        description: "Unique fund identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_name
+        description: "Fund name"
+        tests:
+          - not_null
+
+  - name: admin_investors
+    description: "Fund administrator investor master data"
+    config:
+      column_types:
+        investor_code: varchar(64)
+        investor_name: varchar(255)
+        investor_legal_name: varchar(500)
+        investor_type: varchar(100)
+        investor_type_id: varchar(64)
+        country_code: char(2)
+        state_province: varchar(100)
+        city: varchar(100)
+        contact_person: varchar(255)
+        contact_email: varchar(255)
+        contact_phone: varchar(50)
+        kyc_status: varchar(50)
+        aml_status: varchar(50)
+        accredited_status: varchar(50)
+        tax_id: varchar(100)
+        tax_jurisdiction: varchar(50)
+        investment_capacity: varchar(50)
+        risk_tolerance: varchar(50)
+        liquidity_preference: varchar(50)
+        esg_requirements: varchar(10)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: investor_code
+        description: "Unique investor identifier"
+        tests:
+          - unique
+          - not_null
+      - name: investor_name
+        description: "Investor name"
+        tests:
+          - not_null
+
+  - name: admin_capital_calls
+    description: "Fund administrator capital call transactions"
+    config:
+      column_types:
+        capital_call_id: varchar(64)
+        fund_code: varchar(64)
+        investor_code: varchar(64)
+        call_number: numeric(10,0)
+        call_date: date
+        due_date: date
+        call_amount: numeric(18,2)
+        call_currency: char(3)
+        commitment_amount: numeric(18,2)
+        commitment_currency: char(3)
+        call_percentage: numeric(6,2)
+        purpose: varchar(500)
+        management_fee_amount: numeric(18,2)
+        investment_amount: numeric(18,2)
+        expense_amount: numeric(18,2)
+        status: varchar(50)
+        payment_date: date
+        payment_amount: numeric(18,2)
+        payment_currency: char(3)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: capital_call_id
+        description: "Unique capital call identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier"
+        tests:
+          - not_null
+      - name: investor_code
+        description: "Investor identifier"
+        tests:
+          - not_null
+
+  - name: admin_distributions
+    description: "Fund administrator distribution transactions"
+    config:
+      column_types:
+        distribution_id: varchar(64)
+        fund_code: varchar(64)
+        investor_code: varchar(64)
+        distribution_number: numeric(10,0)
+        distribution_date: date
+        record_date: date
+        distribution_amount: numeric(18,2)
+        distribution_currency: char(3)
+        distribution_type: varchar(100)
+        source_investment: varchar(255)
+        tax_year: numeric(4,0)
+        withholding_tax_amount: numeric(18,2)
+        net_distribution_amount: numeric(18,2)
+        cumulative_distributions: numeric(18,2)
+        status: varchar(50)
+        payment_date: date
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: distribution_id
+        description: "Unique distribution identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier"
+        tests:
+          - not_null
+      - name: investor_code
+        description: "Investor identifier"
+        tests:
+          - not_null
+
+  - name: admin_expenses
+    description: "Fund administrator expense transactions"
+    config:
+      column_types:
+        expense_id: varchar(64)
+        fund_code: varchar(64)
+        expense_type: varchar(100)
+        expense_category: varchar(100)
+        vendor_name: varchar(255)
+        expense_date: date
+        expense_amount: numeric(18,2)
+        expense_currency: char(3)
+        description: varchar(1000)
+        invoice_number: varchar(100)
+        approval_status: varchar(50)
+        payment_status: varchar(50)
+        payment_date: date
+        allocated_to_investments: varchar(255)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: expense_id
+        description: "Unique expense identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier"
+        tests:
+          - not_null
+
+  - name: admin_fees
+    description: "Fund administrator management fee calculations"
+    config:
+      column_types:
+        fee_id: varchar(64)
+        fund_code: varchar(64)
+        fee_type: varchar(100)
+        fee_period_start: date
+        fee_period_end: date
+        fee_calculation_date: date
+        fee_base_amount: numeric(18,2)
+        fee_base_currency: char(3)
+        fee_rate: numeric(6,4)
+        fee_amount: numeric(18,2)
+        fee_currency: char(3)
+        accrued_amount: numeric(18,2)
+        paid_amount: numeric(18,2)
+        outstanding_amount: numeric(18,2)
+        payment_due_date: date
+        payment_status: varchar(50)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: fee_id
+        description: "Unique fee identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier"
+        tests:
+          - not_null
+
+  - name: admin_nav_fund
+    description: "Fund administrator fund-level NAV snapshots"
+    config:
+      column_types:
+        nav_id: varchar(64)
+        fund_code: varchar(64)
+        valuation_date: date
+        nav_per_share: numeric(18,6)
+        total_nav: numeric(18,2)
+        total_nav_currency: char(3)
+        committed_capital: numeric(18,2)
+        called_capital: numeric(18,2)
+        distributed_capital: numeric(18,2)
+        remaining_value: numeric(18,2)
+        total_value: numeric(18,2)
+        dpi_ratio: numeric(10,4)
+        rvpi_ratio: numeric(10,4)
+        tvpi_ratio: numeric(10,4)
+        irr_gross: numeric(8,4)
+        irr_net: numeric(8,4)
+        management_fees_paid: numeric(18,2)
+        carried_interest_paid: numeric(18,2)
+        fund_expenses: numeric(18,2)
+        number_of_investments: numeric(10,0)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: nav_id
+        description: "Unique NAV snapshot identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier"
+        tests:
+          - not_null
+      - name: valuation_date
+        description: "NAV valuation date"
+        tests:
+          - not_null
+
+  - name: admin_nav_investment
+    description: "Fund administrator investment-level NAV snapshots"
+    config:
+      column_types:
+        nav_investment_id: varchar(64)
+        fund_code: varchar(64)
+        investment_name: varchar(255)
+        investment_id: varchar(64)
+        valuation_date: date
+        cost_basis: numeric(18,2)
+        cost_basis_currency: char(3)
+        fair_value: numeric(18,2)
+        fair_value_currency: char(3)
+        unrealized_gain_loss: numeric(18,2)
+        valuation_method: varchar(100)
+        valuation_multiple: numeric(10,4)
+        last_financing_valuation: numeric(18,2)
+        investment_date: date
+        investment_stage: varchar(100)
+        sector: varchar(255)
+        geography: varchar(255)
+        ownership_percentage: numeric(6,2)
+        board_seats: numeric(3,0)
+        liquidation_preference: varchar(100)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: nav_investment_id
+        description: "Unique investment NAV snapshot identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_code
+        description: "Fund identifier"
+        tests:
+          - not_null
+      - name: investment_id
+        description: "Investment identifier"
+        tests:
+          - not_null
+      - name: valuation_date
+        description: "Valuation date"
+        tests:
+          - not_null
+
+  # Portfolio Management Vendor Seeds
+  - name: pm_investments
+    description: "Portfolio management system investment data"
+    config:
+      column_types:
+        investment_code: varchar(64)
+        investment_name: varchar(255)
+        company_name: varchar(255)
+        company_id: varchar(64)
+        fund_name: varchar(255)
+        fund_id: varchar(64)
+        investment_date: date
+        initial_investment_amount: numeric(18,2)
+        initial_investment_currency: char(3)
+        total_invested_amount: numeric(18,2)
+        total_invested_currency: char(3)
+        ownership_percentage: numeric(6,2)
+        investment_type: varchar(100)
+        investment_stage: varchar(100)
+        sector: varchar(255)
+        geography: varchar(255)
+        board_seats: numeric(3,0)
+        liquidation_preference: varchar(255)
+        anti_dilution_protection: varchar(255)
+        drag_along_rights: varchar(10)
+        tag_along_rights: varchar(10)
+        investment_thesis: varchar(2000)
+        key_risks: varchar(2000)
+        exit_strategy: varchar(500)
+        target_exit_date: date
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: investment_code
+        description: "Unique investment identifier"
+        tests:
+          - unique
+          - not_null
+      - name: investment_name
+        description: "Investment name"
+        tests:
+          - not_null
+      - name: fund_id
+        description: "Fund identifier"
+        tests:
+          - not_null
+
+  - name: pm_valuations
+    description: "Portfolio management system valuation data"
+    config:
+      column_types:
+        valuation_id: varchar(64)
+        company_id: varchar(64)
+        company_name: varchar(255)
+        investment_id: varchar(64)
+        valuation_date: date
+        valuation_method: varchar(100)
+        enterprise_value: numeric(18,2)
+        enterprise_value_currency: char(3)
+        equity_value: numeric(18,2)
+        equity_value_currency: char(3)
+        revenue_multiple: numeric(10,2)
+        ebitda_multiple: numeric(10,2)
+        book_multiple: varchar(50)
+        comparable_companies: varchar(1000)
+        discount_rate: varchar(50)
+        terminal_growth_rate: varchar(50)
+        valuation_notes: varchar(2000)
+        valuation_source: varchar(100)
+        confidence_level: varchar(50)
+        last_financing_round_valuation: numeric(18,2)
+        last_financing_date: date
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: valuation_id
+        description: "Unique valuation identifier"
+        tests:
+          - unique
+          - not_null
+      - name: company_id
+        description: "Company identifier"
+        tests:
+          - not_null
+      - name: valuation_date
+        description: "Valuation date"
+        tests:
+          - not_null
+
+  - name: pm_company_financials
+    description: "Portfolio management system company financial data"
+    config:
+      column_types:
+        id: varchar(64)
+        company_id: varchar(64)
+        end_date: date
+        start_date: date
+        period: varchar(50)
+        accounts_type: varchar(50)
+        currency_code: char(3)
+        revenue: numeric(18,2)
+        cost_of_goods_sold: numeric(18,2)
+        gross_profit: numeric(18,2)
+        operating_expenses: numeric(18,2)
+        ebitda: numeric(18,2)
+        depreciation_amortization: numeric(18,2)
+        ebit: numeric(18,2)
+        net_income: numeric(18,2)
+        cash: numeric(18,2)
+        total_assets: numeric(18,2)
+        total_liabilities: numeric(18,2)
+        equity: numeric(18,2)
+        operating_cash_flow: numeric(18,2)
+        investing_cash_flow: numeric(18,2)
+        financing_cash_flow: numeric(18,2)
+        created_at: timestamp
+        updated_at: timestamp
+    columns:
+      - name: id
+        description: "Unique financial record identifier"
+        tests:
+          - unique
+          - not_null
+      - name: company_id
+        description: "Company identifier"
+        tests:
+          - not_null
+      - name: end_date
+        description: "Period end date"
+        tests:
+          - not_null
+
+  - name: pm_investment_countries
+    description: "Portfolio management investment to country mapping"
+    config:
+      column_types:
+        investment_id: varchar(64)
+        country_code: char(2)
+        percentage: numeric(5,2)
+    columns:
+      - name: investment_id
+        description: "Investment identifier"
+        tests:
+          - not_null
+      - name: country_code
+        description: "Country code"
+        tests:
+          - not_null
+
+  # Accounting Vendor Seeds
+  - name: acc_journal_entries
+    description: "Accounting system journal entry data"
+    config:
+      column_types:
+        journal_entry_id: varchar(64)
+        fund_code: varchar(64)
+        entry_date: date
+        entry_type: varchar(100)
+        reference_number: varchar(100)
+        description: varchar(1000)
+        account_code: varchar(50)
+        account_name: varchar(255)
+        debit_amount: numeric(18,2)
+        credit_amount: numeric(18,2)
+        currency_code: char(3)
+        source_document: varchar(255)
+        created_by: varchar(255)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: journal_entry_id
+        description: "Journal entry identifier"
+        tests:
+          - not_null
+      - name: fund_code
+        description: "Fund identifier"
+        tests:
+          - not_null
+      - name: entry_date
+        description: "Entry date"
+        tests:
+          - not_null
