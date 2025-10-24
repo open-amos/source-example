@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: int_funds_resolved
+    description: "Resolved funds from fund admin source using cross-reference table to map to canonical fund_id"
+    columns:
+      - name: fund_id
+        description: "Canonical fund identifier from xref_entities"
+        tests:
+          - not_null
+      - name: source_system
+        description: "Source system identifier (ADMIN)"
+        tests:
+          - not_null
+      - name: source_id
+        description: "Original fund identifier in source system"
+        tests:
+          - not_null
+      - name: name
+        description: "Fund name from source system"
+        tests:
+          - not_null
+      - name: legal_name
+        description: "Legal name of the fund"
+      - name: type
+        description: "Fund type (e.g., Private Equity, Venture Capital, Credit)"
+      - name: vintage
+        description: "Vintage year of the fund"
+      - name: management_fee
+        description: "Management fee rate as decimal"
+      - name: hurdle
+        description: "Hurdle rate as decimal"
+      - name: carried_interest
+        description: "Carried interest rate as decimal"
+      - name: target_commitment
+        description: "Target commitment amount"
+      - name: base_currency_code
+        description: "Base currency code for the fund"
+      - name: created_date
+        description: "Record creation date in source system"
+      - name: last_modified_date
+        description: "Record last modified date in source system"
+
+  - name: int_funds_unified
+    description: "Unified fund dimension with all attributes matching canonical DBML structure, aggregated from multiple sources with priority rules"
+    columns:
+      - name: fund_id
+        description: "Canonical fund identifier"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Fund name"
+        tests:
+          - not_null
+      - name: type
+        description: "Fund type (e.g., Private Equity, Venture Capital, Credit)"
+      - name: vintage
+        description: "Vintage year of the fund"
+      - name: management_fee
+        description: "Management fee rate as decimal"
+      - name: hurdle
+        description: "Hurdle rate as decimal"
+      - name: carried_interest
+        description: "Carried interest rate as decimal"
+      - name: target_commitment
+        description: "Target commitment amount"
+      - name: incorporated_in
+        description: "Jurisdiction where fund is incorporated"
+      - name: base_currency_code
+        description: "Base currency code for the fund"
+      - name: created_at
+        description: "Earliest creation timestamp across all sources"
+      - name: updated_at
+        description: "Latest update timestamp across all sources"
