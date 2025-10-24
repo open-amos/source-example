@@ -1,0 +1,57 @@
+version: 2
+
+sources:
+  - name: accounting
+    description: "Accounting system source data for journal entries and financial transactions"
+    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    schema: "{{ target.schema }}_AMOS_ACCOUNTING_EXAMPLE"
+    meta:
+      system_name: "Accounting Vendor"
+    
+    tables:
+      - name: acc_journal_entries
+        description: "Journal entry data from accounting system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            journal_entry_id: "trim(journal_entry_id)"
+            fund_code: "trim(fund_code)"
+            entry_type: "trim(entry_type)"
+            reference_number: "trim(reference_number)"
+            description: "trim(description)"
+            account_code: "trim(account_code)"
+            account_name: "trim(account_name)"
+            currency_code: "upper(trim(currency_code))"
+            source_document: "trim(source_document)"
+            created_by: "trim(created_by)"
+        columns:
+          - name: journal_entry_id
+            description: "Journal entry identifier"
+          - name: fund_code
+            description: "Fund identifier"
+          - name: entry_date
+            description: "Entry date"
+          - name: entry_type
+            description: "Type of journal entry"
+          - name: reference_number
+            description: "Reference number for the entry"
+          - name: description
+            description: "Entry description"
+          - name: account_code
+            description: "Account code"
+          - name: account_name
+            description: "Account name"
+          - name: debit_amount
+            description: "Debit amount"
+          - name: credit_amount
+            description: "Credit amount"
+          - name: currency_code
+            description: "Currency code"
+          - name: source_document
+            description: "Source document reference"
+          - name: created_by
+            description: "User who created the entry"
+          - name: created_date
+            description: "Entry creation date"
+          - name: last_modified_date
+            description: "Last modification date"

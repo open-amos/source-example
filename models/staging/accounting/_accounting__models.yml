@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: stg_accounting__journal_entries
+    description: "Staging model for accounting journal entries with mechanical cleanup applied"
+    columns:
+      - name: journal_entry_id
+        description: "Journal entry identifier (trimmed)"
+        tests:
+          - not_null
+      - name: fund_code
+        description: "Fund identifier (trimmed)"
+        tests:
+          - not_null
+      - name: entry_date
+        description: "Entry date"
+        tests:
+          - not_null
+      - name: entry_type
+        description: "Type of journal entry (trimmed)"
+      - name: reference_number
+        description: "Reference number for the entry (trimmed)"
+      - name: description
+        description: "Entry description (trimmed)"
+      - name: account_code
+        description: "Account code (trimmed)"
+        tests:
+          - not_null
+      - name: account_name
+        description: "Account name (trimmed)"
+      - name: debit_amount
+        description: "Debit amount"
+      - name: credit_amount
+        description: "Credit amount"
+      - name: currency_code
+        description: "Currency code (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: source_document
+        description: "Source document reference (trimmed)"
+      - name: created_by
+        description: "User who created the entry (trimmed)"
+      - name: created_date
+        description: "Entry creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
