@@ -1,0 +1,163 @@
+version: 2
+
+sources:
+  - name: crm
+    description: "CRM system source data for companies, opportunities, and pipeline stages"
+    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    schema: "{{ target.schema }}_AMOS_CRM_EXAMPLE"
+    meta:
+      system_name: "CRM Vendor"
+    
+    tables:
+      - name: crm_companies
+        description: "Company master data from CRM system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            company_name: "trim(upper(company_name))"
+            legal_name: "trim(legal_name)"
+            industry_primary: "trim(industry_primary)"
+            industry_secondary: "trim(industry_secondary)"
+            country_code: "upper(trim(country_code))"
+            state_province: "trim(state_province)"
+            city: "trim(city)"
+            website: "lower(trim(website))"
+            description: "trim(description)"
+            business_model: "trim(business_model)"
+            competitive_position: "trim(competitive_position)"
+            key_risks: "trim(key_risks)"
+            base_currency_code: "upper(trim(base_currency_code))"
+            industry_id: "trim(industry_id)"
+        columns:
+          - name: company_id
+            description: "Unique company identifier from CRM"
+          - name: company_name
+            description: "Company name"
+          - name: legal_name
+            description: "Legal entity name"
+          - name: industry_primary
+            description: "Primary industry classification"
+          - name: industry_secondary
+            description: "Secondary industry classification"
+          - name: country_code
+            description: "ISO country code"
+          - name: state_province
+            description: "State or province"
+          - name: city
+            description: "City location"
+          - name: founded_year
+            description: "Year company was founded"
+          - name: employee_count
+            description: "Number of employees"
+          - name: revenue_range
+            description: "Revenue range category"
+          - name: website
+            description: "Company website URL"
+          - name: description
+            description: "Company description"
+          - name: business_model
+            description: "Business model type"
+          - name: competitive_position
+            description: "Competitive position assessment"
+          - name: key_risks
+            description: "Key risk factors"
+          - name: esg_score
+            description: "ESG score"
+          - name: base_currency_code
+            description: "Base currency code"
+          - name: industry_id
+            description: "Industry identifier"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+          - name: data_quality_score
+            description: "Data quality score"
+      
+      - name: crm_opportunities
+        description: "Sales opportunities and deal pipeline from CRM"
+        meta:
+          add_metadata: true
+          column_transformations:
+            opportunity_name: "trim(opportunity_name)"
+            company_name: "trim(upper(company_name))"
+            company_id: "trim(company_id)"
+            stage: "trim(stage)"
+            currency_code: "upper(trim(currency_code))"
+            source: "trim(source)"
+            owner_name: "trim(owner_name)"
+            description: "trim(description)"
+            industry: "trim(industry)"
+            geography: "trim(geography)"
+            deal_type: "trim(deal_type)"
+            investment_thesis: "trim(investment_thesis)"
+        columns:
+          - name: opportunity_id
+            description: "Unique opportunity identifier"
+          - name: opportunity_name
+            description: "Opportunity name"
+          - name: company_name
+            description: "Associated company name"
+          - name: company_id
+            description: "Associated company ID"
+          - name: stage
+            description: "Current pipeline stage"
+          - name: expected_close_date
+            description: "Expected closing date"
+          - name: amount
+            description: "Deal amount"
+          - name: currency_code
+            description: "Currency code for amount"
+          - name: probability
+            description: "Probability of closing (percentage)"
+          - name: source
+            description: "Lead source"
+          - name: owner_name
+            description: "Opportunity owner"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+          - name: description
+            description: "Opportunity description"
+          - name: industry
+            description: "Industry classification"
+          - name: geography
+            description: "Geographic region"
+          - name: deal_type
+            description: "Type of deal"
+          - name: investment_thesis
+            description: "Investment thesis"
+      
+      - name: crm_opportunity_countries
+        description: "Country allocations for opportunities"
+        meta:
+          add_metadata: true
+          column_transformations:
+            opportunity_id: "trim(opportunity_id)"
+            country_code: "upper(trim(country_code))"
+        columns:
+          - name: opportunity_id
+            description: "Opportunity identifier"
+          - name: country_code
+            description: "ISO country code"
+          - name: percentage
+            description: "Allocation percentage"
+      
+      - name: crm_stages
+        description: "CRM pipeline stage definitions"
+        meta:
+          add_metadata: true
+          column_transformations:
+            stage_id: "trim(stage_id)"
+            name: "trim(name)"
+            pipeline_type: "trim(pipeline_type)"
+        columns:
+          - name: stage_id
+            description: "Unique stage identifier"
+          - name: name
+            description: "Stage name"
+          - name: pipeline_type
+            description: "Pipeline type"
+          - name: stage_order
+            description: "Stage order in pipeline"

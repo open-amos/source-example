@@ -1,0 +1,181 @@
+version: 2
+
+models:
+  - name: stg_crm__companies
+    description: "Staging model for CRM company data with mechanical cleanup applied"
+    columns:
+      - name: company_id
+        description: "Unique company identifier from CRM"
+        tests:
+          - unique
+          - not_null
+      - name: company_name
+        description: "Company name (trimmed and uppercased)"
+        tests:
+          - not_null
+      - name: legal_name
+        description: "Legal entity name (trimmed)"
+      - name: industry_primary
+        description: "Primary industry classification (trimmed)"
+      - name: industry_secondary
+        description: "Secondary industry classification (trimmed)"
+      - name: country_code
+        description: "ISO country code (uppercased and trimmed)"
+      - name: state_province
+        description: "State or province (trimmed)"
+      - name: city
+        description: "City location (trimmed)"
+      - name: founded_year
+        description: "Year company was founded"
+      - name: employee_count
+        description: "Number of employees"
+      - name: revenue_range
+        description: "Revenue range category"
+      - name: website
+        description: "Company website URL (lowercased and trimmed)"
+      - name: description
+        description: "Company description (trimmed)"
+      - name: business_model
+        description: "Business model type (trimmed)"
+      - name: competitive_position
+        description: "Competitive position assessment (trimmed)"
+      - name: key_risks
+        description: "Key risk factors (trimmed)"
+      - name: esg_score
+        description: "ESG score"
+      - name: base_currency_code
+        description: "Base currency code (uppercased and trimmed)"
+      - name: industry_id
+        description: "Industry identifier (trimmed)"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: data_quality_score
+        description: "Data quality score"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_crm__opportunities
+    description: "Staging model for CRM opportunities with mechanical cleanup applied"
+    columns:
+      - name: opportunity_id
+        description: "Unique opportunity identifier"
+        tests:
+          - unique
+          - not_null
+      - name: opportunity_name
+        description: "Opportunity name (trimmed)"
+        tests:
+          - not_null
+      - name: company_name
+        description: "Associated company name (trimmed and uppercased)"
+      - name: company_id
+        description: "Associated company ID (trimmed)"
+      - name: stage
+        description: "Current pipeline stage (trimmed)"
+      - name: expected_close_date
+        description: "Expected closing date"
+      - name: amount
+        description: "Deal amount"
+      - name: currency_code
+        description: "Currency code for amount (uppercased and trimmed)"
+      - name: probability
+        description: "Probability of closing (percentage)"
+      - name: source
+        description: "Lead source (trimmed)"
+      - name: owner_name
+        description: "Opportunity owner (trimmed)"
+      - name: created_date
+        description: "Record creation date"
+      - name: last_modified_date
+        description: "Last modification date"
+      - name: description
+        description: "Opportunity description (trimmed)"
+      - name: industry
+        description: "Industry classification (trimmed)"
+      - name: geography
+        description: "Geographic region (trimmed)"
+      - name: deal_type
+        description: "Type of deal (trimmed)"
+      - name: investment_thesis
+        description: "Investment thesis (trimmed)"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_crm__opportunity_countries
+    description: "Staging model for CRM opportunity country allocations with mechanical cleanup applied"
+    columns:
+      - name: opportunity_id
+        description: "Opportunity identifier (trimmed)"
+        tests:
+          - not_null
+      - name: country_code
+        description: "ISO country code (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: percentage
+        description: "Allocation percentage"
+        tests:
+          - not_null
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_crm__stages
+    description: "Staging model for CRM pipeline stage definitions with mechanical cleanup applied"
+    columns:
+      - name: stage_id
+        description: "Unique stage identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Stage name (trimmed)"
+        tests:
+          - not_null
+      - name: pipeline_type
+        description: "Pipeline type (trimmed)"
+      - name: stage_order
+        description: "Stage order in pipeline"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
