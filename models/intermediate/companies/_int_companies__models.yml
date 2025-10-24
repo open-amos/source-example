@@ -1,0 +1,97 @@
+version: 2
+
+models:
+  - name: int_companies_resolved
+    description: "Company entities from CRM and PM sources mapped to canonical IDs via xref_entities (preserves source lineage with one row per source system)"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - company_id
+            - source_system
+            - source_id
+    columns:
+      - name: company_id
+        description: "Canonical company identifier from xref_entities"
+        tests:
+          - not_null
+      - name: source_system
+        description: "Source system (CRM or PM)"
+        tests:
+          - not_null
+      - name: source_id
+        description: "Original company ID from source system"
+        tests:
+          - not_null
+      - name: name
+        description: "Company name"
+      - name: legal_name
+        description: "Legal entity name"
+      - name: website
+        description: "Company website URL"
+      - name: description
+        description: "Company description"
+      - name: currency_code
+        description: "Base currency code"
+      - name: created_date
+        description: "Record creation date from source"
+      - name: last_modified_date
+        description: "Last modification date from source"
+
+  - name: int_company_industries_mapped
+    description: "Company to industry mappings using industry synonyms to map raw industry strings to canonical industry IDs"
+    columns:
+      - name: company_id
+        description: "Canonical company identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_companies_resolved')
+              field: company_id
+      - name: industry_id
+        description: "Canonical industry identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_ref__industries')
+              field: industry_id
+      - name: primary_flag
+        description: "True if this is the primary industry for the company"
+        tests:
+          - not_null
+      - name: created_at
+        description: "Record creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Record update timestamp"
+        tests:
+          - not_null
+
+  - name: int_companies_unified
+    description: "Unified company data with coalesced fields from multiple sources (CRM priority) - one row per canonical company"
+    columns:
+      - name: company_id
+        description: "Canonical company identifier"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Company name (CRM priority, fallback to PM)"
+        tests:
+          - not_null
+      - name: legal_name
+        description: "Legal entity name (from CRM)"
+      - name: website
+        description: "Company website URL (from CRM)"
+      - name: description
+        description: "Company description (from CRM)"
+      - name: currency_code
+        description: "Base currency code (from CRM)"
+      - name: created_at
+        description: "Earliest creation date across sources"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Latest modification date across sources"
+        tests:
+          - not_null
