@@ -98,6 +98,35 @@ sources:
           - name: updated_at
             description: "Last modification timestamp"
       
+      - name: shared_investor_type_synonyms
+        description: "Investor type synonym mapping for entity resolution"
+        meta:
+          add_metadata: true
+          column_transformations:
+            synonym: "trim(synonym)"
+            normalized_synonym: "trim(lower(normalized_synonym))"
+            source_system: "upper(trim(source_system))"
+            investor_type_id: "trim(investor_type_id)"
+        columns:
+          - name: synonym
+            description: "Investor type synonym from source system"
+          - name: normalized_synonym
+            description: "Normalized version of synonym"
+          - name: source_system
+            description: "Source system providing the synonym"
+          - name: investor_type_id
+            description: "Canonical investor type ID"
+          - name: confidence
+            description: "Confidence score for mapping"
+          - name: effective_from
+            description: "Effective start date"
+          - name: effective_to
+            description: "Effective end date"
+          - name: created_at
+            description: "Record creation timestamp"
+          - name: updated_at
+            description: "Last modification timestamp"
+      
       - name: xref_entities
         description: "Cross-reference table mapping source system IDs to canonical IDs"
         meta:

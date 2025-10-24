@@ -136,6 +136,44 @@ models:
         tests:
           - not_null
   
+  - name: stg_ref__investor_type_synonyms
+    description: "Staging model for investor type synonym mapping with mechanical cleanup applied"
+    columns:
+      - name: synonym
+        description: "Investor type synonym from source system (trimmed)"
+        tests:
+          - not_null
+      - name: normalized_synonym
+        description: "Normalized version of synonym (lowercased and trimmed)"
+        tests:
+          - not_null
+      - name: source_system
+        description: "Source system providing the synonym (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: investor_type_id
+        description: "Canonical investor type ID (trimmed)"
+        tests:
+          - not_null
+      - name: confidence
+        description: "Confidence score for mapping"
+      - name: effective_from
+        description: "Effective start date"
+      - name: effective_to
+        description: "Effective end date"
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last modification timestamp"
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
   - name: stg_ref__xref_entities
     description: "Staging model for entity cross-reference mapping with mechanical cleanup applied"
     columns:

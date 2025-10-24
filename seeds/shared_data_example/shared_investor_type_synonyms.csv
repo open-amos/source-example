@@ -1,0 +1,22 @@
+synonym,normalized_synonym,source_system,investor_type_id,confidence,effective_from,effective_to,created_at,updated_at
+Public Pension,public pension,ADMIN,pension_fund,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Corporate Pension,corporate pension,ADMIN,pension_fund,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Pension Fund,pension fund,ADMIN,pension_fund,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Endowment,endowment,ADMIN,endowment_foundation,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Foundation,foundation,ADMIN,endowment_foundation,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Sovereign Wealth,sovereign wealth,ADMIN,sovereign_wealth_or_govt,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Insurance,insurance,ADMIN,insurance_company,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Insurance Company,insurance company,ADMIN,insurance_company,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Family Office,family office,ADMIN,family_office,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Fund of Funds,fund of funds,ADMIN,fund_of_funds,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Individual,individual,ADMIN,hnw_individual,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+High Net Worth Individual,high net worth individual,ADMIN,hnw_individual,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+DFI,dfi,ADMIN,sovereign_wealth_or_govt,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Development Finance Institution,development finance institution,ADMIN,sovereign_wealth_or_govt,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Asset Manager,asset manager,ADMIN,asset_manager,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Bank,bank,ADMIN,regulated_fi,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Bank Treasury,bank treasury,ADMIN,regulated_fi,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Consultant,consultant,ADMIN,asset_manager,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Pension Consultant,pension consultant,ADMIN,asset_manager,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Corporate,corporate,ADMIN,corporate_treasury,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
+Corporate Treasury,corporate treasury,ADMIN,corporate_treasury,,,,2025-10-24 12:00:00,2025-10-24 12:00:00
