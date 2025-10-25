@@ -1,0 +1,115 @@
+version: 2
+
+models:
+  - name: int_commitments_curated
+    description: "Curated commitments representing investor commitments to funds, derived from capital call data with resolved canonical IDs"
+    columns:
+      - name: commitment_id
+        description: "Unique commitment identifier (surrogate key from fund_id + investor_id)"
+        tests:
+          - unique
+          - not_null
+      - name: fund_id
+        description: "Canonical fund identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_funds_unified')
+              field: fund_id
+      - name: investor_id
+        description: "Canonical investor identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_investors_unified')
+              field: investor_id
+      - name: created_at
+        description: "Commitment creation timestamp"
+      - name: updated_at
+        description: "Commitment last update timestamp"
+
+  - name: int_commitment_records_curated
+    description: "Commitment change history tracking commitment amounts and status over time"
+    columns:
+      - name: commitment_record_id
+        description: "Unique commitment record identifier"
+        tests:
+          - unique
+          - not_null
+      - name: commitment_id
+        description: "Reference to commitment"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_commitments_curated')
+              field: commitment_id
+      - name: date_from
+        description: "Effective date of this commitment record"
+        tests:
+          - not_null
+      - name: amount
+        description: "Commitment amount"
+        tests:
+          - not_null
+      - name: status
+        description: "Commitment status (e.g., Active, Closed)"
+        tests:
+          - not_null
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Record last update timestamp"
+
+  - name: int_commitment_snapshots_curated
+    description: "Commitment snapshots showing cumulative drawdowns and distributions by period"
+    columns:
+      - name: commitment_snapshot_id
+        description: "Unique commitment snapshot identifier"
+        tests:
+          - unique
+          - not_null
+      - name: commitment_id
+        description: "Reference to commitment"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_commitments_curated')
+              field: commitment_id
+      - name: period_start_date
+        description: "Start date of the reporting period"
+      - name: period_end_date
+        description: "End date of the reporting period"
+        tests:
+          - not_null
+      - name: frequency
+        description: "Reporting frequency (e.g., QUARTERLY, MONTHLY)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['DAILY', 'MONTHLY', 'QUARTERLY', 'ANNUAL']
+      - name: reporting_basis
+        description: "Reporting basis (e.g., GAAP, IFRS)"
+        tests:
+          - not_null
+      - name: snapshot_source
+        description: "Source of the snapshot data"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ADMIN', 'INTERNAL']
+      - name: total_commitment
+        description: "Total commitment amount"
+        tests:
+          - not_null
+      - name: total_drawdowns
+        description: "Cumulative drawdowns as of period end"
+        tests:
+          - not_null
+      - name: total_distributions
+        description: "Cumulative distributions as of period end"
+        tests:
+          - not_null
+      - name: created_at
+        description: "Snapshot creation timestamp"
+      - name: updated_at
+        description: "Snapshot last update timestamp"
