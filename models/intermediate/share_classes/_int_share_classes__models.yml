@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: int_share_classes_curated
+    description: "Curated share classes extracted from PM investment data. Share classes are inferred from liquidation preferences and investment types."
+    columns:
+      - name: share_class_id
+        description: "Unique identifier for the share class (surrogate key)"
+        tests:
+          - unique
+          - not_null
+      - name: company_id
+        description: "Foreign key to company dimension"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_companies_unified')
+              field: company_id
+      - name: name
+        description: "Share class name (e.g., 'Common', 'Preferred - 1.0x Non-Participating Preferred')"
+        tests:
+          - not_null
+      - name: created_at
+        description: "Timestamp when the record was created"
+      - name: updated_at
+        description: "Timestamp when the record was last updated"
+
+  - name: int_shareholders_curated
+    description: "Curated shareholders extracted from PM investment data. Represents fund ownership in portfolio companies."
+    columns:
+      - name: shareholder_id
+        description: "Unique identifier for the shareholder (surrogate key)"
+        tests:
+          - unique
+          - not_null
+      - name: company_id
+        description: "Foreign key to company dimension"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_companies_unified')
+              field: company_id
+      - name: shareholder_name
+        description: "Shareholder name (typically fund name)"
+        tests:
+          - not_null
+      - name: type
+        description: "Type of shareholder (e.g., 'FUND', 'INDIVIDUAL', 'INSTITUTION')"
+      - name: number_of_shares
+        description: "Number of shares held (null if not available)"
+      - name: share_class_id
+        description: "Foreign key to share class"
+        tests:
+          - relationships:
+              to: ref('int_share_classes_curated')
+              field: share_class_id
+      - name: affiliated_entity
+        description: "Boolean flag indicating if shareholder is an affiliated entity"
+      - name: created_at
+        description: "Timestamp when the record was created"
+      - name: updated_at
+        description: "Timestamp when the record was last updated"
