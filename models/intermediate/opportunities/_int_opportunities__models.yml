@@ -1,0 +1,102 @@
+version: 2
+
+models:
+  - name: int_opportunities_curated
+    description: "Curated opportunities from CRM system with enriched stage and company references"
+    columns:
+      - name: opportunity_id
+        description: "Unique opportunity identifier"
+        tests:
+          - unique
+          - not_null
+      - name: fund_id
+        description: "Associated fund identifier (may be null for CRM opportunities)"
+      - name: name
+        description: "Opportunity name"
+        tests:
+          - not_null
+      - name: stage_id
+        description: "Current pipeline stage identifier"
+        tests:
+          - relationships:
+              to: ref('stg_crm__stages')
+              field: stage_id
+      - name: company_id
+        description: "Canonical company identifier"
+        tests:
+          - relationships:
+              to: ref('int_companies_unified')
+              field: company_id
+      - name: responsible
+        description: "Person responsible for the opportunity"
+      - name: amount
+        description: "Deal amount"
+      - name: source
+        description: "Lead source"
+      - name: close_date
+        description: "Expected closing date"
+      - name: created_at
+        description: "Record creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+        tests:
+          - not_null
+
+  - name: int_opportunity_countries_curated
+    description: "Country allocations for opportunities with primary flag determination"
+    columns:
+      - name: opportunity_id
+        description: "Opportunity identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_opportunities_curated')
+              field: opportunity_id
+      - name: country_code
+        description: "ISO 3166-1 alpha-2 country code"
+        tests:
+          - not_null
+      - name: primary_flag
+        description: "Indicates if this is the primary country for the opportunity"
+        tests:
+          - not_null
+      - name: allocation_pct
+        description: "Allocation percentage for this country"
+      - name: role
+        description: "Role of the country (e.g., OPERATING, HEADQUARTERS)"
+      - name: created_at
+        description: "Record creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+        tests:
+          - not_null
+
+  - name: int_opportunity_industries_curated
+    description: "Industry classifications for opportunities mapped through industry synonyms"
+    columns:
+      - name: opportunity_id
+        description: "Opportunity identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_opportunities_curated')
+              field: opportunity_id
+      - name: industry_id
+        description: "Canonical industry identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_ref__industries')
+              field: industry_id
+      - name: created_at
+        description: "Record creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+        tests:
+          - not_null
