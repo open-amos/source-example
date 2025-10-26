@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: int_transactions_classified
-    description: "Intermediate model that unions and classifies all fund transactions from fund admin sources (capital calls, distributions, expenses, fees) with resolved canonical IDs"
+    description: "Intermediate model that unions and classifies all fund transactions from fund admin sources (capital calls, distributions, expenses, fees) and PM investment rounds, with resolved canonical IDs and FX conversion"
     columns:
       - name: transaction_id
         description: "Unique transaction identifier (surrogate key from source_system and source_transaction_id)"
@@ -33,7 +33,7 @@ models:
               where: "investor_id is not null"
       
       - name: instrument_id
-        description: "Canonical instrument identifier (resolved via xref_entities, null if not linked to specific instrument)"
+        description: "Canonical instrument identifier (resolved via xref_entities from source_investment in distributions, allocated_to_investments in expenses, and investment_code in PM rounds)"
         tests:
           - relationships:
               to: ref('int_instruments_unified')
@@ -41,7 +41,7 @@ models:
               where: "instrument_id is not null"
       
       - name: investment_round_id
-        description: "Investment round identifier (null in current implementation, reserved for future use)"
+        description: "Canonical investment round identifier (resolved via xref_entities from PM round_id)"
       
       - name: facility_id
         description: "Facility identifier (null in current implementation, reserved for future use)"
@@ -59,16 +59,16 @@ models:
         description: "Currency code for transaction amount"
       
       - name: fx_rate
-        description: "Foreign exchange rate (base-per-native)"
+        description: "Foreign exchange rate (base-per-native) from stg_ref__fx_rates, matched on transaction date and fund base currency"
       
       - name: amount_converted
-        description: "Transaction amount converted to base currency"
+        description: "Transaction amount converted to fund base currency using fx_rate (amount * fx_rate)"
       
       - name: fx_rate_as_of
-        description: "Date of FX rate"
+        description: "Date of FX rate (matches transaction date)"
       
       - name: fx_rate_source
-        description: "Source of FX rate"
+        description: "Source of FX rate from reference data"
       
       - name: date
         description: "Transaction date"

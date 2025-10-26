@@ -13,10 +13,6 @@ with capital_calls as (
         purpose as description,
         call_amount as amount,
         call_currency as currency_code,
-        null as fx_rate,
-        null as amount_converted,
-        null as fx_rate_as_of,
-        null as fx_rate_source,
         call_date as date,
         'ADMIN' as source,
         capital_call_id as reference,
@@ -43,10 +39,6 @@ distributions as (
         distribution_type as description,
         distribution_amount as amount,
         distribution_currency as currency_code,
-        null as fx_rate,
-        null as amount_converted,
-        null as fx_rate_as_of,
-        null as fx_rate_source,
         distribution_date as date,
         'ADMIN' as source,
         distribution_id as reference,
@@ -70,10 +62,6 @@ expenses as (
         description,
         expense_amount as amount,
         expense_currency as currency_code,
-        null as fx_rate,
-        null as amount_converted,
-        null as fx_rate_as_of,
-        null as fx_rate_source,
         expense_date as date,
         'ADMIN' as source,
         invoice_number as reference,
@@ -97,16 +85,35 @@ fees as (
         'Fee period: ' || cast(fee_period_start as varchar) || ' to ' || cast(fee_period_end as varchar) as description,
         fee_amount as amount,
         fee_currency as currency_code,
-        null as fx_rate,
-        null as amount_converted,
-        null as fx_rate_as_of,
-        null as fx_rate_source,
         fee_calculation_date as date,
         'ADMIN' as source,
         fee_id as reference,
         created_date,
         last_modified_date
     from {{ ref('stg_fund_admin__fees') }}
+),
+
+investment_rounds as (
+    select
+        round_id as source_transaction_id,
+        'PM' as source_system,
+        'INVESTMENT_ROUND' as source_table,
+        fund_id as source_fund_id,
+        null as source_investor_id,
+        investment_code as source_instrument_id,
+        round_id as source_investment_round_id,
+        null as source_facility_id,
+        'INVESTMENT_TRANSACTION' as transaction_type,
+        round_name as name,
+        round_description as description,
+        round_amount as amount,
+        round_currency as currency_code,
+        round_date as date,
+        'PM' as source,
+        round_id as reference,
+        created_date,
+        last_modified_date
+    from {{ ref('stg_pm__investment_rounds') }}
 ),
 
 all_transactions as (
@@ -117,6 +124,8 @@ all_transactions as (
     select * from expenses
     union all
     select * from fees
+    union all
+    select * from investment_rounds
 ),
 
 -- Resolve fund_id using xref
@@ -149,6 +158,35 @@ instrument_xref as (
     where entity_type = 'INSTRUMENT'
 ),
 
+-- Resolve investment_round_id using xref
+investment_round_xref as (
+    select
+        source_system,
+        source_id,
+        canonical_id as investment_round_id
+    from {{ ref('stg_ref__xref_entities') }}
+    where entity_type = 'INVESTMENT_ROUND'
+),
+
+-- Get fund base currencies for FX conversion
+fund_base_currencies as (
+    select
+        fund_id,
+        base_currency_code
+    from {{ ref('int_funds_unified') }}
+),
+
+-- Get FX rates
+fx_rates as (
+    select
+        rate_date,
+        base_currency,
+        quote_currency,
+        exchange_rate,
+        rate_source
+    from {{ ref('stg_ref__fx_rates') }}
+),
+
 transactions_with_resolved_ids as (
     select
         {{ dbt_utils.generate_surrogate_key(['t.source_system', 't.source_transaction_id']) }} as transaction_id,
@@ -156,16 +194,19 @@ transactions_with_resolved_ids as (
         f.fund_id,
         i.investor_id,
         inst.instrument_id,
-        null as investment_round_id,
+        ir.investment_round_id,
         null as facility_id,
         t.name,
         t.description,
         t.amount,
         t.currency_code,
-        t.fx_rate,
-        t.amount_converted,
-        t.fx_rate_as_of,
-        t.fx_rate_source,
+        fx.exchange_rate as fx_rate,
+        case
+            when fx.exchange_rate is not null then t.amount * fx.exchange_rate
+            else null
+        end as amount_converted,
+        fx.rate_date as fx_rate_as_of,
+        fx.rate_source as fx_rate_source,
         t.date,
         t.source,
         t.reference,
@@ -181,6 +222,15 @@ transactions_with_resolved_ids as (
     left join instrument_xref inst
         on t.source_system = inst.source_system
         and t.source_instrument_id = inst.source_id
+    left join investment_round_xref ir
+        on t.source_system = ir.source_system
+        and t.source_investment_round_id = ir.source_id
+    left join fund_base_currencies fbc
+        on f.fund_id = fbc.fund_id
+    left join fx_rates fx
+        on t.currency_code = fx.quote_currency
+        and fbc.base_currency_code = fx.base_currency
+        and t.date = fx.rate_date
 )
 
 select * from transactions_with_resolved_ids
