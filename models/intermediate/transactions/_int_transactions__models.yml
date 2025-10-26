@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: int_transactions_classified
+    description: "Intermediate model that unions and classifies all fund transactions from fund admin sources (capital calls, distributions, expenses, fees) with resolved canonical IDs"
+    columns:
+      - name: transaction_id
+        description: "Unique transaction identifier (surrogate key from source_system and source_transaction_id)"
+        tests:
+          - unique
+          - not_null
+      
+      - name: transaction_type
+        description: "Classified transaction type enum (DRAWDOWN, DISTRIBUTION, DIVIDEND, EXPENSE, MANAGEMENT_FEE)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['DRAWDOWN', 'DISTRIBUTION', 'DIVIDEND', 'INVESTMENT_TRANSACTION', 'EXPENSE', 'MANAGEMENT_FEE', 'LOAN_RECEIVED', 'LOAN_DRAW', 'LOAN_PRINCIPAL_REPAYMENT', 'LOAN_INTEREST_RECEIPT', 'LOAN_FEE_RECEIPT']
+      
+      - name: fund_id
+        description: "Canonical fund identifier (resolved via xref_entities)"
+        tests:
+          - relationships:
+              to: ref('int_funds_unified')
+              field: fund_id
+      
+      - name: investor_id
+        description: "Canonical investor identifier (resolved via xref_entities, null for fund-level transactions)"
+        tests:
+          - relationships:
+              to: ref('int_investors_unified')
+              field: investor_id
+              where: "investor_id is not null"
+      
+      - name: instrument_id
+        description: "Canonical instrument identifier (resolved via xref_entities, null if not linked to specific instrument)"
+        tests:
+          - relationships:
+              to: ref('int_instruments_unified')
+              field: instrument_id
+              where: "instrument_id is not null"
+      
+      - name: investment_round_id
+        description: "Investment round identifier (null in current implementation, reserved for future use)"
+      
+      - name: facility_id
+        description: "Facility identifier (null in current implementation, reserved for future use)"
+      
+      - name: name
+        description: "Transaction name or title"
+      
+      - name: description
+        description: "Transaction description or purpose"
+      
+      - name: amount
+        description: "Transaction amount in original currency"
+      
+      - name: currency_code
+        description: "Currency code for transaction amount"
+      
+      - name: fx_rate
+        description: "Foreign exchange rate (base-per-native)"
+      
+      - name: amount_converted
+        description: "Transaction amount converted to base currency"
+      
+      - name: fx_rate_as_of
+        description: "Date of FX rate"
+      
+      - name: fx_rate_source
+        description: "Source of FX rate"
+      
+      - name: date
+        description: "Transaction date"
+        tests:
+          - not_null
+      
+      - name: source
+        description: "Source system identifier"
+      
+      - name: reference
+        description: "External reference or identifier"
+      
+      - name: created_at
+        description: "Record creation timestamp"
+      
+      - name: updated_at
+        description: "Record last update timestamp"
