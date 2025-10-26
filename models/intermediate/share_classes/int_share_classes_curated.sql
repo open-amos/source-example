@@ -6,7 +6,7 @@ with companies_resolved as (
     from {{ ref('int_companies_resolved') }}
 ),
 
--- Extract share class information from PM investments
+-- Extract share class information from PM investment rounds
 -- Note: PM investments don't explicitly have share class data in the seed,
 -- but we can infer share classes from investment types and liquidation preferences
 pm_share_classes as (
@@ -26,7 +26,7 @@ pm_share_classes as (
         end as name,
         current_timestamp as created_at,
         current_timestamp as updated_at
-    from {{ ref('stg_pm__investments') }} inv
+    from {{ ref('stg_pm__investment_rounds') }} inv
     inner join companies_resolved cr
         on cr.source_system = 'PM'
         and cr.source_id = inv.company_id

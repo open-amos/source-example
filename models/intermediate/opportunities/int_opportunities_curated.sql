@@ -10,6 +10,13 @@ with crm_opportunities as (
         source,
         owner_name as responsible,
         description,
+        fund_name,
+        -- Generate source_id from fund_name by converting to lowercase and replacing spaces with hyphens
+        case
+            when fund_name is not null and fund_name != '' then
+                'CRM-FUND-' || lower(replace(replace(fund_name, ' ', '-'), '''', ''))
+            else null
+        end as fund_source_id,
         created_date,
         last_modified_date
     from {{ ref('stg_crm__opportunities') }}
@@ -33,12 +40,21 @@ companies as (
     where source_system = 'CRM'
 ),
 
--- Join to funds (opportunities may not always have fund_id in CRM)
--- For now, we'll leave fund_id as null since CRM data doesn't have it
+-- Map fund source_id to canonical fund_id using xref_entities
+fund_xref as (
+    select
+        source_system,
+        source_id,
+        canonical_id as fund_id
+    from {{ ref('stg_ref__xref_entities') }}
+    where entity_type = 'FUND'
+        and source_system = 'CRM'
+),
+
 opportunities_enriched as (
     select
         opp.opportunity_id,
-        null as fund_id,  -- CRM opportunities don't have fund assignment yet
+        fx.fund_id,  -- Map fund_source_id to canonical fund_id via xref
         opp.name,
         stg.stage_id,
         comp.company_id,
@@ -53,6 +69,8 @@ opportunities_enriched as (
         on opp.stage_name = stg.stage_name
     left join companies as comp
         on opp.company_id = comp.source_id
+    left join fund_xref as fx
+        on opp.fund_source_id = fx.source_id
 )
 
 select * from opportunities_enriched

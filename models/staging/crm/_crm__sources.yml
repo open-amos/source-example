@@ -91,6 +91,7 @@ sources:
             geography: "trim(geography)"
             deal_type: "trim(deal_type)"
             investment_thesis: "trim(investment_thesis)"
+            fund_name: "trim(fund_name)"
         columns:
           - name: opportunity_id
             description: "Unique opportunity identifier"
@@ -128,6 +129,8 @@ sources:
             description: "Type of deal"
           - name: investment_thesis
             description: "Investment thesis"
+          - name: fund_name
+            description: "Target fund name for the opportunity"
       
       - name: crm_opportunity_countries
         description: "Country allocations for opportunities"

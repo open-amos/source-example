@@ -32,10 +32,11 @@ fund_xref as (
     where entity_type = 'FUND'
 ),
 
--- Extract shareholder information from PM investments
+-- Extract shareholder information from PM investment rounds
 -- We can infer fund shareholders from investment ownership
+-- Use DISTINCT to deduplicate since multiple rounds may exist for same investment_code
 pm_fund_shareholders as (
-    select
+    select distinct
         {{ dbt_utils.generate_surrogate_key(['cr.company_id', 'coalesce(fx.fund_id, inv.fund_id)']) }} as shareholder_id,
         cr.company_id,
         funds.name as shareholder_name,
@@ -47,7 +48,7 @@ pm_fund_shareholders as (
         true as affiliated_entity,
         current_timestamp as created_at,
         current_timestamp as updated_at
-    from {{ ref('stg_pm__investments') }} inv
+    from {{ ref('stg_pm__investment_rounds') }} inv
     inner join companies_resolved cr
         on cr.source_system = 'PM'
         and cr.source_id = inv.company_id

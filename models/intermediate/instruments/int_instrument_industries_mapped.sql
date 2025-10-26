@@ -9,10 +9,10 @@ with instruments_resolved as (
 ),
 
 pm_investments as (
-    select
+    select distinct
         investment_code as source_id,
         sector
-    from {{ ref('stg_pm__investments') }}
+    from {{ ref('stg_pm__investment_rounds') }}
     where sector is not null
 ),
 

@@ -13,7 +13,7 @@ with crm_companies as (
 ),
 
 pm_companies as (
-    select
+    select distinct
         company_id as source_id,
         'PM' as source_system,
         company_name as name,
@@ -23,7 +23,7 @@ pm_companies as (
         null as currency_code,
         created_date,
         last_modified_date
-    from {{ ref('stg_pm__investments') }}
+    from {{ ref('stg_pm__investment_rounds') }}
     where company_id is not null
 ),
 

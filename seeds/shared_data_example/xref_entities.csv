@@ -75,3 +75,9 @@ PM,FUND,FUND-002,9003ffcb-d149-5cd5-831b-da580f3b55e1,European Buyout Fund II,20
 PM,FUND,FUND-003,1d936802-36b0-56fc-8fc1-bd2eeac76fb5,Healthcare Innovation Fund I,2023-04-05,2024-01-22
 PM,FUND,FUND-004,b6e6e7af-81a6-5983-afae-0578ee7b286b,Infrastructure Debt Fund,2021-02-15,2024-01-18
 PM,FUND,FUND-006,a16ffc10-9d86-5af1-951d-90029028f2ef,Asia Pacific Growth Fund,2022-11-15,2024-01-26
+CRM,FUND,CRM-FUND-european-buyout-fund-ii,9003ffcb-d149-5cd5-831b-da580f3b55e1,European Buyout Fund II,2021-05-15,2024-01-20
+CRM,FUND,CRM-FUND-healthcare-innovation-fund-i,1d936802-36b0-56fc-8fc1-bd2eeac76fb5,Healthcare Innovation Fund I,2022-10-01,2024-01-25
+CRM,FUND,CRM-FUND-infrastructure-debt-fund,b6e6e7af-81a6-5983-afae-0578ee7b286b,Infrastructure Debt Fund,2020-08-01,2024-01-18
+CRM,FUND,CRM-FUND-distressed-opportunities-fund,9374f4e8-e022-5dac-9d7f-180035c3c01a,Distressed Opportunities Fund,2022-08-15,2024-01-22
+CRM,FUND,CRM-FUND-asia-pacific-growth-fund,a16ffc10-9d86-5af1-951d-90029028f2ef,Asia Pacific Growth Fund,2022-06-01,2024-01-28
+CRM,FUND,CRM-FUND-growth-capital-fund-iii,8d12beb6-77e9-53ca-a731-5313b113854f,Growth Capital Fund III,2022-03-01,2024-01-15

@@ -110,6 +110,8 @@ models:
         description: "Type of deal (trimmed)"
       - name: investment_thesis
         description: "Investment thesis (trimmed)"
+      - name: fund_name
+        description: "Target fund name for the opportunity (trimmed)"
       - name: source_system
         description: "Source system identifier"
         tests:
