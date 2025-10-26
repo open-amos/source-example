@@ -46,33 +46,32 @@ with source as (
 
 transformed as (
     select
-        {% for column in source_columns %}
+{%- set filtered_columns = [] -%}
+{%- for column in source_columns -%}
+    {%- set col_name = column.name | lower -%}
+    {%- if col_name not in exclude_columns -%}
+        {%- if include_columns | length == 0 or col_name in include_columns -%}
+            {%- set _ = filtered_columns.append(column) -%}
+        {%- endif -%}
+    {%- endif -%}
+{%- endfor %}
+{% for column in filtered_columns -%}
         {%- set col_name = column.name | lower -%}
-        
-        {# Skip excluded columns #}
-        {%- if col_name in exclude_columns -%}
-            {%- continue -%}
-        {%- endif -%}
-        
-        {# If include_columns is specified, only include those columns #}
-        {%- if include_columns | length > 0 and col_name not in include_columns -%}
-            {%- continue -%}
-        {%- endif -%}
         
         {# Apply transformation if specified #}
         {%- if col_name in column_transformations -%}
-            {%- set transformation = column_transformations[col_name] -%}
+            {%- set transformation = column_transformations[col_name] %}
         {{ transformation }} as {{ column_mappings.get(col_name, col_name) }}
         {%- else -%}
             {# Apply default transformation (trim for strings) #}
-            {%- if column.dtype in ('TEXT', 'VARCHAR', 'STRING', 'CHAR') -%}
+            {%- if column.dtype in ('TEXT', 'VARCHAR', 'STRING', 'CHAR') %}
         trim({{ col_name }}) as {{ column_mappings.get(col_name, col_name) }}
-            {%- else -%}
+            {%- else %}
         {{ col_name }} as {{ column_mappings.get(col_name, col_name) }}
             {%- endif -%}
         {%- endif -%}
-        {%- if not loop.last -%},{%- endif %}
-        {% endfor %}
+        {%- if not loop.last %},{% endif %}
+        {%- endfor %}
         
         {%- if add_metadata %}
         {%- set col_names_lower = source_columns | map(attribute='name') | map('lower') | list %}
