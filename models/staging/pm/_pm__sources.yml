@@ -9,19 +9,22 @@ sources:
       system_name: "Portfolio Management Vendor"
     
     tables:
-      - name: pm_investments
-        description: "Investment master data from Portfolio Management system"
+      - name: pm_investment_rounds
+        description: "Investment rounds detail from Portfolio Management system - consolidated table with both instrument metadata and round-level transactions"
         meta:
           add_metadata: true
           column_transformations:
+            round_id: "trim(round_id)"
             investment_code: "trim(investment_code)"
             investment_name: "trim(investment_name)"
-            company_name: "trim(upper(company_name))"
             company_id: "trim(company_id)"
-            fund_name: "trim(fund_name)"
+            company_name: "trim(upper(company_name))"
             fund_id: "trim(fund_id)"
-            initial_investment_currency: "upper(trim(initial_investment_currency))"
-            total_invested_currency: "upper(trim(total_invested_currency))"
+            fund_name: "trim(fund_name)"
+            round_name: "trim(round_name)"
+            round_currency: "upper(trim(round_currency))"
+            share_class: "trim(share_class)"
+            round_description: "trim(round_description)"
             investment_type: "trim(investment_type)"
             investment_stage: "trim(investment_stage)"
             sector: "trim(sector)"
@@ -34,34 +37,40 @@ sources:
             key_risks: "trim(key_risks)"
             exit_strategy: "trim(exit_strategy)"
         columns:
+          - name: round_id
+            description: "Unique round identifier from PM system"
           - name: investment_code
-            description: "Unique investment identifier from PM system"
+            description: "Investment identifier (groups multiple rounds)"
           - name: investment_name
             description: "Investment name"
-          - name: company_name
-            description: "Company name"
           - name: company_id
             description: "Company identifier"
-          - name: fund_name
-            description: "Fund name"
+          - name: company_name
+            description: "Company name"
           - name: fund_id
             description: "Fund identifier"
-          - name: investment_date
-            description: "Date of investment"
-          - name: initial_investment_amount
-            description: "Initial investment amount"
-          - name: initial_investment_currency
-            description: "Currency code for initial investment"
-          - name: total_invested_amount
-            description: "Total invested amount"
-          - name: total_invested_currency
-            description: "Currency code for total invested"
-          - name: ownership_percentage
-            description: "Ownership percentage"
+          - name: fund_name
+            description: "Fund name"
+          - name: round_name
+            description: "Round name (e.g., Series A, Series B, Follow-on)"
+          - name: round_date
+            description: "Date of the investment round"
+          - name: round_amount
+            description: "Amount invested in this round"
+          - name: round_currency
+            description: "Currency code for round amount"
+          - name: stake_acquired
+            description: "Percentage stake acquired in this round"
+          - name: share_class
+            description: "Share class for this round"
+          - name: number_of_shares
+            description: "Number of shares acquired in this round"
+          - name: round_description
+            description: "Description of the investment round"
           - name: investment_type
-            description: "Type of investment"
+            description: "Type of investment (Equity, Loan, etc.)"
           - name: investment_stage
-            description: "Investment stage"
+            description: "Investment stage (Growth, Buyout, etc.)"
           - name: sector
             description: "Sector classification"
           - name: geography
@@ -230,3 +239,5 @@ sources:
             description: "ISO country code"
           - name: percentage
             description: "Allocation percentage"
+      
+

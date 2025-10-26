@@ -1,3 +1,5 @@
+-- Instruments are at the investment_code level (one instrument can have multiple rounds)
+-- We take the first round's metadata for instrument-level attributes
 with pm_instruments as (
     select
         investment_code as source_id,
@@ -6,14 +8,25 @@ with pm_instruments as (
         fund_id,
         company_id as pm_company_id,
         investment_type,
-        investment_date as inception_date,
+        min(round_date) as inception_date,  -- First round date
         target_exit_date as termination_date,
-        initial_investment_currency as currency_code,
+        round_currency as currency_code,  -- Currency from first round
         investment_thesis as description,
         created_date,
         last_modified_date
-    from {{ ref('stg_pm__investments') }}
+    from {{ ref('stg_pm__investment_rounds') }}
     where investment_code is not null
+    group by 
+        investment_code,
+        investment_name,
+        fund_id,
+        company_id,
+        investment_type,
+        target_exit_date,
+        round_currency,
+        investment_thesis,
+        created_date,
+        last_modified_date
 ),
 
 xref as (
