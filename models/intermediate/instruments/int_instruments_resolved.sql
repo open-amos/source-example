@@ -35,7 +35,7 @@ xref as (
         source_id,
         canonical_id
     from {{ ref('stg_ref__xref_entities') }}
-    where entity_type = 'INVESTMENT'
+    where entity_type = 'INSTRUMENT'
 ),
 
 -- Resolve company_id through xref

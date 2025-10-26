@@ -34,7 +34,7 @@ instrument_xref as (
         source_id,
         canonical_id as instrument_id
     from {{ ref('stg_ref__xref_entities') }}
-    where entity_type = 'INVESTMENT'
+    where entity_type = 'INSTRUMENT'
 ),
 
 -- Resolve share_class_id through xref if available
