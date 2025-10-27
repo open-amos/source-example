@@ -2,6 +2,11 @@
 
 AMOS helps investment managers unify data across CRM, portfolio management, fund administration, and finance to produce a consistent analytics layer. This example project ships realistic sample data and source‑aligned models that demonstrate how to connect your systems to AMOS Core.
 
+### Related Projects
+
+- **[AMOS Core](../amos_core/README.md)** - Canonical dimensional model
+- **[AMOS Source Example](../amos_source_example/README.md)** - Source integration patterns
+
 ### The problem this addresses
 
 - Source schemas vary by vendor and implementation, making joins brittle
