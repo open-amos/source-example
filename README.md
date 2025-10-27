@@ -4,8 +4,8 @@ AMOS helps investment managers unify data across CRM, portfolio management, fund
 
 ### Related Projects
 
-- **[AMOS Core](/core/)** - Canonical dimensional model
-- **[AMOS Starter](/starter)** – Orchestrator and entry point
+- **[AMOS Core](https://github.com/open-amos/source-example)** - Canonical dimensional model
+- **[AMOS Starter](https://github.com/open-amos/starter)** – Orchestrator and entry point
 
 ### The problem this addresses
 
