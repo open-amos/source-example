@@ -110,7 +110,7 @@ commitment_snapshots_resolved as (
     select
         {{ dbt_utils.generate_surrogate_key(['c.commitment_id', 'cm.period_end_date']) }} as commitment_snapshot_id,
         c.commitment_id,
-        cast(dateadd(month, -3, cm.period_end_date) as date) as period_start_date,
+        cast({{ amos_core.compat_dateadd('month', -3, 'cm.period_end_date') }} as date) as period_start_date,
         cm.period_end_date,
         'QUARTERLY' as frequency,
         'GAAP' as reporting_basis,

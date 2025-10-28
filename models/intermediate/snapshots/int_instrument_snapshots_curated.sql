@@ -12,24 +12,24 @@ with admin_nav as (
         'GAAP' as reporting_basis,  -- Assuming GAAP basis
         'ADMIN' as snapshot_source,
         fair_value_currency as currency_code,
-        null as fx_rate,  -- Not provided in source
-        fair_value,
-        cost_basis as amortized_cost,
-        null as principal_outstanding,  -- Not applicable for equity
-        null as undrawn_commitment,  -- Not provided in source
-        null as accrued_income,  -- Not provided in source
-        null as accrued_fees,  -- Not provided in source
-        null as fair_value_converted,  -- Will be calculated in marts
-        null as amortized_cost_converted,  -- Will be calculated in marts
-        null as principal_outstanding_converted,
-        null as undrawn_commitment_converted,
-        null as accrued_income_converted,
-        null as accrued_fees_converted,
-        ownership_percentage as equity_stake_pct,
-        null as equity_dividends_cum,  -- Not provided in source
-        null as equity_exit_proceeds_actual,  -- Not provided in source
-        null as equity_exit_proceeds_forecast,  -- Not provided in source
-        null as snapshot_source_file_ref,  -- Not provided in source
+        cast(null as numeric) as fx_rate,  -- Not provided in source
+        cast(fair_value as numeric) as fair_value,
+        cast(cost_basis as numeric) as amortized_cost,
+        cast(null as numeric) as principal_outstanding,  -- Not applicable for equity
+        cast(null as numeric) as undrawn_commitment,  -- Not provided in source
+        cast(null as numeric) as accrued_income,  -- Not provided in source
+        cast(null as numeric) as accrued_fees,  -- Not provided in source
+        cast(null as numeric) as fair_value_converted,  -- Will be calculated in marts
+        cast(null as numeric) as amortized_cost_converted,  -- Will be calculated in marts
+        cast(null as numeric) as principal_outstanding_converted,
+        cast(null as numeric) as undrawn_commitment_converted,
+        cast(null as numeric) as accrued_income_converted,
+        cast(null as numeric) as accrued_fees_converted,
+        cast(ownership_percentage as numeric) as equity_stake_pct,
+        cast(null as numeric) as equity_dividends_cum,  -- Not provided in source
+        cast(null as numeric) as equity_exit_proceeds_actual,  -- Not provided in source
+        cast(null as numeric) as equity_exit_proceeds_forecast,  -- Not provided in source
+        cast(null as text) as snapshot_source_file_ref,  -- Not provided in source
         created_date,
         last_modified_date
     from {{ ref('stg_fund_admin__nav_investment') }}
@@ -39,7 +39,7 @@ pm_valuations as (
     select
         valuation_id,
         investment_id as source_investment_id,
-        null as source_fund_id,  -- Not provided in PM valuations
+        cast(null as text) as source_fund_id,  -- Not provided in PM valuations
         'PM' as source_system,
         valuation_date as period_end_date,
         null as period_start_date,  -- Not provided in source
@@ -47,24 +47,24 @@ pm_valuations as (
         'GAAP' as reporting_basis,  -- Assuming GAAP basis
         'INTERNAL' as snapshot_source,
         equity_value_currency as currency_code,
-        null as fx_rate,  -- Not provided in source
-        equity_value as fair_value,
-        null as amortized_cost,  -- Not provided in PM valuations
-        null as principal_outstanding,
-        null as undrawn_commitment,
-        null as accrued_income,
-        null as accrued_fees,
-        null as fair_value_converted,
-        null as amortized_cost_converted,
-        null as principal_outstanding_converted,
-        null as undrawn_commitment_converted,
-        null as accrued_income_converted,
-        null as accrued_fees_converted,
-        null as equity_stake_pct,  -- Not provided in PM valuations
-        null as equity_dividends_cum,
-        null as equity_exit_proceeds_actual,
-        null as equity_exit_proceeds_forecast,
-        valuation_source as snapshot_source_file_ref,
+        cast(null as numeric) as fx_rate,  -- Not provided in source
+        cast(equity_value as numeric) as fair_value,
+        cast(null as numeric) as amortized_cost,  -- Not provided in PM valuations
+        cast(null as numeric) as principal_outstanding,
+        cast(null as numeric) as undrawn_commitment,
+        cast(null as numeric) as accrued_income,
+        cast(null as numeric) as accrued_fees,
+        cast(null as numeric) as fair_value_converted,
+        cast(null as numeric) as amortized_cost_converted,
+        cast(null as numeric) as principal_outstanding_converted,
+        cast(null as numeric) as undrawn_commitment_converted,
+        cast(null as numeric) as accrued_income_converted,
+        cast(null as numeric) as accrued_fees_converted,
+        cast(null as numeric) as equity_stake_pct,  -- Not provided in PM valuations
+        cast(null as numeric) as equity_dividends_cum,
+        cast(null as numeric) as equity_exit_proceeds_actual,
+        cast(null as numeric) as equity_exit_proceeds_forecast,
+        cast(valuation_source as text) as snapshot_source_file_ref,
         created_date,
         last_modified_date
     from {{ ref('stg_pm__valuations') }}

@@ -74,11 +74,18 @@ final as (
         primary_flag,
         current_timestamp as created_at,
         current_timestamp as updated_at
-    from all_company_industries
-    qualify row_number() over (
-        partition by company_id, industry_id 
-        order by case when primary_flag then 0 else 1 end
-    ) = 1
+    from (
+        select
+            company_id,
+            industry_id,
+            primary_flag,
+            row_number() over (
+                partition by company_id, industry_id
+                order by case when primary_flag then 0 else 1 end
+            ) as rn
+        from all_company_industries
+    ) ranked
+    where ranked.rn = 1
 )
 
 select * from final

@@ -22,7 +22,7 @@ Supports metadata configuration in sources.yml:
         *,
         '{{ source_name | upper }}' as source_system,
         '{{ table_name }}' as source_table,
-        current_timestamp() as loaded_at
+        current_timestamp as loaded_at
     from {{ source_relation }}
 {%- else -%}
 
@@ -40,12 +40,7 @@ Supports metadata configuration in sources.yml:
 {# Get source columns #}
 {%- set source_columns = adapter.get_columns_in_relation(source_relation) -%}
 
-with source as (
-    select * from {{ source_relation }}
-),
-
-transformed as (
-    select
+select
 {%- set filtered_columns = [] -%}
 {%- for column in source_columns -%}
     {%- set col_name = column.name | lower -%}
@@ -55,42 +50,46 @@ transformed as (
         {%- endif -%}
     {%- endif -%}
 {%- endfor %}
-{% for column in filtered_columns -%}
-        {%- set col_name = column.name | lower -%}
-        
-        {# Apply transformation if specified #}
-        {%- if col_name in column_transformations -%}
-            {%- set transformation = column_transformations[col_name] %}
-        {{ transformation }} as {{ column_mappings.get(col_name, col_name) }}
-        {%- else -%}
-            {# Apply default transformation (trim for strings) #}
-            {%- if column.dtype in ('TEXT', 'VARCHAR', 'STRING', 'CHAR') %}
-        trim({{ col_name }}) as {{ column_mappings.get(col_name, col_name) }}
-            {%- else %}
-        {{ col_name }} as {{ column_mappings.get(col_name, col_name) }}
-            {%- endif -%}
-        {%- endif -%}
-        {%- if not loop.last %},{% endif %}
-        {%- endfor %}
-        
-        {%- if add_metadata %}
-        {%- set col_names_lower = source_columns | map(attribute='name') | map('lower') | list %}
-        {%- if 'source_system' not in col_names_lower %}
-        ,-- Source system metadata
-        '{{ source_name | upper }}' as source_system
-        {% endif %}
-        {%- if 'source_table' not in col_names_lower %}
-        ,'{{ table_name }}' as source_table
-        {% endif %}
-        {%- if 'loaded_at' not in col_names_lower %}
-        ,current_timestamp() as loaded_at
-        {% endif %}
-        {%- endif %}
-    
-    from source
-)
+{%- for column in filtered_columns -%}
+    {%- set col_name = column.name | lower -%}
 
-select * from transformed
+    {# Apply transformation if specified #}
+    {%- if col_name in column_transformations -%}
+        {%- set transformation = column_transformations[col_name] %}
+    {{ transformation }} as {{ column_mappings.get(col_name, col_name) }}
+    {%- else -%}
+        {# Apply default transformation (trim for strings) #}
+        {%- if column.dtype in ('TEXT', 'VARCHAR', 'STRING', 'CHAR') %}
+    trim({{ col_name }}) as {{ column_mappings.get(col_name, col_name) }}
+        {%- else %}
+    {{ col_name }} as {{ column_mappings.get(col_name, col_name) }}
+        {%- endif -%}
+    {%- endif -%}
+    {%- if not loop.last %},{% endif %}
+{%- endfor %}
+
+{%- if add_metadata %}
+    {%- set col_names_lower = source_columns | map(attribute='name') | map('lower') | list %}
+    {%- set meta_exprs = [] -%}
+    {%- if 'source_system' not in col_names_lower -%}
+        {%- set _ = meta_exprs.append("'" ~ source_name | upper ~ "' as source_system") -%}
+    {%- endif -%}
+    {%- if 'source_table' not in col_names_lower -%}
+        {%- set _ = meta_exprs.append("'" ~ table_name ~ "' as source_table") -%}
+    {%- endif -%}
+    {%- if 'loaded_at' not in col_names_lower -%}
+        {%- set _ = meta_exprs.append("current_timestamp as loaded_at") -%}
+    {%- endif -%}
+    {%- if meta_exprs | length > 0 -%}
+        {%- if filtered_columns | length > 0 -%}
+,
+        {%- endif -%}
+-- Source system metadata
+{{ meta_exprs | join(',\n') }}
+    {%- endif -%}
+{%- endif %}
+
+from {{ source_relation }}
 
 {%- endif -%}
 {% endmacro %}
