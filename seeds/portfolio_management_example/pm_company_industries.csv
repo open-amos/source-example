@@ -1,0 +1,9 @@
+company_id,company_name,industry_id,industry_name,is_primary,created_at,updated_at
+PM-COMP-001,TechFlow Solutions,ind_30f7a16c51a35741,Technology,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-COMP-002,MedDevice Innovations,ind_1e8f514d4ca2a317,Healthcare,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-COMP-004,RetailMax Holdings,ind_cb7a82c317871051,Consumer,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-COMP-005,FinTech Innovations,ind_5dd6ec8df562f24a,Financial Services,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-COMP-009,BioTech Ventures,ind_1e8f514d4ca2a317,Healthcare,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-COMP-011,CloudSoft Systems,ind_30f7a16c51a35741,Technology,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-COMP-012,European Pharma,ind_1e8f514d4ca2a317,Healthcare,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-COMP-013,AgriTech Solutions,ind_96c842e9da8fd2e3,Agriculture,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00

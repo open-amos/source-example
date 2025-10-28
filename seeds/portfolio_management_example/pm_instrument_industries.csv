@@ -1,0 +1,10 @@
+investment_id,investment_name,industry_id,industry_name,is_primary,created_at,updated_at
+PM-INV-001,TechFlow Solutions Growth Capital Fund III,ind_30f7a16c51a35741,Technology,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-INV-002,RetailMax Holdings Growth Capital Fund III,ind_cb7a82c317871051,Consumer,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-INV-003,CloudSoft Systems Growth Capital Fund III,ind_30f7a16c51a35741,Technology,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-INV-004,MedDevice Innovations European Buyout Fund II,ind_1e8f514d4ca2a317,Healthcare,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-INV-005,European Pharma European Buyout Fund II,ind_1e8f514d4ca2a317,Healthcare,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-INV-006,BioTech Ventures Healthcare Innovation Fund I,ind_1e8f514d4ca2a317,Healthcare,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-INV-007,FinTech Innovations Healthcare Innovation Fund I,ind_5dd6ec8df562f24a,Financial Services,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-INV-008,Infrastructure Debt Portfolio Infrastructure Debt Fund,ind_35f8b7463f1ec720,Infrastructure,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
+PM-INV-009,AgriTech Solutions Asia Pacific Growth Fund,ind_96c842e9da8fd2e3,Agriculture,TRUE,2025-10-28 10:00:00,2025-10-28 10:00:00
