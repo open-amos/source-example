@@ -1,5 +1,5 @@
 with source_data as (
-    {{ staging_from_source('pm', 'pm_valuations') }}
+    {{ amos_core.staging_from_source('pm', 'pm_valuations') }}
 )
 
 select * from source_data
