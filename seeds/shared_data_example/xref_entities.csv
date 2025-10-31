@@ -81,3 +81,59 @@ CRM,FUND,CRM-FUND-infrastructure-debt-fund,b6e6e7af-81a6-5983-afae-0578ee7b286b,
 CRM,FUND,CRM-FUND-distressed-opportunities-fund,9374f4e8-e022-5dac-9d7f-180035c3c01a,Distressed Opportunities Fund,2022-08-15,2024-01-22
 CRM,FUND,CRM-FUND-asia-pacific-growth-fund,a16ffc10-9d86-5af1-951d-90029028f2ef,Asia Pacific Growth Fund,2022-06-01,2024-01-28
 CRM,FUND,CRM-FUND-growth-capital-fund-iii,8d12beb6-77e9-53ca-a731-5313b113854f,Growth Capital Fund III,2022-03-01,2024-01-15
+PM,COMPANY,PM-COMP-016,c1e8f514-d4ca-2a31-7b6d-ec8df562f24a,Renewable Energy Portfolio,2023-12-01,2025-10-15
+PM,COMPANY,PM-COMP-017,d2f9g625-e5db-3b42-8c7e-fd9eg673g35b,Water Infrastructure Partners,2023-11-15,2025-10-15
+PM,COMPANY,PM-COMP-018,e3g0h736-f6ec-4c53-9d8f-ge0fh784h46c,Transportation Infrastructure Co,2024-05-20,2025-10-15
+PM,COMPANY,PM-COMP-019,f4h1i847-g7fd-5d64-ae9g-hf1gi895i57d,European Power Grid,2023-08-01,2025-10-15
+PM,COMPANY,PM-COMP-020,g5i2j958-h8ge-6e75-bf0h-ig2hj906j68e,UK Broadband Infrastructure,2023-12-15,2025-10-15
+PM,COMPANY,PM-COMP-021,h6j3k069-i9hf-7f86-cg1i-jh3ik017k79f,Toll Road Infrastructure,2023-10-01,2025-10-15
+PM,COMPANY,PM-COMP-022,i7k4l170-j0ig-8g97-dh2j-ki4jl128l80g,Data Center Infrastructure,2024-03-01,2025-10-15
+CRM,COMPANY,CRM-COMP-016,c1e8f514-d4ca-2a31-7b6d-ec8df562f24a,Renewable Energy Portfolio,2023-12-01,2025-10-15
+CRM,COMPANY,CRM-COMP-017,d2f9g625-e5db-3b42-8c7e-fd9eg673g35b,Water Infrastructure Partners,2023-11-15,2025-10-15
+CRM,COMPANY,CRM-COMP-018,e3g0h736-f6ec-4c53-9d8f-ge0fh784h46c,Transportation Infrastructure Co,2024-05-20,2025-10-15
+CRM,COMPANY,CRM-COMP-019,f4h1i847-g7fd-5d64-ae9g-hf1gi895i57d,European Power Grid,2023-08-01,2025-10-15
+CRM,COMPANY,CRM-COMP-020,g5i2j958-h8ge-6e75-bf0h-ig2hj906j68e,UK Broadband Infrastructure,2023-12-15,2025-10-15
+CRM,COMPANY,CRM-COMP-021,h6j3k069-i9hf-7f86-cg1i-jh3ik017k79f,Toll Road Infrastructure,2023-10-01,2025-10-15
+CRM,COMPANY,CRM-COMP-022,i7k4l170-j0ig-8g97-dh2j-ki4jl128l80g,Data Center Infrastructure,2024-03-01,2025-10-15
+PM,INSTRUMENT,PM-INV-010,j8l5m281-k1jh-9h08-ei3k-lj5km239m91h,Renewable Energy Portfolio Loan Infrastructure Debt Fund,2024-01-01,2025-10-15
+PM,INSTRUMENT,PM-INV-011,k9m6n392-l2ki-0i19-fj4l-mk6ln340n02i,Water Infrastructure Loan Infrastructure Debt Fund,2024-02-15,2025-10-15
+PM,INSTRUMENT,PM-INV-012,l0n7o403-m3lj-1j20-gk5m-nl7mo451o13j,Transportation Infrastructure Loan Infrastructure Debt Fund,2024-06-01,2025-10-15
+PM,INSTRUMENT,PM-INV-013,m1o8p514-n4mk-2k31-hl6n-om8np562p24k,European Power Grid Loan Infrastructure Debt Fund,2023-08-15,2025-10-15
+PM,INSTRUMENT,PM-INV-014,n2p9q625-o5nl-3l42-im7o-pn9oq673q35l,UK Broadband Infrastructure Loan Infrastructure Debt Fund,2024-01-15,2025-10-15
+PM,INSTRUMENT,PM-INV-015,o3q0r736-p6om-4m53-jn8p-qo0pr784r46m,Toll Road Infrastructure Loan Infrastructure Debt Fund,2023-11-01,2025-10-15
+PM,INSTRUMENT,PM-INV-016,p4r1s847-q7pn-5n64-ko9q-rp1qs895s57n,Data Center Infrastructure Loan Infrastructure Debt Fund,2024-03-15,2025-10-15
+PM,INSTRUMENT,PM-INV-017,q5s2t958-r8qo-6o75-lp0r-sq2rt906t68o,Renewable Energy Portfolio Loan B Infrastructure Debt Fund,2024-04-15,2025-10-15
+PM,INSTRUMENT,PM-INV-018,r6t3u069-s9rp-7p86-mq1s-tr3su017u79p,Transportation Infrastructure Loan B Infrastructure Debt Fund,2024-08-15,2025-10-15
+PM,INSTRUMENT,PM-INV-019,s7u4v170-t0sq-8q97-nr2t-us4tv128v80q,Data Center Infrastructure Loan B Infrastructure Debt Fund,2024-03-15,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-010,j8l5m281-k1jh-9h08-ei3k-lj5km239m91h,Renewable Energy Portfolio Loan Infrastructure Debt Fund,2024-01-01,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-011,k9m6n392-l2ki-0i19-fj4l-mk6ln340n02i,Water Infrastructure Loan Infrastructure Debt Fund,2024-02-15,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-012,l0n7o403-m3lj-1j20-gk5m-nl7mo451o13j,Transportation Infrastructure Loan Infrastructure Debt Fund,2024-06-01,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-013,m1o8p514-n4mk-2k31-hl6n-om8np562p24k,European Power Grid Loan Infrastructure Debt Fund,2023-08-15,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-014,n2p9q625-o5nl-3l42-im7o-pn9oq673q35l,UK Broadband Infrastructure Loan Infrastructure Debt Fund,2024-01-15,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-015,o3q0r736-p6om-4m53-jn8p-qo0pr784r46m,Toll Road Infrastructure Loan Infrastructure Debt Fund,2023-11-01,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-016,p4r1s847-q7pn-5n64-ko9q-rp1qs895s57n,Data Center Infrastructure Loan Infrastructure Debt Fund,2024-03-15,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-017,q5s2t958-r8qo-6o75-lp0r-sq2rt906t68o,Renewable Energy Portfolio Loan B Infrastructure Debt Fund,2024-04-15,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-018,r6t3u069-s9rp-7p86-mq1s-tr3su017u79p,Transportation Infrastructure Loan B Infrastructure Debt Fund,2024-08-15,2025-10-15
+ADMIN,INSTRUMENT,ADMIN-INVT-019,s7u4v170-t0sq-8q97-nr2t-us4tv128v80q,Data Center Infrastructure Loan B Infrastructure Debt Fund,2024-03-15,2025-10-15
+PM,LOAN,PM-LOAN-001,t8v5w281-u1tr-9r08-os3u-vt5uw230w91r,Renewable Energy Portfolio Senior Secured Term Loan A,2024-01-01,2025-10-15
+PM,LOAN,PM-LOAN-002,u9w6x392-v2us-0s19-pt4v-wu6vx341x02s,Water Infrastructure Senior Secured Term Loan,2024-02-15,2025-10-15
+PM,LOAN,PM-LOAN-003,v0x7y403-w3vt-1t20-qu5w-xv7wy452y13t,Transportation Infrastructure Mezzanine Loan,2024-06-01,2025-10-15
+PM,LOAN,PM-LOAN-004,w1y8z514-x4wu-2u31-rv6x-yw8xz563z24u,European Power Grid Senior Secured Term Loan,2023-08-15,2025-10-15
+PM,LOAN,PM-LOAN-005,x2z9a625-y5xv-3v42-sw7y-zx9ya674a35v,UK Broadband Infrastructure Senior Secured Term Loan,2024-01-15,2025-10-15
+PM,LOAN,PM-LOAN-006,y3a0b736-z6yw-4w53-tx8z-ay0zb785b46w,Toll Road Infrastructure Senior Secured Term Loan B,2023-11-01,2025-10-15
+PM,LOAN,PM-LOAN-007,z4b1c847-a7zx-5x64-uy9a-bz1ac896c57x,Data Center Infrastructure Mezzanine Loan,2024-03-15,2025-10-15
+PM,LOAN,PM-LOAN-008,a5c2d958-b8ay-6y75-vz0b-ca2bd907d68y,Renewable Energy Portfolio Revolver,2024-01-01,2025-10-15
+PM,LOAN,PM-LOAN-009,b6d3e069-c9bz-7z86-wa1c-db3ce018e79z,Water Infrastructure Revolver,2024-02-15,2025-10-15
+PM,LOAN,PM-LOAN-010,c7e4f170-d0ca-8a97-xb2d-ec4df129f80a,European Power Grid Revolver,2023-08-15,2025-10-15
+PM,LOAN,PM-LOAN-011,d8f5g281-e1db-9b08-yc3e-fd5eg230g91b,UK Broadband Infrastructure Revolver,2024-01-15,2025-10-15
+PM,LOAN,PM-LOAN-012,e9g6h392-f2ec-0c19-zd4f-ge6fh341h02c,Toll Road Infrastructure Revolver,2023-11-01,2025-10-15
+PM,LOAN,PM-LOAN-013,f0h7i403-g3fd-1d20-ae5g-hf7gi452i13d,Renewable Energy Portfolio Senior Secured Term Loan B,2024-04-15,2025-10-15
+PM,LOAN,PM-LOAN-014,g1i8j514-h4ge-2e31-bf6h-ig8hj563j24e,Transportation Infrastructure Senior Secured Term Loan,2024-08-15,2025-10-15
+PM,LOAN,PM-LOAN-015,h2j9k625-i5hf-3f42-cg7i-jh9ik674k35f,Data Center Infrastructure Senior Secured Term Loan,2024-03-15,2025-10-15
+PM,FACILITY,PM-FAC-001,i3k0l736-j6ig-4g53-dh8j-ki0jl785l46g,Renewable Energy Portfolio Facility,2024-01-01,2025-10-15
+PM,FACILITY,PM-FAC-002,j4l1m847-k7jh-5h64-ei9k-lj1km896m57h,Water Infrastructure Facility,2024-02-15,2025-10-15
+PM,FACILITY,PM-FAC-003,k5m2n958-l8ki-6i75-fj0l-mk2ln907n68i,Transportation Infrastructure Facility,2024-06-01,2025-10-15
+PM,FACILITY,PM-FAC-004,l6n3o069-m9lj-7j86-gk1m-nl3mo018o79j,European Power Grid Facility,2023-08-15,2025-10-15
+PM,FACILITY,PM-FAC-005,m7o4p170-n0mk-8k97-hl2n-om4np129p80k,UK Broadband Infrastructure Facility,2024-01-15,2025-10-15
+PM,FACILITY,PM-FAC-006,n8p5q281-o1nl-9l08-im3o-pn5oq230q91l,Toll Road Infrastructure Facility,2023-11-01,2025-10-15
+PM,FACILITY,PM-FAC-007,o9q6r392-p2om-0m19-jn4p-qo6pr341r02m,Data Center Infrastructure Facility,2024-03-15,2025-10-15

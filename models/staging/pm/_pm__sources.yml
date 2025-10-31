@@ -241,3 +241,164 @@ sources:
             description: "Allocation percentage"
       
 
+
+      - name: pm_loans
+        description: "Loan details from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            loan_id: "trim(loan_id)"
+            instrument_id: "trim(instrument_id)"
+            facility_id: "trim(facility_id)"
+            borrower_company_id: "trim(borrower_company_id)"
+            loan_type: "trim(upper(loan_type))"
+            tranche_label: "trim(tranche_label)"
+            currency_code: "upper(trim(currency_code))"
+            interest_index: "trim(upper(interest_index))"
+            day_count: "trim(upper(day_count))"
+            amortization_type: "trim(upper(amortization_type))"
+            security_rank: "trim(upper(security_rank))"
+            status: "trim(upper(status))"
+        columns:
+          - name: loan_id
+            description: "Unique loan identifier"
+          - name: instrument_id
+            description: "Instrument identifier"
+          - name: facility_id
+            description: "Facility identifier"
+          - name: borrower_company_id
+            description: "Borrower company identifier"
+          - name: loan_type
+            description: "Loan type (TERM, REVOLVER, MEZZ, etc.)"
+          - name: tranche_label
+            description: "Tranche label"
+          - name: commitment_amount
+            description: "Total loan commitment amount"
+          - name: currency_code
+            description: "Currency code"
+          - name: start_date
+            description: "Loan start date"
+          - name: maturity_date
+            description: "Loan maturity date"
+          - name: interest_index
+            description: "Interest rate index (SOFR, EURIBOR, etc.)"
+          - name: index_tenor_days
+            description: "Index tenor in days"
+          - name: fixed_rate_pct
+            description: "Fixed interest rate percentage"
+          - name: spread_bps
+            description: "Spread over index in basis points"
+          - name: floor_pct
+            description: "Interest rate floor percentage"
+          - name: day_count
+            description: "Day count convention"
+          - name: pay_freq_months
+            description: "Payment frequency in months"
+          - name: amortization_type
+            description: "Amortization type (BULLET, STRAIGHT_LINE, etc.)"
+          - name: security_rank
+            description: "Security rank (SENIOR_SECURED, MEZZANINE, etc.)"
+          - name: status
+            description: "Loan status"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: pm_facilities
+        description: "Credit facility details from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            facility_id: "trim(facility_id)"
+            facility_name: "trim(facility_name)"
+            borrower_company_id: "trim(borrower_company_id)"
+            facility_type: "trim(upper(facility_type))"
+            currency_code: "upper(trim(currency_code))"
+            status: "trim(upper(status))"
+        columns:
+          - name: facility_id
+            description: "Unique facility identifier"
+          - name: facility_name
+            description: "Facility name"
+          - name: borrower_company_id
+            description: "Borrower company identifier"
+          - name: facility_type
+            description: "Facility type"
+          - name: total_commitment
+            description: "Total facility commitment"
+          - name: currency_code
+            description: "Currency code"
+          - name: start_date
+            description: "Facility start date"
+          - name: maturity_date
+            description: "Facility maturity date"
+          - name: status
+            description: "Facility status"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: pm_loan_cashflows
+        description: "Loan cashflow transactions from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            loan_cashflow_id: "trim(loan_cashflow_id)"
+            loan_id: "trim(loan_id)"
+            cashflow_type: "trim(upper(cashflow_type))"
+            currency_code: "upper(trim(currency_code))"
+            description: "trim(description)"
+        columns:
+          - name: loan_cashflow_id
+            description: "Unique cashflow identifier"
+          - name: loan_id
+            description: "Loan identifier"
+          - name: cashflow_type
+            description: "Cashflow type (DRAW, PRINCIPAL_REPAYMENT, INTEREST_PAYMENT, etc.)"
+          - name: cashflow_date
+            description: "Cashflow date"
+          - name: amount
+            description: "Cashflow amount"
+          - name: currency_code
+            description: "Currency code"
+          - name: description
+            description: "Cashflow description"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"
+      
+      - name: pm_loan_snapshots
+        description: "Loan position snapshots from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            loan_snapshot_id: "trim(loan_snapshot_id)"
+            loan_id: "trim(loan_id)"
+            status: "trim(upper(status))"
+            currency_code: "upper(trim(currency_code))"
+        columns:
+          - name: loan_snapshot_id
+            description: "Unique snapshot identifier"
+          - name: loan_id
+            description: "Loan identifier"
+          - name: period_end_date
+            description: "Period end date"
+          - name: principal_outstanding
+            description: "Principal outstanding"
+          - name: undrawn_commitment
+            description: "Undrawn commitment"
+          - name: accrued_interest
+            description: "Accrued interest"
+          - name: fair_value
+            description: "Fair value"
+          - name: status
+            description: "Loan status"
+          - name: currency_code
+            description: "Currency code"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"

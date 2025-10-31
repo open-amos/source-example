@@ -4,35 +4,31 @@
 -- This model will return empty results until loan data is added
 
 with pm_loans as (
-    -- Placeholder: Extract loans from PM system when available
-    -- Expected columns: loan_id, instrument_id, facility_id, loan_type, tranche_label,
-    -- commitment_amount, currency_code, start_date, maturity_date, interest_index,
-    -- index_tenor_days, fixed_rate_pct, spread_bps, floor_pct, day_count,
-    -- pay_freq_months, amortization_type, security_rank, status
+    -- Extract loans from PM system
     select
-        cast(null as varchar(64)) as source_id,
-        cast(null as varchar(10)) as source_system,
-        cast(null as varchar(64)) as instrument_id,
-        cast(null as varchar(64)) as facility_id,
-        cast(null as varchar(64)) as loan_type,
-        cast(null as varchar(64)) as tranche_label,
-        cast(null as numeric(24,2)) as commitment_amount,
-        cast(null as varchar(3)) as currency_code,
-        cast(null as date) as start_date,
-        cast(null as date) as maturity_date,
-        cast(null as varchar(64)) as interest_index,
-        cast(null as integer) as index_tenor_days,
-        cast(null as decimal(7,4)) as fixed_rate_pct,
-        cast(null as integer) as spread_bps,
-        cast(null as decimal(7,4)) as floor_pct,
-        cast(null as varchar(64)) as day_count,
-        cast(null as integer) as pay_freq_months,
-        cast(null as varchar(64)) as amortization_type,
-        cast(null as varchar(64)) as security_rank,
-        cast(null as varchar(32)) as status,
-        cast(null as timestamp) as created_date,
-        cast(null as timestamp) as last_modified_date
-    where 1 = 0  -- Return no rows until source data exists
+        loan_id as source_id,
+        'PM' as source_system,
+        instrument_id,
+        facility_id,
+        loan_type,
+        tranche_label,
+        commitment_amount,
+        currency_code,
+        start_date,
+        maturity_date,
+        interest_index,
+        index_tenor_days,
+        fixed_rate_pct,
+        spread_bps,
+        floor_pct,
+        day_count,
+        pay_freq_months,
+        amortization_type,
+        security_rank,
+        status,
+        created_date,
+        last_modified_date
+    from {{ ref('stg_pm__loans') }}
 ),
 
 fund_admin_loans as (

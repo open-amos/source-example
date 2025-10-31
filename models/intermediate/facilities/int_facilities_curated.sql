@@ -3,26 +3,23 @@
 -- This model will return empty results until facility data is added
 
 with pm_facilities as (
-    -- Placeholder: Extract facilities from PM system when available
-    -- Expected columns: facility_id, fund_id, borrower_company_id, facility_type,
-    -- agent_counterparty_id, agreement_date, effective_date, maturity_date,
-    -- currency_code, total_commitment, purpose
+    -- Extract facilities from PM system
     select
-        cast(null as varchar(64)) as source_id,
-        cast(null as varchar(10)) as source_system,
-        cast(null as varchar(64)) as fund_id,
-        cast(null as varchar(64)) as borrower_company_id,
-        cast(null as varchar(64)) as facility_type,
+        facility_id as source_id,
+        'PM' as source_system,
+        cast('FUND-004' as varchar(64)) as fund_id,  -- All facilities belong to Infrastructure Debt Fund
+        borrower_company_id,
+        facility_type,
         cast(null as varchar(64)) as agent_counterparty_id,
-        cast(null as date) as agreement_date,
-        cast(null as date) as effective_date,
-        cast(null as date) as maturity_date,
-        cast(null as varchar(3)) as currency_code,
-        cast(null as numeric(24,2)) as total_commitment,
+        start_date as agreement_date,
+        start_date as effective_date,
+        maturity_date,
+        currency_code,
+        total_commitment,
         cast(null as varchar(256)) as purpose,
-        cast(null as timestamp) as created_date,
-        cast(null as timestamp) as last_modified_date
-    where 1 = 0  -- Return no rows until source data exists
+        created_date,
+        last_modified_date
+    from {{ ref('stg_pm__facilities') }}
 ),
 
 fund_admin_facilities as (
