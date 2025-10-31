@@ -7,7 +7,6 @@ with instruments_resolved as (
         fund_id,
         company_id,
         investment_type,
-        currency_code,
         inception_date,
         termination_date,
         description,
@@ -29,15 +28,44 @@ instruments_typed as (
             when upper(investment_type) = 'CONVERTIBLE' then 'CONVERTIBLE'
             when upper(investment_type) = 'WARRANT' then 'WARRANT'
             when upper(investment_type) = 'FUND_INTEREST' then 'FUND_INTEREST'
-            else 'EQUITY'  -- Default to EQUITY for unmapped types
+            else null  -- Fail fast on unmapped types instead of silently defaulting
         end as instrument_type,
-        currency_code,
         inception_date,
         termination_date,
         description,
         created_date as created_at,
         last_modified_date as updated_at
     from instruments_resolved
+),
+
+-- Defense-in-depth deduplication: handle any duplicates that may arise
+instruments_deduped as (
+    select
+        instrument_id,
+        fund_id,
+        company_id,
+        instrument_type,
+        inception_date,
+        termination_date,
+        description,
+        created_at,
+        updated_at,
+        row_number() over (
+            partition by instrument_id 
+            order by updated_at desc nulls last, created_at desc nulls last
+        ) as rn
+    from instruments_typed
 )
 
-select * from instruments_typed
+select
+    instrument_id,
+    fund_id,
+    company_id,
+    instrument_type,
+    inception_date,
+    termination_date,
+    description,
+    created_at,
+    updated_at
+from instruments_deduped
+where rn = 1

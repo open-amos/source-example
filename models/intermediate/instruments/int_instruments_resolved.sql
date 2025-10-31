@@ -10,7 +10,6 @@ with pm_instruments as (
         investment_type,
         min(round_date) as inception_date,  -- First round date
         target_exit_date as termination_date,
-        round_currency as currency_code,  -- Currency from first round
         investment_thesis as description,
         created_date,
         last_modified_date
@@ -23,7 +22,6 @@ with pm_instruments as (
         company_id,
         investment_type,
         target_exit_date,
-        round_currency,
         investment_thesis,
         created_date,
         last_modified_date
@@ -67,7 +65,6 @@ resolved as (
         fund_xref.fund_id,
         company_xref.company_id,
         pm_instruments.investment_type,
-        pm_instruments.currency_code,
         pm_instruments.inception_date,
         pm_instruments.termination_date,
         pm_instruments.description,
