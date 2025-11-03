@@ -27,6 +27,35 @@ with pm_instruments as (
         last_modified_date
 ),
 
+-- Loan instruments from the loans table
+-- Group by instrument_id since one instrument can have multiple loan tranches
+pm_loan_instruments as (
+    select
+        instrument_id as source_id,
+        'PM' as source_system,
+        max(tranche_label) as name,  -- Take one tranche label as the name
+        null as fund_id,  -- Loans may not have direct fund_id
+        borrower_company_id as pm_company_id,
+        'LOAN' as investment_type,
+        min(start_date) as inception_date,  -- Earliest start date
+        max(maturity_date) as termination_date,  -- Latest maturity date
+        null as description,
+        min(created_date) as created_date,
+        max(last_modified_date) as last_modified_date
+    from {{ ref('stg_pm__loans') }}
+    where instrument_id is not null
+    group by
+        instrument_id,
+        borrower_company_id
+),
+
+-- Union all instruments (equity + loans)
+all_instruments as (
+    select * from pm_instruments
+    union all
+    select * from pm_loan_instruments
+),
+
 xref as (
     select
         source_system,
@@ -59,27 +88,27 @@ fund_xref as (
 resolved as (
     select
         xref.canonical_id as instrument_id,
-        pm_instruments.source_system,
-        pm_instruments.source_id,
-        pm_instruments.name,
+        all_instruments.source_system,
+        all_instruments.source_id,
+        all_instruments.name,
         fund_xref.fund_id,
         company_xref.company_id,
-        pm_instruments.investment_type,
-        pm_instruments.inception_date,
-        pm_instruments.termination_date,
-        pm_instruments.description,
-        pm_instruments.created_date,
-        pm_instruments.last_modified_date
-    from pm_instruments
+        all_instruments.investment_type,
+        all_instruments.inception_date,
+        all_instruments.termination_date,
+        all_instruments.description,
+        all_instruments.created_date,
+        all_instruments.last_modified_date
+    from all_instruments
     inner join xref
-        on pm_instruments.source_system = xref.source_system
-        and pm_instruments.source_id = xref.source_id
+        on all_instruments.source_system = xref.source_system
+        and all_instruments.source_id = xref.source_id
     inner join company_xref
-        on pm_instruments.source_system = company_xref.source_system
-        and pm_instruments.pm_company_id = company_xref.source_id
-    inner join fund_xref
-        on pm_instruments.source_system = fund_xref.source_system
-        and pm_instruments.fund_id = fund_xref.source_id
+        on all_instruments.source_system = company_xref.source_system
+        and all_instruments.pm_company_id = company_xref.source_id
+    left join fund_xref
+        on all_instruments.source_system = fund_xref.source_system
+        and all_instruments.fund_id = fund_xref.source_id
 )
 
 select * from resolved
