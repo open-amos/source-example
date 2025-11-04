@@ -1,36 +1,21 @@
-with companies_resolved as (
+with instruments as (
     select
         company_id,
-        source_system,
-        source_id
-    from {{ ref('int_companies_resolved') }}
+        share_class_name
+    from {{ ref('int_instruments_unified') }}
+    where instrument_type = 'EQUITY'
+        and share_class_name is not null
 ),
 
--- Extract share class information from PM investment rounds
--- Note: PM investments don't explicitly have share class data in the seed,
--- but we can infer share classes from investment types and liquidation preferences
-pm_share_classes as (
-    select distinct
-        {{ dbt_utils.generate_surrogate_key(['cr.company_id', 'coalesce(inv.liquidation_preference, \'COMMON\')']) }} as share_class_id,
-        cr.company_id,
-        case
-            when inv.liquidation_preference is not null and inv.liquidation_preference != '' then
-                case
-                    -- Use descriptive names that reflect the actual preference structure
-                    -- Since we don't have series info, use the preference type as the distinguisher
-                    when inv.liquidation_preference like '%Participating%' then 'Participating Preferred'
-                    when inv.liquidation_preference like '%Non-Participating%' then 'Non-Participating Preferred'
-                    else 'Preferred Stock'
-                end
-            else 'Common Stock'
-        end as name,
+share_classes as (
+    select
+        {{ dbt_utils.generate_surrogate_key(['company_id', 'share_class_name']) }} as share_class_id,
+        company_id,
+        share_class_name as name,
         current_timestamp as created_at,
         current_timestamp as updated_at
-    from {{ ref('stg_pm__investment_rounds') }} inv
-    inner join companies_resolved cr
-        on cr.source_system = 'PM'
-        and cr.source_id = inv.company_id
-    where inv.company_id is not null
+    from instruments
+    group by company_id, share_class_name
 )
 
-select * from pm_share_classes
+select * from share_classes

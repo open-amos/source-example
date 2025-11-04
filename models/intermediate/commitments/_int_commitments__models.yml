@@ -28,40 +28,8 @@ models:
       - name: updated_at
         description: "Commitment last update timestamp"
 
-  - name: int_commitment_records_curated
-    description: "Commitment change history tracking commitment amounts and status over time"
-    columns:
-      - name: commitment_record_id
-        description: "Unique commitment record identifier"
-        tests:
-          - unique
-          - not_null
-      - name: commitment_id
-        description: "Reference to commitment"
-        tests:
-          - not_null
-          - relationships:
-              to: ref('int_commitments_curated')
-              field: commitment_id
-      - name: date_from
-        description: "Effective date of this commitment record"
-        tests:
-          - not_null
-      - name: amount
-        description: "Commitment amount"
-        tests:
-          - not_null
-      - name: status
-        description: "Commitment status (e.g., Active, Closed)"
-        tests:
-          - not_null
-      - name: created_at
-        description: "Record creation timestamp"
-      - name: updated_at
-        description: "Record last update timestamp"
-
   - name: int_commitment_snapshots_curated
-    description: "Commitment snapshots showing cumulative drawdowns and distributions by period"
+    description: "Commitment snapshots showing cumulative drawdowns and distributions by period with currency and source tracking"
     columns:
       - name: commitment_snapshot_id
         description: "Unique commitment snapshot identifier"
@@ -97,6 +65,16 @@ models:
           - not_null
           - accepted_values:
               values: ['ADMIN', 'INTERNAL']
+      - name: currency_code
+        description: "Currency code for snapshot amounts"
+        tests:
+          - not_null
+      - name: source
+        description: "Source system for snapshot data"
+        tests:
+          - not_null
+      - name: source_reference
+        description: "Source system reference identifier"
       - name: total_commitment
         description: "Total commitment amount"
         tests:

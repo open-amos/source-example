@@ -1,47 +1,57 @@
--- Build instrument cashflows from transactions or PM sources
--- Maps transaction data to instrument-level cash movements
-with transactions as (
+with pm_instrument_cashflows as (
     select
-        transaction_id,
-        transaction_type,
-        instrument_id,
-        amount,
+        pm_instrument_cashflow_id,
+        pm_instrument_id,
+        instrument_cashflow_type,
+        date,
         currency_code,
         fx_rate,
-        amount_converted,
-        date,
+        fx_rate_as_of,
+        fx_rate_source,
+        amount,
+        pm_transaction_id,
         reference,
-        created_at,
-        updated_at
-    from {{ ref('int_transactions_classified') }}
-    where instrument_id is not null
+        non_cash,
+        _source_system,
+        _source_loaded_at
+    from {{ ref('stg_pm__instrument_cashflows') }}
 ),
 
--- Map transaction types to instrument cashflow types
-cashflows as (
+instrument_xref as (
     select
-        {{ dbt_utils.generate_surrogate_key(['transaction_id', 'instrument_id']) }} as instrument_cashflow_id,
-        instrument_id,
+        source_system,
+        source_id,
+        canonical_id as instrument_id
+    from {{ ref('stg_ref__xref_entities') }}
+    where entity_type = 'INSTRUMENT'
+),
+
+resolved as (
+    select
+        {{ dbt_utils.generate_surrogate_key(['pm.pm_instrument_cashflow_id']) }} as instrument_cashflow_id,
+        xref.instrument_id,
+        pm.instrument_cashflow_type,
+        pm.date,
+        pm.amount,
+        pm.currency_code,
+        pm.fx_rate,
+        pm.fx_rate_as_of,
+        pm.fx_rate_source,
+        -- Calculate converted amount
         case
-            when transaction_type = 'INVESTMENT_TRANSACTION' then 'CONTRIBUTION'
-            when transaction_type = 'DISTRIBUTION' then 'DISTRIBUTION'
-            when transaction_type = 'DIVIDEND' then 'DIVIDEND'
-            when transaction_type = 'LOAN_INTEREST_RECEIPT' then 'INTEREST'
-            when transaction_type = 'LOAN_FEE_RECEIPT' then 'FEE'
-            when transaction_type = 'LOAN_PRINCIPAL_REPAYMENT' then 'PRINCIPAL'
-            when transaction_type = 'LOAN_DRAW' then 'DRAW'
-            else 'OTHER'
-        end as instrument_cashflow_type,
-        date,
-        amount,
-        currency_code,
-        fx_rate,
-        amount_converted,
-        transaction_id,
-        reference,
-        created_at,
-        updated_at
-    from transactions
+            when pm.fx_rate is not null and pm.amount is not null
+            then pm.amount * pm.fx_rate
+            else null
+        end as amount_converted,
+        pm.pm_transaction_id as transaction_id,
+        pm.reference,
+        pm.non_cash,
+        current_timestamp as created_at,
+        current_timestamp as updated_at
+    from pm_instrument_cashflows pm
+    inner join instrument_xref xref
+        on pm.pm_instrument_id = xref.source_id
+        and xref.source_system = 'PM'
 )
 
-select * from cashflows
+select * from resolved

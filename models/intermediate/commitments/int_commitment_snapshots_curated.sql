@@ -5,7 +5,8 @@ with capital_calls as (
         call_date,
         call_amount,
         commitment_amount,
-        commitment_currency
+        commitment_currency,
+        source_reference
     from {{ ref('stg_fund_admin__capital_calls') }}
     where status = 'Paid'
 ),
@@ -63,7 +64,9 @@ cumulative_drawdowns as (
         cc.investor_code,
         vd.period_end_date,
         max(cc.commitment_amount) as total_commitment,
-        sum(cc.call_amount) as total_drawdowns
+        max(cc.commitment_currency) as currency_code,
+        sum(cc.call_amount) as total_drawdowns,
+        max(cc.source_reference) as source_reference
     from capital_calls cc
     cross join valuation_dates vd
     where cc.call_date <= vd.period_end_date
@@ -96,8 +99,10 @@ commitment_metrics as (
         cd.investor_code,
         cd.period_end_date,
         cd.total_commitment,
+        cd.currency_code,
         cd.total_drawdowns,
-        coalesce(cdi.total_distributions, 0) as total_distributions
+        coalesce(cdi.total_distributions, 0) as total_distributions,
+        cd.source_reference
     from cumulative_drawdowns cd
     left join cumulative_distributions cdi
         on cd.fund_code = cdi.fund_code
@@ -115,6 +120,9 @@ commitment_snapshots_resolved as (
         'QUARTERLY' as frequency,
         'GAAP' as reporting_basis,
         'ADMIN' as snapshot_source,
+        cm.currency_code,
+        'ADMIN' as source,
+        cm.source_reference,
         cm.total_commitment,
         cm.total_drawdowns,
         cm.total_distributions,

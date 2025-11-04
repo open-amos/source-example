@@ -1,11 +1,11 @@
 version: 2
 
 models:
-  - name: int_instruments_resolved
-    description: "Resolved instruments from PM source system using cross-reference table to map to canonical instrument_id, company_id, and fund_id"
+  - name: int_instruments_unified
+    description: "Unified instrument data with canonical instrument_type enum and all type-specific attributes from PM sources"
     columns:
       - name: instrument_id
-        description: "Canonical instrument identifier from xref_entities"
+        description: "Canonical instrument identifier"
         tests:
           - unique
           - not_null
@@ -17,80 +17,192 @@ models:
         description: "Source system instrument identifier"
         tests:
           - not_null
+      - name: fund_id
+        description: "Canonical fund identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_funds_unified')
+              field: fund_id
+      - name: company_id
+        description: "Canonical company identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_companies_unified')
+              field: company_id
       - name: name
-        description: "Investment name from source system"
-      - name: fund_id
-        description: "Canonical fund identifier"
-        tests:
-          - not_null
-          - relationships:
-              to: ref('int_funds_unified')
-              field: fund_id
-      - name: company_id
-        description: "Canonical company identifier"
-        tests:
-          - not_null
-          - relationships:
-              to: ref('int_companies_unified')
-              field: company_id
-      - name: investment_type
-        description: "Investment type from source system"
-      - name: currency_code
-        description: "Currency code for the instrument"
-      - name: inception_date
-        description: "Instrument inception date"
-      - name: termination_date
-        description: "Instrument termination date (null for ongoing)"
-      - name: description
-        description: "Investment thesis or description"
-      - name: created_date
-        description: "Record creation date from source"
-      - name: last_modified_date
-        description: "Last modification date from source"
-
-  - name: int_instruments_unified
-    description: "Unified instrument data with canonical instrument_type enum and standardized attributes matching canonical DBML structure"
-    columns:
-      - name: instrument_id
-        description: "Canonical instrument identifier"
-        tests:
-          - unique
-          - not_null
-      - name: fund_id
-        description: "Canonical fund identifier"
-        tests:
-          - not_null
-          - relationships:
-              to: ref('int_funds_unified')
-              field: fund_id
-      - name: company_id
-        description: "Canonical company identifier"
-        tests:
-          - not_null
-          - relationships:
-              to: ref('int_companies_unified')
-              field: company_id
+        description: "Instrument name"
       - name: instrument_type
         description: "Canonical instrument type enum"
         tests:
           - not_null
           - accepted_values:
               values: ['EQUITY', 'LOAN', 'CONVERTIBLE', 'WARRANT', 'FUND_INTEREST']
-      - name: currency_code
-        description: "Currency code for the instrument"
       - name: inception_date
         description: "Instrument inception date"
       - name: termination_date
         description: "Instrument termination date (null for ongoing)"
+      - name: share_class_name
+        description: "Share class name (equity only)"
+      - name: initial_share_count
+        description: "Initial share count (equity only)"
+      - name: initial_ownership_pct
+        description: "Initial ownership percentage (equity only)"
+      - name: initial_cost
+        description: "Initial cost (equity only)"
+      - name: initial_price_per_share
+        description: "Initial price per share (equity only)"
+      - name: facility_id
+        description: "Canonical facility identifier (credit only)"
+        tests:
+          - relationships:
+              to: ref('int_facilities_curated')
+              field: facility_id
+              config:
+                where: "facility_id is not null"
+      - name: tranche_label
+        description: "Tranche label (credit only)"
+      - name: commitment_amount
+        description: "Commitment amount (credit only)"
+      - name: start_date
+        description: "Start date (credit only)"
+      - name: maturity_date
+        description: "Maturity date (credit only)"
+      - name: interest_index
+        description: "Interest rate index (credit only)"
+      - name: spread_bps
+        description: "Spread in basis points (credit only)"
+      - name: floor_pct
+        description: "Interest rate floor percentage (credit only)"
+      - name: day_count
+        description: "Day count convention (credit only)"
+      - name: pay_freq_months
+        description: "Payment frequency in months (credit only)"
+      - name: amortization_type
+        description: "Amortization type (credit only)"
+      - name: security_rank
+        description: "Security rank (credit only)"
+      - name: currency_code
+        description: "Currency code for the instrument"
+      - name: fx_rate
+        description: "Foreign exchange rate"
+      - name: fx_rate_as_of
+        description: "Date of FX rate"
+      - name: fx_rate_source
+        description: "Source of FX rate"
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: int_instruments_equity_curated
+    description: "Equity-specific instrument attributes with business logic applied"
+    columns:
+      - name: instrument_id
+        description: "Canonical instrument identifier"
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('int_instruments_unified')
+              field: instrument_id
+      - name: share_class_id
+        description: "Generated share class identifier"
+      - name: initial_share_count
+        description: "Initial share count"
+      - name: initial_ownership_pct
+        description: "Initial ownership percentage"
+      - name: initial_cost
+        description: "Initial cost in native currency"
+      - name: initial_price_per_share
+        description: "Initial price per share"
+      - name: currency_code
+        description: "Currency code"
+      - name: fx_rate
+        description: "Foreign exchange rate"
+      - name: fx_rate_as_of
+        description: "Date of FX rate"
+      - name: fx_rate_source
+        description: "Source of FX rate"
+      - name: initial_cost_converted
+        description: "Initial cost converted to base currency"
       - name: description
-        description: "Investment thesis or description"
+        description: "Additional description"
+      - name: created_at
+        description: "Record creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: int_instruments_credit_curated
+    description: "Credit-specific instrument attributes with business logic applied"
+    columns:
+      - name: instrument_id
+        description: "Canonical instrument identifier"
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('int_instruments_unified')
+              field: instrument_id
+      - name: facility_id
+        description: "Canonical facility identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_facilities_curated')
+              field: facility_id
+      - name: instrument_credit_type
+        description: "Credit instrument type enum"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['TERM', 'REVOLVER', 'DDTL', 'BRIDGE', 'MEZZ']
+      - name: tranche_label
+        description: "Tranche label"
+      - name: commitment_amount
+        description: "Commitment amount in native currency"
+      - name: currency_code
+        description: "Currency code"
+      - name: fx_rate
+        description: "Foreign exchange rate"
+      - name: fx_rate_as_of
+        description: "Date of FX rate"
+      - name: fx_rate_source
+        description: "Source of FX rate"
+      - name: commitment_amount_converted
+        description: "Commitment amount converted to base currency"
+      - name: start_date
+        description: "Start date"
+      - name: maturity_date
+        description: "Maturity date"
+      - name: interest_index
+        description: "Interest rate index"
+      - name: index_tenor_days
+        description: "Index tenor in days"
+      - name: fixed_rate_pct
+        description: "Fixed rate percentage"
+      - name: spread_bps
+        description: "Spread in basis points"
+      - name: floor_pct
+        description: "Interest rate floor percentage"
+      - name: day_count
+        description: "Day count convention"
+      - name: pay_freq_months
+        description: "Payment frequency in months"
+      - name: amortization_type
+        description: "Amortization type"
+      - name: security_rank
+        description: "Security rank"
+      - name: status
+        description: "Current status"
       - name: created_at
         description: "Record creation timestamp"
       - name: updated_at
         description: "Last update timestamp"
 
   - name: int_instrument_countries_mapped
-    description: "Instrument to country allocations with temporal validity for bridge table br_instrument_countries"
+    description: "Instrument to country allocations with temporal validity and allocation percentages for bridge table br_instrument_countries"
     columns:
       - name: instrument_id
         description: "Canonical instrument identifier"
@@ -103,20 +215,20 @@ models:
         description: "ISO 3166-1 alpha-2 country code"
         tests:
           - not_null
-      - name: allocation_pct
-        description: "Allocation percentage to this country"
       - name: valid_from
         description: "Start date of validity period"
         tests:
           - not_null
       - name: valid_to
         description: "End date of validity period (null for ongoing)"
+      - name: allocation_pct
+        description: "Allocation percentage to this country"
+      - name: role
+        description: "Role of the country relationship (e.g., HEADQUARTERS, OPERATIONS, BORROWER)"
       - name: primary_flag
         description: "Indicates if this is the primary country for the instrument"
         tests:
           - not_null
-      - name: role
-        description: "Role of the country relationship (e.g., headquarters, operations)"
       - name: created_at
         description: "Record creation timestamp"
       - name: updated_at

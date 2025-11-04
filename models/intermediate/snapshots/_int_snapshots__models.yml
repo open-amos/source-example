@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: int_fund_snapshots_curated
-    description: "Curated fund-level performance snapshots from fund administration system"
+    description: "Curated fund-level performance snapshots from fund administration system with currency and source tracking"
     columns:
       - name: fund_snapshot_id
         description: "Unique fund snapshot identifier (surrogate key)"
@@ -29,6 +29,16 @@ models:
         tests:
           - accepted_values:
               values: ['ADMIN', 'INTERNAL']
+      - name: currency_code
+        description: "Currency code for snapshot amounts"
+        tests:
+          - not_null
+      - name: source
+        description: "Source system for snapshot data"
+        tests:
+          - not_null
+      - name: source_reference
+        description: "Source system reference identifier"
       - name: committed_capital
         description: "Total committed capital"
       - name: called_capital
@@ -47,7 +57,7 @@ models:
           - not_null
 
   - name: int_instrument_snapshots_curated
-    description: "Curated instrument-level valuation snapshots from fund admin and PM systems"
+    description: "Curated instrument-level valuation snapshots from PM systems with FX tracking"
     columns:
       - name: instrument_snapshot_id
         description: "Unique instrument snapshot identifier (surrogate key)"
@@ -61,6 +71,8 @@ models:
           - relationships:
               to: ref('int_instruments_unified')
               field: instrument_id
+      - name: period_start_date
+        description: "Snapshot period start date"
       - name: period_end_date
         description: "Snapshot period end date"
         tests:
@@ -76,51 +88,44 @@ models:
               values: ['ADMIN', 'INTERNAL']
       - name: currency_code
         description: "Currency code for snapshot values"
+      - name: fx_rate
+        description: "Foreign exchange rate"
+      - name: fx_rate_as_of
+        description: "Date of FX rate"
+      - name: fx_rate_source
+        description: "Source of FX rate"
       - name: fair_value
         description: "Fair value of instrument"
       - name: amortized_cost
         description: "Amortized cost basis"
-      - name: equity_stake_pct
-        description: "Equity ownership percentage"
-      - name: created_at
-        description: "Record creation timestamp"
-        tests:
-          - not_null
-      - name: updated_at
-        description: "Record last update timestamp"
-        tests:
-          - not_null
-
-  - name: int_loan_snapshots_curated
-    description: "Curated loan-level position snapshots (placeholder for future loan data)"
-    columns:
-      - name: loan_snapshot_id
-        description: "Unique loan snapshot identifier (surrogate key)"
-        tests:
-          - unique
-      - name: loan_id
-        description: "Canonical loan identifier"
-      - name: period_end_date
-        description: "Snapshot period end date"
-      - name: frequency
-        description: "Reporting frequency (QUARTERLY, ANNUAL)"
-      - name: reporting_basis
-        description: "Reporting basis (GAAP, IFRS)"
-      - name: snapshot_source
-        description: "Source of snapshot data (ADMIN, INTERNAL)"
-        tests:
-          - accepted_values:
-              values: ['ADMIN', 'INTERNAL']
-              config:
-                where: "loan_snapshot_id is not null"
       - name: principal_outstanding
-        description: "Outstanding principal balance"
-      - name: currency_code
-        description: "Currency code for snapshot values"
+        description: "Outstanding principal balance (credit only)"
+      - name: undrawn_commitment
+        description: "Undrawn commitment amount (credit only)"
+      - name: accrued_income
+        description: "Accrued income"
+      - name: accrued_interest
+        description: "Accrued interest (credit only)"
+      - name: accrued_fees
+        description: "Accrued fees (credit only)"
+      - name: equity_stake_pct
+        description: "Equity ownership percentage (equity only)"
+      - name: stake_basis
+        description: "Basis for stake calculation (equity only)"
+      - name: expected_loss
+        description: "Expected loss amount (credit only)"
+      - name: status
+        description: "Instrument status"
+      - name: snapshot_source_file_ref
+        description: "Source file reference for audit trail"
       - name: created_at
         description: "Record creation timestamp"
+        tests:
+          - not_null
       - name: updated_at
         description: "Record last update timestamp"
+        tests:
+          - not_null
 
   - name: int_company_valuations_curated
     description: "Curated company valuation snapshots from PM system"

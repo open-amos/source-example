@@ -28,8 +28,10 @@ models:
           - relationships:
               to: ref('stg_ref__investor_types')
               field: investor_type_id
+      - name: domicile_country_code
+        description: "Country code of investor domicile for regulatory reporting"
       - name: country_code
-        description: "Country code where investor is domiciled"
+        description: "Country code where investor is located"
       - name: state_province
         description: "State or province"
       - name: city
@@ -81,8 +83,10 @@ models:
           - relationships:
               to: ref('stg_ref__investor_types')
               field: investor_type_id
+      - name: domicile_country_code
+        description: "Country code of investor domicile for regulatory reporting"
       - name: country_code
-        description: "Country code where investor is domiciled"
+        description: "Country code where investor is located"
       - name: state_province
         description: "State or province"
       - name: city

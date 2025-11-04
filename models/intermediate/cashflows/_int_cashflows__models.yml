@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: int_instrument_cashflows_curated
-    description: "Curated instrument-level cash movements from transactions"
+    description: "Curated instrument-level cash movements from PM sources"
     columns:
       - name: instrument_cashflow_id
         description: "Unique instrument cashflow identifier (surrogate key)"
@@ -17,11 +17,11 @@ models:
               to: ref('int_instruments_unified')
               field: instrument_id
       - name: instrument_cashflow_type
-        description: "Type of cashflow (CONTRIBUTION, DISTRIBUTION, DIVIDEND, INTEREST, FEE, PRINCIPAL, DRAW, PREPAYMENT, OTHER)"
+        description: "Type of cashflow (CONTRIBUTION, DISTRIBUTION, DIVIDEND, INTEREST, FEE, PRINCIPAL, DRAW, PREPAYMENT, PURCHASE, SALE, OTHER)"
         tests:
           - not_null
           - accepted_values:
-              values: ['CONTRIBUTION', 'DISTRIBUTION', 'DIVIDEND', 'INTEREST', 'FEE', 'PRINCIPAL', 'DRAW', 'PREPAYMENT', 'OTHER']
+              values: ['CONTRIBUTION', 'DISTRIBUTION', 'DIVIDEND', 'INTEREST', 'FEE', 'PRINCIPAL', 'DRAW', 'PREPAYMENT', 'PURCHASE', 'SALE', 'OTHER']
       - name: date
         description: "Cashflow date"
         tests:
@@ -36,16 +36,18 @@ models:
           - not_null
       - name: fx_rate
         description: "Foreign exchange rate (base-per-native)"
+      - name: fx_rate_as_of
+        description: "Date of FX rate"
+      - name: fx_rate_source
+        description: "Source of FX rate"
       - name: amount_converted
         description: "Cashflow amount converted to base currency"
       - name: transaction_id
         description: "Reference to source transaction"
-        tests:
-          - relationships:
-              to: ref('int_transactions_classified')
-              field: transaction_id
       - name: reference
         description: "External reference or identifier"
+      - name: non_cash
+        description: "Flag indicating if this is a non-cash transaction"
       - name: created_at
         description: "Record creation timestamp"
         tests:
@@ -54,91 +56,6 @@ models:
         description: "Record last update timestamp"
         tests:
           - not_null
-
-  - name: int_loan_cashflows_curated
-    description: "Curated loan-level cash movements from fund admin or PM sources"
-    columns:
-      - name: loan_cashflow_id
-        description: "Unique loan cashflow identifier (surrogate key)"
-        tests:
-          - unique
-      - name: loan_id
-        description: "Canonical loan identifier"
-        tests:
-          - relationships:
-              to: ref('int_loans_curated')
-              field: loan_id
-              config:
-                where: "loan_cashflow_id is not null"
-      - name: loan_cashflow_type
-        description: "Type of loan cashflow (DRAW, PRINCIPAL_REPAYMENT, INTEREST_PAYMENT, FEE_PAYMENT, PREPAYMENT_PENALTY, AMENDMENT_FEE, COMMITMENT_FEE)"
-        tests:
-          - accepted_values:
-              values: ['DRAW', 'PRINCIPAL_REPAYMENT', 'INTEREST_PAYMENT', 'FEE_PAYMENT', 'PREPAYMENT_PENALTY', 'AMENDMENT_FEE', 'COMMITMENT_FEE']
-              config:
-                where: "loan_cashflow_id is not null"
-      - name: date
-        description: "Cashflow date"
-      - name: amount
-        description: "Cashflow amount in native currency"
-      - name: currency_code
-        description: "Currency code for cashflow amount"
-      - name: fx_rate
-        description: "Foreign exchange rate (base-per-native)"
-      - name: amount_converted
-        description: "Cashflow amount converted to base currency"
-      - name: interest_period_id
-        description: "Reference to loan interest period (if applicable)"
-      - name: transaction_id
-        description: "Reference to source transaction"
-        tests:
-          - relationships:
-              to: ref('int_transactions_classified')
-              field: transaction_id
-              config:
-                where: "loan_cashflow_id is not null and transaction_id is not null"
-      - name: reference
-        description: "External reference or identifier"
-      - name: created_at
-        description: "Record creation timestamp"
-      - name: updated_at
-        description: "Record last update timestamp"
-
-  - name: int_loan_interest_periods_curated
-    description: "Curated loan interest accrual periods from fund admin sources"
-    columns:
-      - name: loan_interest_period_id
-        description: "Unique loan interest period identifier (surrogate key)"
-        tests:
-          - unique
-      - name: loan_id
-        description: "Canonical loan identifier"
-        tests:
-          - relationships:
-              to: ref('int_loans_curated')
-              field: loan_id
-              config:
-                where: "loan_interest_period_id is not null"
-      - name: period_start
-        description: "Interest period start date"
-      - name: period_end
-        description: "Interest period end date"
-      - name: index_rate_pct
-        description: "Index rate percentage (e.g., SOFR rate)"
-      - name: margin_pct
-        description: "Margin percentage added to index rate"
-      - name: accrual_days
-        description: "Number of days in accrual period"
-      - name: expected_interest_amount
-        description: "Expected interest amount for period"
-      - name: payment_due_date
-        description: "Interest payment due date"
-      - name: actual_interest_amount
-        description: "Actual interest amount paid"
-      - name: created_at
-        description: "Record creation timestamp"
-      - name: updated_at
-        description: "Record last update timestamp"
 
   - name: int_company_dividend_forecasts_curated
     description: "Curated projected dividend payments from PM sources"

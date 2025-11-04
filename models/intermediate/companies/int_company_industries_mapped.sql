@@ -71,6 +71,8 @@ final as (
     select
         company_id,
         industry_id,
+        current_timestamp as valid_from,
+        cast(null as timestamp) as valid_to,
         primary_flag,
         current_timestamp as created_at,
         current_timestamp as updated_at

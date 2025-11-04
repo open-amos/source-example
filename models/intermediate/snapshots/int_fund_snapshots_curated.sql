@@ -10,6 +10,9 @@ with admin_nav as (
         'QUARTERLY' as frequency,  -- Assuming quarterly reporting
         'GAAP' as reporting_basis,  -- Assuming GAAP basis
         'ADMIN' as snapshot_source,
+        total_nav_currency as currency_code,
+        'ADMIN' as source,
+        nav_id as source_reference,
         committed_capital,
         called_capital,
         dpi_ratio as dpi,
@@ -19,10 +22,7 @@ with admin_nav as (
         distributed_capital as total_distributions,
         fund_expenses as total_expenses,
         management_fees_paid as total_management_fees,
-        null as total_loans_received,  -- Not provided in source
-        null as principal_outstanding,  -- Not provided in source
         (committed_capital - called_capital) as undrawn_commitment,
-        null as total_interest_income,  -- Not provided in source
         created_date,
         last_modified_date
     from {{ ref('stg_fund_admin__nav_fund') }}
@@ -47,6 +47,9 @@ curated as (
         admin_nav.frequency,
         admin_nav.reporting_basis,
         admin_nav.snapshot_source,
+        admin_nav.currency_code,
+        admin_nav.source,
+        admin_nav.source_reference,
         admin_nav.committed_capital,
         admin_nav.called_capital,
         admin_nav.dpi,
@@ -56,10 +59,7 @@ curated as (
         admin_nav.total_distributions,
         admin_nav.total_expenses,
         admin_nav.total_management_fees,
-        admin_nav.total_loans_received,
-        admin_nav.principal_outstanding,
         admin_nav.undrawn_commitment,
-        admin_nav.total_interest_income,
         current_timestamp as created_at,
         current_timestamp as updated_at
     from admin_nav

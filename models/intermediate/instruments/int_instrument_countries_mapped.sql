@@ -1,45 +1,37 @@
-with instruments_resolved as (
+with pm_instrument_countries as (
     select
-        instrument_id,
+        pm_instrument_id,
+        country_code,
+        primary_flag,
+        allocation_pct,
+        role
+    from {{ ref('stg_pm__instrument_countries') }}
+),
+
+instrument_xref as (
+    select
         source_system,
         source_id,
-        inception_date,
-        termination_date
-    from {{ ref('int_instruments_resolved') }}
+        canonical_id as instrument_id
+    from {{ ref('stg_ref__xref_entities') }}
+    where entity_type = 'INSTRUMENT'
 ),
 
-pm_investment_countries as (
+resolved as (
     select
-        investment_id,
-        country_code,
-        percentage as allocation_pct
-    from {{ ref('stg_pm__investment_countries') }}
-    where investment_id is not null
-        and country_code is not null
-),
-
--- Join investment countries to resolved instruments
-instrument_countries as (
-    select
-        instruments_resolved.instrument_id,
-        pm_investment_countries.country_code,
-        pm_investment_countries.allocation_pct,
-        -- Use inception_date as valid_from for temporal validity
-        instruments_resolved.inception_date as valid_from,
-        -- Use termination_date as valid_to (can be null for ongoing instruments)
-        instruments_resolved.termination_date as valid_to,
-        -- Determine primary flag (highest allocation percentage)
-        row_number() over (
-            partition by instruments_resolved.instrument_id 
-            order by pm_investment_countries.allocation_pct desc
-        ) = 1 as primary_flag,
-        null as role,  -- Role not provided in source data
+        xref.instrument_id,
+        ic.country_code,
+        current_timestamp as valid_from,
+        cast(null as timestamp) as valid_to,
+        ic.allocation_pct,
+        ic.role,
+        ic.primary_flag,
         current_timestamp as created_at,
         current_timestamp as updated_at
-    from instruments_resolved
-    inner join pm_investment_countries
-        on instruments_resolved.source_system = 'PM'
-        and instruments_resolved.source_id = pm_investment_countries.investment_id
+    from pm_instrument_countries ic
+    inner join instrument_xref xref
+        on ic.pm_instrument_id = xref.source_id
+        and xref.source_system = 'PM'
 )
 
-select * from instrument_countries
+select * from resolved
