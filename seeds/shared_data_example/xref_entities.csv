@@ -137,3 +137,9 @@ PM,FACILITY,PM-FAC-004,l6n3o069-m9lj-7j86-gk1m-nl3mo018o79j,European Power Grid 
 PM,FACILITY,PM-FAC-005,m7o4p170-n0mk-8k97-hl2n-om4np129p80k,UK Broadband Infrastructure Facility,2024-01-15,2025-10-15
 PM,FACILITY,PM-FAC-006,n8p5q281-o1nl-9l08-im3o-pn5oq230q91l,Toll Road Infrastructure Facility,2023-11-01,2025-10-15
 PM,FACILITY,PM-FAC-007,o9q6r392-p2om-0m19-jn4p-qo6pr341r02m,Data Center Infrastructure Facility,2024-03-15,2025-10-15
+PM,INDUSTRY,ind_30f7a16c51a35741,ind_30f7a16c51a35741,Technology,2020-01-01,2025-11-04
+PM,INDUSTRY,ind_cb7a82c317871051,ind_cb7a82c317871051,Consumer,2020-01-01,2025-11-04
+PM,INDUSTRY,ind_1e8f514d4ca2a317,ind_1e8f514d4ca2a317,Healthcare,2020-01-01,2025-11-04
+PM,INDUSTRY,ind_5dd6ec8df562f24a,ind_5dd6ec8df562f24a,Financial Services,2020-01-01,2025-11-04
+PM,INDUSTRY,ind_35f8b7463f1ec720,ind_35f8b7463f1ec720,Infrastructure,2020-01-01,2025-11-04
+PM,INDUSTRY,ind_96c842e9da8fd2e3,ind_96c842e9da8fd2e3,Agriculture,2020-01-01,2025-11-04
