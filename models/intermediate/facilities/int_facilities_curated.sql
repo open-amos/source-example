@@ -10,9 +10,7 @@ with pm_facilities as (
         maturity_date,
         currency_code,
         total_commitment,
-        purpose,
-        _source_system,
-        _source_loaded_at
+        purpose
     from {{ ref('stg_pm__facilities') }}
 ),
 

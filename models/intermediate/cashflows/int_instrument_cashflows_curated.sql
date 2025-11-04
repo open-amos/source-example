@@ -11,9 +11,7 @@ with pm_instrument_cashflows as (
         amount,
         pm_transaction_id,
         reference,
-        non_cash,
-        _source_system,
-        _source_loaded_at
+        non_cash
     from {{ ref('stg_pm__instrument_cashflows') }}
 ),
 

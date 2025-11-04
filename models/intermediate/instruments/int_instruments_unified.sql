@@ -8,6 +8,7 @@ with pm_instruments as (
         instrument_type,
         inception_date,
         termination_date,
+        description,
         
         -- Equity-specific fields
         share_class_name,
@@ -34,10 +35,7 @@ with pm_instruments as (
         currency_code,
         fx_rate,
         fx_rate_as_of,
-        fx_rate_source,
-        
-        _source_system,
-        _source_loaded_at
+        fx_rate_source
     from {{ ref('stg_pm__instruments') }}
 ),
 
@@ -88,6 +86,7 @@ resolved as (
         pm.instrument_type,
         pm.inception_date,
         pm.termination_date,
+        pm.description,
         
         -- Equity fields
         pm.share_class_name,

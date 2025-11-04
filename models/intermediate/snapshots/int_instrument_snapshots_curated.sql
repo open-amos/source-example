@@ -4,7 +4,7 @@ with pm_instrument_snapshots as (
         pm_instrument_id,
         period_start_date,
         period_end_date,
-        frequency,
+        snapshot_frequency as frequency,
         reporting_basis,
         snapshot_source,
         currency_code,
@@ -22,9 +22,7 @@ with pm_instrument_snapshots as (
         amortized_cost,
         expected_loss,
         status,
-        snapshot_source_file_ref,
-        _source_system,
-        _source_loaded_at
+        snapshot_source_file_ref
     from {{ ref('stg_pm__instrument_snapshots') }}
 ),
 

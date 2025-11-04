@@ -23,6 +23,7 @@ with admin_nav as (
         fund_expenses as total_expenses,
         management_fees_paid as total_management_fees,
         (committed_capital - called_capital) as undrawn_commitment,
+        null::numeric(20,2) as total_interest_income,
         created_date,
         last_modified_date
     from {{ ref('stg_fund_admin__nav_fund') }}
@@ -60,6 +61,7 @@ curated as (
         admin_nav.total_expenses,
         admin_nav.total_management_fees,
         admin_nav.undrawn_commitment,
+        admin_nav.total_interest_income,
         current_timestamp as created_at,
         current_timestamp as updated_at
     from admin_nav

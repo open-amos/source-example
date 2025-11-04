@@ -1,4 +1,4 @@
-pm_instrument_industries as (
+with pm_instrument_industries as (
     select
         pm_instrument_id,
         pm_industry_id,
