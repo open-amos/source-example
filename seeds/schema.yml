@@ -105,27 +105,26 @@ seeds:
     description: "Cross-reference table mapping source system IDs to canonical IDs"
     config:
       column_types:
-        SOURCE_SYSTEM: varchar(50)
-        ENTITY_TYPE: varchar(50)
-        SOURCE_ID: varchar(255)
-        CANONICAL_ID: varchar(255)
-        NAME: varchar(500)
-        CREATED_DATE: date
-        LAST_MODIFIED_DATE: date
+        entity_type: varchar(50)
+        source_system: varchar(50)
+        source_id: varchar(255)
+        canonical_id: varchar(255)
     columns:
-      - name: SOURCE_SYSTEM
+      - name: entity_type
+        description: "Type of entity being mapped (COMPANY, FUND, INVESTOR, INDUSTRY, INSTRUMENT, FACILITY)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['COMPANY', 'FUND', 'INVESTOR', 'INDUSTRY', 'INSTRUMENT', 'FACILITY']
+      - name: source_system
         description: "Source system name"
         tests:
           - not_null
-      - name: ENTITY_TYPE
-        description: "Type of entity being mapped"
-        tests:
-          - not_null
-      - name: SOURCE_ID
+      - name: source_id
         description: "Source system entity ID"
         tests:
           - not_null
-      - name: CANONICAL_ID
+      - name: canonical_id
         description: "Canonical entity ID"
         tests:
           - not_null
@@ -283,30 +282,12 @@ seeds:
     description: "Fund administrator investor master data"
     config:
       column_types:
-        investor_code: varchar(64)
+        admin_investor_id: varchar(64)
         investor_name: varchar(255)
-        investor_legal_name: varchar(500)
         investor_type: varchar(100)
-        investor_type_id: varchar(64)
-        country_code: char(2)
-        state_province: varchar(100)
-        city: varchar(100)
-        contact_person: varchar(255)
-        contact_email: varchar(255)
-        contact_phone: varchar(50)
-        kyc_status: varchar(50)
-        aml_status: varchar(50)
-        accredited_status: varchar(50)
-        tax_id: varchar(100)
-        tax_jurisdiction: varchar(50)
-        investment_capacity: varchar(50)
-        risk_tolerance: varchar(50)
-        liquidity_preference: varchar(50)
-        esg_requirements: varchar(10)
-        created_date: date
-        last_modified_date: date
+        domicile_country_code: char(2)
     columns:
-      - name: investor_code
+      - name: admin_investor_id
         description: "Unique investor identifier"
         tests:
           - unique
@@ -315,83 +296,94 @@ seeds:
         description: "Investor name"
         tests:
           - not_null
+      - name: investor_type
+        description: "Type of investor"
+        tests:
+          - not_null
+      - name: domicile_country_code
+        description: "Country code where investor is domiciled"
+        tests:
+          - not_null
 
   - name: admin_capital_calls
     description: "Fund administrator capital call transactions"
     config:
       column_types:
-        capital_call_id: varchar(64)
-        fund_code: varchar(64)
-        investor_code: varchar(64)
-        call_number: numeric(10,0)
+        admin_capital_call_id: varchar(64)
+        admin_fund_id: varchar(64)
+        admin_investor_id: varchar(64)
         call_date: date
-        due_date: date
-        call_amount: numeric(18,2)
-        call_currency: char(3)
-        commitment_amount: numeric(18,2)
-        commitment_currency: char(3)
-        call_percentage: numeric(6,2)
-        purpose: varchar(500)
-        management_fee_amount: numeric(18,2)
-        investment_amount: numeric(18,2)
-        expense_amount: numeric(18,2)
-        status: varchar(50)
-        payment_date: date
-        payment_amount: numeric(18,2)
-        payment_currency: char(3)
-        created_date: date
-        last_modified_date: date
+        amount: numeric(18,2)
+        currency_code: char(3)
+        source_reference: varchar(255)
     columns:
-      - name: capital_call_id
+      - name: admin_capital_call_id
         description: "Unique capital call identifier"
         tests:
           - unique
           - not_null
-      - name: fund_code
+      - name: admin_fund_id
         description: "Fund identifier"
         tests:
           - not_null
-      - name: investor_code
+      - name: admin_investor_id
         description: "Investor identifier"
         tests:
           - not_null
+      - name: call_date
+        description: "Date of capital call"
+        tests:
+          - not_null
+      - name: amount
+        description: "Capital call amount"
+        tests:
+          - not_null
+      - name: currency_code
+        description: "Currency code"
+        tests:
+          - not_null
+      - name: source_reference
+        description: "Source system reference for traceability"
 
   - name: admin_distributions
     description: "Fund administrator distribution transactions"
     config:
       column_types:
-        distribution_id: varchar(64)
-        fund_code: varchar(64)
-        investor_code: varchar(64)
-        distribution_number: numeric(10,0)
+        admin_distribution_id: varchar(64)
+        admin_fund_id: varchar(64)
+        admin_investor_id: varchar(64)
         distribution_date: date
-        record_date: date
-        distribution_amount: numeric(18,2)
-        distribution_currency: char(3)
-        distribution_type: varchar(100)
-        source_investment: varchar(255)
-        tax_year: numeric(4,0)
-        withholding_tax_amount: numeric(18,2)
-        net_distribution_amount: numeric(18,2)
-        cumulative_distributions: numeric(18,2)
-        status: varchar(50)
-        payment_date: date
-        created_date: date
-        last_modified_date: date
+        amount: numeric(18,2)
+        currency_code: char(3)
+        source_reference: varchar(255)
     columns:
-      - name: distribution_id
+      - name: admin_distribution_id
         description: "Unique distribution identifier"
         tests:
           - unique
           - not_null
-      - name: fund_code
+      - name: admin_fund_id
         description: "Fund identifier"
         tests:
           - not_null
-      - name: investor_code
+      - name: admin_investor_id
         description: "Investor identifier"
         tests:
           - not_null
+      - name: distribution_date
+        description: "Date of distribution"
+        tests:
+          - not_null
+      - name: amount
+        description: "Distribution amount"
+        tests:
+          - not_null
+      - name: currency_code
+        description: "Currency code"
+        tests:
+          - not_null
+      - name: source_reference
+        description: "Source system reference for traceability"
 
   - name: admin_expenses
     description: "Fund administrator expense transactions"
@@ -544,94 +536,6 @@ seeds:
           - not_null
 
   # Portfolio Management Vendor Seeds
-  - name: pm_investments
-    description: "Portfolio management system investment data"
-    config:
-      column_types:
-        investment_code: varchar(64)
-        investment_name: varchar(255)
-        company_name: varchar(255)
-        company_id: varchar(64)
-        fund_name: varchar(255)
-        fund_id: varchar(64)
-        investment_date: date
-        initial_investment_amount: numeric(18,2)
-        initial_investment_currency: char(3)
-        total_invested_amount: numeric(18,2)
-        total_invested_currency: char(3)
-        ownership_percentage: numeric(6,2)
-        investment_type: varchar(100)
-        investment_stage: varchar(100)
-        sector: varchar(255)
-        geography: varchar(255)
-        board_seats: numeric(3,0)
-        liquidation_preference: varchar(255)
-        anti_dilution_protection: varchar(255)
-        drag_along_rights: varchar(10)
-        tag_along_rights: varchar(10)
-        investment_thesis: varchar(2000)
-        key_risks: varchar(2000)
-        exit_strategy: varchar(500)
-        target_exit_date: date
-        created_date: date
-        last_modified_date: date
-    columns:
-      - name: investment_code
-        description: "Unique investment identifier"
-        tests:
-          - unique
-          - not_null
-      - name: investment_name
-        description: "Investment name"
-        tests:
-          - not_null
-      - name: fund_id
-        description: "Fund identifier"
-        tests:
-          - not_null
-
-  - name: pm_valuations
-    description: "Portfolio management system valuation data"
-    config:
-      column_types:
-        valuation_id: varchar(64)
-        company_id: varchar(64)
-        company_name: varchar(255)
-        investment_id: varchar(64)
-        valuation_date: date
-        valuation_method: varchar(100)
-        enterprise_value: numeric(18,2)
-        enterprise_value_currency: char(3)
-        equity_value: numeric(18,2)
-        equity_value_currency: char(3)
-        revenue_multiple: numeric(10,2)
-        ebitda_multiple: numeric(10,2)
-        book_multiple: varchar(50)
-        comparable_companies: varchar(1000)
-        discount_rate: varchar(50)
-        terminal_growth_rate: varchar(50)
-        valuation_notes: varchar(2000)
-        valuation_source: varchar(100)
-        confidence_level: varchar(50)
-        last_financing_round_valuation: numeric(18,2)
-        last_financing_date: date
-        created_date: date
-        last_modified_date: date
-    columns:
-      - name: valuation_id
-        description: "Unique valuation identifier"
-        tests:
-          - unique
-          - not_null
-      - name: company_id
-        description: "Company identifier"
-        tests:
-          - not_null
-      - name: valuation_date
-        description: "Valuation date"
-        tests:
-          - not_null
-
   - name: pm_company_financials
     description: "Portfolio management system company financial data"
     config:
@@ -675,20 +579,251 @@ seeds:
         tests:
           - not_null
 
-  - name: pm_investment_countries
-    description: "Portfolio management investment to country mapping"
+  - name: pm_instruments
+    description: "Portfolio management unified instrument data (equity and credit)"
     config:
       column_types:
-        investment_id: varchar(64)
-        country_code: char(2)
-        percentage: numeric(5,2)
+        pm_instrument_id: varchar(64)
+        pm_fund_id: varchar(64)
+        pm_company_id: varchar(64)
+        instrument_name: varchar(255)
+        instrument_type: varchar(50)
+        inception_date: date
+        termination_date: date
+        description: varchar(2000)
+        share_class_name: varchar(255)
+        initial_share_count: numeric(18,0)
+        initial_ownership_pct: numeric(6,2)
+        initial_cost: numeric(18,2)
+        initial_price_per_share: numeric(18,6)
+        pm_facility_id: varchar(64)
+        tranche_label: varchar(255)
+        commitment_amount: numeric(18,2)
+        start_date: date
+        maturity_date: date
+        interest_index: varchar(50)
+        spread_bps: numeric(8,2)
+        floor_pct: numeric(6,4)
+        day_count: varchar(50)
+        pay_freq_months: numeric(3,0)
+        amortization_type: varchar(50)
+        security_rank: varchar(50)
+        currency_code: char(3)
+        fx_rate: numeric(18,6)
+        fx_rate_as_of: date
+        fx_rate_source: varchar(100)
     columns:
-      - name: investment_id
-        description: "Investment identifier"
+      - name: pm_instrument_id
+        description: "Unique instrument identifier"
+        tests:
+          - unique
+          - not_null
+      - name: pm_fund_id
+        description: "Fund identifier"
+        tests:
+          - not_null
+      - name: pm_company_id
+        description: "Company identifier"
+        tests:
+          - not_null
+      - name: instrument_name
+        description: "Instrument name"
+        tests:
+          - not_null
+      - name: instrument_type
+        description: "Type of instrument (EQUITY or LOAN)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['EQUITY', 'LOAN']
+      - name: inception_date
+        description: "Date instrument was created"
+        tests:
+          - not_null
+      - name: currency_code
+        description: "Currency code"
+        tests:
+          - not_null
+
+  - name: pm_facilities
+    description: "Portfolio management loan facility master data"
+    config:
+      column_types:
+        pm_facility_id: varchar(64)
+        pm_fund_id: varchar(64)
+        pm_borrower_company_id: varchar(64)
+        facility_name: varchar(255)
+        facility_type: varchar(50)
+        agreement_date: date
+        total_commitment: numeric(18,2)
+        currency_code: char(3)
+        maturity_date: date
+        description: varchar(2000)
+    columns:
+      - name: pm_facility_id
+        description: "Unique facility identifier"
+        tests:
+          - unique
+          - not_null
+      - name: pm_fund_id
+        description: "Fund identifier"
+        tests:
+          - not_null
+      - name: pm_borrower_company_id
+        description: "Borrower company identifier"
+        tests:
+          - not_null
+      - name: facility_name
+        description: "Facility name"
+        tests:
+          - not_null
+      - name: facility_type
+        description: "Type of facility"
+        tests:
+          - not_null
+      - name: agreement_date
+        description: "Date of facility agreement"
+        tests:
+          - not_null
+
+  - name: pm_instrument_snapshots
+    description: "Portfolio management instrument periodic valuations"
+    config:
+      column_types:
+        pm_instrument_snapshot_id: varchar(64)
+        pm_instrument_id: varchar(64)
+        period_start_date: date
+        period_end_date: date
+        snapshot_frequency: varchar(50)
+        reporting_basis: varchar(50)
+        snapshot_source: varchar(100)
+        currency_code: char(3)
+        fx_rate: numeric(18,6)
+        fx_rate_as_of: date
+        fx_rate_source: varchar(100)
+        fair_value: numeric(18,2)
+        accrued_income: numeric(18,2)
+        equity_stake_pct: numeric(6,2)
+        stake_basis: varchar(50)
+        principal_outstanding: numeric(18,2)
+        undrawn_commitment: numeric(18,2)
+        accrued_interest: numeric(18,2)
+        accrued_fees: numeric(18,2)
+        amortized_cost: numeric(18,2)
+        expected_loss: numeric(18,2)
+        status: varchar(50)
+        snapshot_source_file_ref: varchar(500)
+    columns:
+      - name: pm_instrument_snapshot_id
+        description: "Unique snapshot identifier"
+        tests:
+          - unique
+          - not_null
+      - name: pm_instrument_id
+        description: "Instrument identifier"
+        tests:
+          - not_null
+      - name: period_end_date
+        description: "Period end date"
+        tests:
+          - not_null
+      - name: snapshot_frequency
+        description: "Frequency of snapshot"
+        tests:
+          - not_null
+      - name: fair_value
+        description: "Fair value of instrument"
+        tests:
+          - not_null
+
+  - name: pm_instrument_cashflows
+    description: "Portfolio management instrument cash movements"
+    config:
+      column_types:
+        pm_instrument_cashflow_id: varchar(64)
+        pm_instrument_id: varchar(64)
+        instrument_cashflow_type: varchar(50)
+        date: date
+        currency_code: char(3)
+        fx_rate: numeric(18,6)
+        fx_rate_as_of: date
+        fx_rate_source: varchar(100)
+        amount: numeric(18,2)
+        pm_transaction_id: varchar(64)
+        reference: varchar(500)
+        non_cash: boolean
+    columns:
+      - name: pm_instrument_cashflow_id
+        description: "Unique cashflow identifier"
+        tests:
+          - unique
+          - not_null
+      - name: pm_instrument_id
+        description: "Instrument identifier"
+        tests:
+          - not_null
+      - name: instrument_cashflow_type
+        description: "Type of cashflow"
+        tests:
+          - not_null
+      - name: date
+        description: "Date of cashflow"
+        tests:
+          - not_null
+      - name: amount
+        description: "Cashflow amount"
+        tests:
+          - not_null
+      - name: non_cash
+        description: "Flag indicating if cashflow is non-cash"
+        tests:
+          - not_null
+
+  - name: pm_instrument_countries
+    description: "Portfolio management instrument to country mapping with allocation"
+    config:
+      column_types:
+        pm_instrument_id: varchar(64)
+        country_code: char(2)
+        primary_flag: boolean
+        allocation_pct: numeric(6,2)
+        role: varchar(50)
+    columns:
+      - name: pm_instrument_id
+        description: "Instrument identifier"
         tests:
           - not_null
       - name: country_code
         description: "Country code"
+        tests:
+          - not_null
+      - name: primary_flag
+        description: "Flag indicating if this is the primary country"
+        tests:
+          - not_null
+      - name: allocation_pct
+        description: "Percentage allocation to this country"
+        tests:
+          - not_null
+
+  - name: pm_instrument_industries
+    description: "Portfolio management instrument to industry mapping"
+    config:
+      column_types:
+        pm_instrument_id: varchar(64)
+        pm_industry_id: varchar(64)
+        primary_flag: boolean
+    columns:
+      - name: pm_instrument_id
+        description: "Instrument identifier"
+        tests:
+          - not_null
+      - name: pm_industry_id
+        description: "Industry identifier"
+        tests:
+          - not_null
+      - name: primary_flag
+        description: "Flag indicating if this is the primary industry"
         tests:
           - not_null
 
@@ -708,6 +843,10 @@ seeds:
         debit_amount: numeric(18,2)
         credit_amount: numeric(18,2)
         currency_code: char(3)
+        fx_rate: numeric(18,6)
+        fx_rate_as_of: date
+        fx_rate_source: varchar(100)
+        non_cash: boolean
         source_document: varchar(255)
         created_by: varchar(255)
         created_date: date
@@ -723,5 +862,15 @@ seeds:
           - not_null
       - name: entry_date
         description: "Entry date"
+        tests:
+          - not_null
+      - name: fx_rate
+        description: "Foreign exchange rate"
+      - name: fx_rate_as_of
+        description: "Date of FX rate"
+      - name: fx_rate_source
+        description: "Source of FX rate"
+      - name: non_cash
+        description: "Flag indicating if transaction is non-cash"
         tests:
           - not_null
