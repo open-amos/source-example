@@ -93,29 +93,6 @@ fees as (
     from {{ ref('stg_fund_admin__fees') }}
 ),
 
-investment_rounds as (
-    select
-        round_id as source_transaction_id,
-        'PM' as source_system,
-        'INVESTMENT_ROUND' as source_table,
-        fund_id as source_fund_id,
-        null as source_investor_id,
-        investment_code as source_instrument_id,
-        round_id as source_investment_round_id,
-        null as source_facility_id,
-        'INVESTMENT_TRANSACTION' as transaction_type,
-        round_name as name,
-        round_description as description,
-        round_amount as amount,
-        round_currency as currency_code,
-        round_date as date,
-        'PM' as source,
-        round_id as reference,
-        created_date,
-        last_modified_date
-    from {{ ref('stg_pm__investment_rounds') }}
-),
-
 all_transactions as (
     select * from capital_calls
     union all
@@ -124,8 +101,6 @@ all_transactions as (
     select * from expenses
     union all
     select * from fees
-    union all
-    select * from investment_rounds
 ),
 
 -- Resolve fund_id using xref
@@ -159,15 +134,6 @@ instrument_xref as (
 ),
 
 -- Resolve investment_round_id using xref
-investment_round_xref as (
-    select
-        source_system,
-        source_id,
-        canonical_id as investment_round_id
-    from {{ ref('stg_ref__xref_entities') }}
-    where entity_type = 'INVESTMENT_ROUND'
-),
-
 -- Get fund base currencies for FX conversion
 fund_base_currencies as (
     select
@@ -194,7 +160,6 @@ transactions_with_resolved_ids as (
         f.fund_id,
         i.investor_id,
         inst.instrument_id,
-        ir.investment_round_id,
         null as facility_id,
         t.name,
         t.description,
@@ -210,6 +175,7 @@ transactions_with_resolved_ids as (
         t.date,
         t.source,
         t.reference,
+        t.source_transaction_id as source_reference,
         t.created_date as created_at,
         t.last_modified_date as updated_at
     from all_transactions t
@@ -222,9 +188,6 @@ transactions_with_resolved_ids as (
     left join instrument_xref inst
         on t.source_system = inst.source_system
         and t.source_instrument_id = inst.source_id
-    left join investment_round_xref ir
-        on t.source_system = ir.source_system
-        and t.source_investment_round_id = ir.source_id
     left join fund_base_currencies fbc
         on f.fund_id = fbc.fund_id
     left join fx_rates fx

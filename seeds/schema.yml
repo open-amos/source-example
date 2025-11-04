@@ -536,6 +536,30 @@ seeds:
           - not_null
 
   # Portfolio Management Vendor Seeds
+  - name: pm_valuations
+    description: "Portfolio management system company-level valuations"
+    config:
+      column_types:
+        valuation_id: varchar(64)
+        company_id: varchar(64)
+        valuation_date: date
+        equity_value: numeric(18,2)
+        created_date: date
+        last_modified_date: date
+    columns:
+      - name: valuation_id
+        description: "Unique valuation record identifier"
+        tests:
+          - unique
+          - not_null
+      - name: company_id
+        description: "PM company identifier"
+        tests:
+          - not_null
+      - name: valuation_date
+        description: "Valuation date"
+        tests:
+          - not_null
   - name: pm_company_financials
     description: "Portfolio management system company financial data"
     config:

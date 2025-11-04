@@ -21,6 +21,7 @@ opportunity_industries_mapped as (
     select
         opp.opportunity_id,
         syn.industry_id,
+        true as primary_flag,
         current_timestamp as created_at,
         current_timestamp as updated_at
     from crm_opportunities as opp

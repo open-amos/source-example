@@ -40,6 +40,9 @@ commitments_resolved as (
         {{ dbt_utils.generate_surrogate_key(['fx.fund_id', 'ix.investor_id']) }} as commitment_id,
         fx.fund_id,
         ix.investor_id,
+        cc.commitment_currency as currency_code,
+        cc.commitment_amount as original_amount,
+        cc.first_call_date as agreement_date,
         cc.created_date as created_at,
         cc.last_modified_date as updated_at
     from capital_calls cc

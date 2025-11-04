@@ -14,17 +14,17 @@ with crm_companies as (
 
 pm_companies as (
     select distinct
-        company_id as source_id,
+        pm_company_id as source_id,
         'PM' as source_system,
-        company_name as name,
+        null as name,
         null as legal_name,
         null as website,
         null as description,
         null as currency_code,
-        created_date,
-        last_modified_date
-    from {{ ref('stg_pm__investment_rounds') }}
-    where company_id is not null
+        cast(null as date) as created_date,
+        cast(null as date) as last_modified_date
+    from {{ ref('stg_pm__instruments') }}
+    where pm_company_id is not null
 ),
 
 all_sources as (

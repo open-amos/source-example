@@ -317,3 +317,24 @@ sources:
             description: "Industry identifier from PM system"
           - name: primary_flag
             description: "Primary industry flag"
+
+      - name: pm_valuations
+        description: "Company-level equity valuations from Portfolio Management system"
+        meta:
+          add_metadata: true
+          column_transformations:
+            valuation_id: "trim(valuation_id)"
+            company_id: "trim(company_id)"
+        columns:
+          - name: valuation_id
+            description: "Unique valuation record identifier"
+          - name: company_id
+            description: "PM company identifier"
+          - name: valuation_date
+            description: "Valuation date"
+          - name: equity_value
+            description: "Equity valuation amount"
+          - name: created_date
+            description: "Record creation date"
+          - name: last_modified_date
+            description: "Last modification date"

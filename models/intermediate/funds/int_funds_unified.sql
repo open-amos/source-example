@@ -47,6 +47,8 @@ unified as (
         admin_carried_interest as carried_interest,
         admin_target_commitment as target_commitment,
         null as incorporated_in,
+        null as strategy,
+        cast(null as date) as final_close_date,
         admin_base_currency_code as base_currency_code,
         earliest_created_date as created_at,
         latest_modified_date as updated_at
