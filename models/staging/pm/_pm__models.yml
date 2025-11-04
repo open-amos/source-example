@@ -1,75 +1,6 @@
 version: 2
 
 models:
-  - name: stg_pm__valuations
-    description: "Staging model for Portfolio Management valuation data with mechanical cleanup applied"
-    columns:
-      - name: valuation_id
-        description: "Unique valuation identifier (trimmed)"
-        tests:
-          - unique
-          - not_null
-      - name: company_id
-        description: "Company identifier (trimmed)"
-        tests:
-          - not_null
-      - name: company_name
-        description: "Company name (trimmed and uppercased)"
-      - name: investment_id
-        description: "Investment identifier (trimmed)"
-      - name: valuation_date
-        description: "Valuation date"
-        tests:
-          - not_null
-      - name: valuation_method
-        description: "Valuation methodology (trimmed)"
-      - name: enterprise_value
-        description: "Enterprise value"
-      - name: enterprise_value_currency
-        description: "Currency code for enterprise value (uppercased and trimmed)"
-      - name: equity_value
-        description: "Equity value"
-      - name: equity_value_currency
-        description: "Currency code for equity value (uppercased and trimmed)"
-      - name: revenue_multiple
-        description: "Revenue multiple"
-      - name: ebitda_multiple
-        description: "EBITDA multiple"
-      - name: book_multiple
-        description: "Book value multiple (trimmed)"
-      - name: comparable_companies
-        description: "Comparable companies used (trimmed)"
-      - name: discount_rate
-        description: "Discount rate used (trimmed)"
-      - name: terminal_growth_rate
-        description: "Terminal growth rate (trimmed)"
-      - name: valuation_notes
-        description: "Valuation notes (trimmed)"
-      - name: valuation_source
-        description: "Source of valuation (trimmed)"
-      - name: confidence_level
-        description: "Confidence level in valuation (trimmed)"
-      - name: last_financing_round_valuation
-        description: "Last financing round valuation"
-      - name: last_financing_date
-        description: "Last financing date"
-      - name: created_date
-        description: "Record creation date"
-      - name: last_modified_date
-        description: "Last modification date"
-      - name: source_system
-        description: "Source system identifier"
-        tests:
-          - not_null
-      - name: source_table
-        description: "Source table name"
-        tests:
-          - not_null
-      - name: loaded_at
-        description: "Timestamp when data was loaded"
-        tests:
-          - not_null
-  
   - name: stg_pm__company_financials
     description: "Staging model for Portfolio Management company financial data with mechanical cleanup applied"
     columns:
@@ -141,21 +72,76 @@ models:
         tests:
           - not_null
   
-  - name: stg_pm__investment_countries
-    description: "Staging model for Portfolio Management investment country allocations with mechanical cleanup applied"
+  - name: stg_pm__instruments
+    description: "Staging model for Portfolio Management unified instrument master data with mechanical cleanup applied"
     columns:
-      - name: investment_id
-        description: "Investment identifier (trimmed)"
+      - name: pm_instrument_id
+        description: "Unique instrument identifier from PM system (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: pm_fund_id
+        description: "Fund identifier from PM system (trimmed)"
         tests:
           - not_null
-      - name: country_code
-        description: "ISO country code (uppercased and trimmed)"
+      - name: pm_company_id
+        description: "Company identifier from PM system (trimmed)"
         tests:
           - not_null
-      - name: percentage
-        description: "Allocation percentage"
+      - name: instrument_name
+        description: "Instrument name (trimmed)"
+      - name: instrument_type
+        description: "Instrument type (uppercased and trimmed)"
         tests:
           - not_null
+          - accepted_values:
+              values: ['EQUITY', 'LOAN']
+      - name: inception_date
+        description: "Instrument inception date"
+      - name: termination_date
+        description: "Instrument termination date"
+      - name: share_class_name
+        description: "Share class name (trimmed, equity only)"
+      - name: initial_share_count
+        description: "Initial share count (equity only)"
+      - name: initial_ownership_pct
+        description: "Initial ownership percentage (equity only)"
+      - name: initial_cost
+        description: "Initial cost (equity only)"
+      - name: initial_price_per_share
+        description: "Initial price per share (equity only)"
+      - name: currency_code
+        description: "Currency code (uppercased and trimmed)"
+      - name: fx_rate
+        description: "FX rate for currency conversion"
+      - name: fx_rate_as_of
+        description: "FX rate as of date"
+      - name: fx_rate_source
+        description: "FX rate source (trimmed)"
+      - name: pm_facility_id
+        description: "Facility identifier from PM system (trimmed, credit only)"
+      - name: tranche_label
+        description: "Tranche label (trimmed, credit only)"
+      - name: commitment_amount
+        description: "Commitment amount (credit only)"
+      - name: start_date
+        description: "Start date (credit only)"
+      - name: maturity_date
+        description: "Maturity date (credit only)"
+      - name: interest_index
+        description: "Interest rate index (uppercased and trimmed, credit only)"
+      - name: spread_bps
+        description: "Spread in basis points (credit only)"
+      - name: floor_pct
+        description: "Interest rate floor percentage (credit only)"
+      - name: day_count
+        description: "Day count convention (uppercased and trimmed, credit only)"
+      - name: pay_freq_months
+        description: "Payment frequency in months (credit only)"
+      - name: amortization_type
+        description: "Amortization type (uppercased and trimmed, credit only)"
+      - name: security_rank
+        description: "Security rank (uppercased and trimmed, credit only)"
       - name: source_system
         description: "Source system identifier"
         tests:
@@ -168,41 +154,170 @@ models:
         description: "Timestamp when data was loaded"
         tests:
           - not_null
-
-  - name: stg_pm__investment_rounds
-    description: "Staging model for Portfolio Management investment rounds showing multiple financing rounds per investment with mechanical cleanup applied"
+  
+  - name: stg_pm__instrument_snapshots
+    description: "Staging model for Portfolio Management instrument snapshots with mechanical cleanup applied"
     columns:
-      - name: round_id
-        description: "Unique round identifier from PM system (trimmed)"
+      - name: pm_instrument_snapshot_id
+        description: "Unique snapshot identifier (trimmed)"
         tests:
           - unique
           - not_null
-      - name: investment_code
-        description: "Investment identifier linking to pm_investments (trimmed)"
+      - name: pm_instrument_id
+        description: "Instrument identifier from PM system (trimmed)"
         tests:
           - not_null
-      - name: round_name
-        description: "Round name (e.g., Series A, Series B, Follow-on) (trimmed)"
-      - name: round_date
-        description: "Date of the investment round"
+      - name: period_start_date
+        description: "Period start date"
+      - name: period_end_date
+        description: "Period end date"
         tests:
           - not_null
-      - name: round_amount
-        description: "Amount invested in this round"
-      - name: round_currency
-        description: "Currency code for round amount (uppercased and trimmed)"
-      - name: stake_acquired
-        description: "Percentage stake acquired in this round"
-      - name: share_class
-        description: "Share class for this round (trimmed)"
-      - name: number_of_shares
-        description: "Number of shares acquired in this round"
-      - name: round_description
-        description: "Description of the investment round (trimmed)"
-      - name: created_date
-        description: "Record creation date"
-      - name: last_modified_date
-        description: "Last modification date"
+      - name: frequency
+        description: "Snapshot frequency (uppercased and trimmed)"
+      - name: reporting_basis
+        description: "Reporting basis (uppercased and trimmed)"
+      - name: snapshot_source
+        description: "Snapshot source (uppercased and trimmed)"
+      - name: currency_code
+        description: "Currency code (uppercased and trimmed)"
+      - name: fx_rate
+        description: "FX rate for currency conversion"
+      - name: fx_rate_as_of
+        description: "FX rate as of date"
+      - name: fx_rate_source
+        description: "FX rate source (trimmed)"
+      - name: fair_value
+        description: "Fair value"
+      - name: accrued_income
+        description: "Accrued income"
+      - name: equity_stake_pct
+        description: "Equity stake percentage (equity only)"
+      - name: stake_basis
+        description: "Stake basis (trimmed, equity only)"
+      - name: principal_outstanding
+        description: "Principal outstanding (credit only)"
+      - name: undrawn_commitment
+        description: "Undrawn commitment (credit only)"
+      - name: accrued_interest
+        description: "Accrued interest (credit only)"
+      - name: accrued_fees
+        description: "Accrued fees (credit only)"
+      - name: amortized_cost
+        description: "Amortized cost (credit only)"
+      - name: expected_loss
+        description: "Expected loss (credit only)"
+      - name: status
+        description: "Status (trimmed, credit only)"
+      - name: snapshot_source_file_ref
+        description: "Source file reference for traceability (trimmed)"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_pm__instrument_cashflows
+    description: "Staging model for Portfolio Management instrument cashflows with mechanical cleanup applied"
+    columns:
+      - name: pm_instrument_cashflow_id
+        description: "Unique cashflow identifier (trimmed)"
+        tests:
+          - unique
+          - not_null
+      - name: pm_instrument_id
+        description: "Instrument identifier from PM system (trimmed)"
+        tests:
+          - not_null
+      - name: instrument_cashflow_type
+        description: "Cashflow type (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: date
+        description: "Cashflow date"
+        tests:
+          - not_null
+      - name: currency_code
+        description: "Currency code (uppercased and trimmed)"
+      - name: fx_rate
+        description: "FX rate for currency conversion"
+      - name: fx_rate_as_of
+        description: "FX rate as of date"
+      - name: fx_rate_source
+        description: "FX rate source (trimmed)"
+      - name: amount
+        description: "Cashflow amount"
+        tests:
+          - not_null
+      - name: pm_transaction_id
+        description: "Transaction identifier from PM system (trimmed)"
+      - name: reference
+        description: "Cashflow reference (trimmed)"
+      - name: non_cash
+        description: "Non-cash transaction flag"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_pm__instrument_countries
+    description: "Staging model for Portfolio Management instrument country allocations with mechanical cleanup applied"
+    columns:
+      - name: pm_instrument_id
+        description: "Instrument identifier from PM system (trimmed)"
+        tests:
+          - not_null
+      - name: country_code
+        description: "ISO country code (uppercased and trimmed)"
+        tests:
+          - not_null
+      - name: primary_flag
+        description: "Primary country flag"
+      - name: allocation_pct
+        description: "Allocation percentage"
+      - name: role
+        description: "Country role (trimmed)"
+      - name: source_system
+        description: "Source system identifier"
+        tests:
+          - not_null
+      - name: source_table
+        description: "Source table name"
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "Timestamp when data was loaded"
+        tests:
+          - not_null
+  
+  - name: stg_pm__instrument_industries
+    description: "Staging model for Portfolio Management instrument industry classifications with mechanical cleanup applied"
+    columns:
+      - name: pm_instrument_id
+        description: "Instrument identifier from PM system (trimmed)"
+        tests:
+          - not_null
+      - name: pm_industry_id
+        description: "Industry identifier from PM system (trimmed)"
+        tests:
+          - not_null
+      - name: primary_flag
+        description: "Primary industry flag"
       - name: source_system
         description: "Source system identifier"
         tests:
