@@ -165,6 +165,7 @@ sources:
             purpose: "trim(purpose)"
             status: "trim(status)"
             payment_currency: "upper(trim(payment_currency))"
+            fx_rate_source: "trim(fx_rate_source)"
         columns:
           - name: capital_call_id
             description: "Unique capital call identifier"
@@ -204,6 +205,12 @@ sources:
             description: "Actual payment amount"
           - name: payment_currency
             description: "Currency for payment"
+          - name: fx_rate
+            description: "Record-level FX rate"
+          - name: fx_rate_as_of
+            description: "As-of date for FX rate"
+          - name: fx_rate_source
+            description: "Source system for FX rate"
           - name: created_date
             description: "Record creation date"
           - name: last_modified_date
@@ -221,6 +228,7 @@ sources:
             distribution_type: "trim(distribution_type)"
             source_investment: "trim(source_investment)"
             status: "trim(status)"
+            fx_rate_source: "trim(fx_rate_source)"
         columns:
           - name: distribution_id
             description: "Unique distribution identifier"
@@ -254,6 +262,12 @@ sources:
             description: "Payment status"
           - name: payment_date
             description: "Actual payment date"
+          - name: fx_rate
+            description: "Record-level FX rate"
+          - name: fx_rate_as_of
+            description: "As-of date for FX rate"
+          - name: fx_rate_source
+            description: "Source system for FX rate"
           - name: created_date
             description: "Record creation date"
           - name: last_modified_date
@@ -275,6 +289,7 @@ sources:
             approval_status: "trim(approval_status)"
             payment_status: "trim(payment_status)"
             allocated_to_investments: "trim(allocated_to_investments)"
+            fx_rate_source: "trim(fx_rate_source)"
         columns:
           - name: expense_id
             description: "Unique expense identifier"
@@ -304,6 +319,12 @@ sources:
             description: "Payment date"
           - name: allocated_to_investments
             description: "Investment allocation"
+          - name: fx_rate
+            description: "Record-level FX rate"
+          - name: fx_rate_as_of
+            description: "As-of date for FX rate"
+          - name: fx_rate_source
+            description: "Source system for FX rate"
           - name: created_date
             description: "Record creation date"
           - name: last_modified_date
@@ -320,6 +341,7 @@ sources:
             fee_base_currency: "upper(trim(fee_base_currency))"
             fee_currency: "upper(trim(fee_currency))"
             payment_status: "trim(payment_status)"
+            fx_rate_source: "trim(fx_rate_source)"
         columns:
           - name: fee_id
             description: "Unique fee identifier"
@@ -353,6 +375,12 @@ sources:
             description: "Payment due date"
           - name: payment_status
             description: "Payment status"
+          - name: fx_rate
+            description: "Record-level FX rate"
+          - name: fx_rate_as_of
+            description: "As-of date for FX rate"
+          - name: fx_rate_source
+            description: "Source system for FX rate"
           - name: created_date
             description: "Record creation date"
           - name: last_modified_date
