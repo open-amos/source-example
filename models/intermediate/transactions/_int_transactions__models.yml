@@ -59,16 +59,16 @@ models:
         description: "Currency code for transaction amount"
       
       - name: fx_rate
-        description: "Foreign exchange rate (base-per-native) from stg_ref__fx_rates, matched on transaction date and fund base currency"
+        description: "Foreign exchange rate (base-per-native) supplied on the source transaction when available; falls back to 1.0 when currency matches the fund base"
       
       - name: amount_converted
         description: "Transaction amount converted to fund base currency using fx_rate (amount * fx_rate)"
       
       - name: fx_rate_as_of
-        description: "Date of FX rate (matches transaction date)"
+        description: "As-of date for the applied FX rate (transaction date when base currency matches)"
       
       - name: fx_rate_source
-        description: "Source of FX rate from reference data"
+        description: "Source system for the applied FX rate; defaults to 'NATIVE' when no conversion required"
       
       - name: date
         description: "Transaction date"

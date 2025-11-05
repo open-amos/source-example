@@ -45,30 +45,6 @@ sources:
           - name: kyc_category
             description: "KYC category classification"
       
-      - name: shared_fx_rates
-        description: "Foreign exchange rate data"
-        meta:
-          add_metadata: true
-          column_transformations:
-            base_currency: "upper(trim(base_currency))"
-            quote_currency: "upper(trim(quote_currency))"
-            rate_source: "trim(rate_source)"
-        columns:
-          - name: rate_date
-            description: "Date of the exchange rate"
-          - name: base_currency
-            description: "Base currency code"
-          - name: quote_currency
-            description: "Quote currency code"
-          - name: exchange_rate
-            description: "Exchange rate from base to quote currency"
-          - name: rate_source
-            description: "Source of the exchange rate"
-          - name: created_date
-            description: "Record creation date"
-          - name: last_modified_date
-            description: "Last modification date"
-      
       - name: shared_industry_synonyms
         description: "Industry synonym mapping for entity resolution"
         meta:

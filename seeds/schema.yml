@@ -41,35 +41,6 @@ seeds:
         tests:
           - not_null
 
-  - name: shared_fx_rates
-    description: "Shared foreign exchange rate data"
-    config:
-      column_types:
-        rate_date: date
-        base_currency: char(3)
-        quote_currency: char(3)
-        exchange_rate: numeric(18,6)
-        rate_source: varchar(100)
-        created_date: date
-        last_modified_date: date
-    columns:
-      - name: rate_date
-        description: "Date of the exchange rate"
-        tests:
-          - not_null
-      - name: base_currency
-        description: "Base currency code"
-        tests:
-          - not_null
-      - name: quote_currency
-        description: "Quote currency code"
-        tests:
-          - not_null
-      - name: exchange_rate
-        description: "Exchange rate from base to quote currency"
-        tests:
-          - not_null
-
   - name: shared_industry_synonyms
     description: "Shared industry synonym mapping for entity resolution"
     config:
@@ -316,6 +287,9 @@ seeds:
         amount: numeric(18,2)
         currency_code: char(3)
         source_reference: varchar(255)
+        fx_rate: numeric(18,6)
+        fx_rate_as_of: date
+        fx_rate_source: varchar(64)
     columns:
       - name: admin_capital_call_id
         description: "Unique capital call identifier"
@@ -344,6 +318,12 @@ seeds:
           - not_null
       - name: source_reference
         description: "Source system reference for traceability"
+      - name: fx_rate
+        description: "Record-level FX rate expressed as fund base currency per transaction currency"
+      - name: fx_rate_as_of
+        description: "As-of date for the FX rate"
+      - name: fx_rate_source
+        description: "Origin of the FX rate data"
 
   - name: admin_distributions
     description: "Fund administrator distribution transactions"
@@ -356,6 +336,9 @@ seeds:
         amount: numeric(18,2)
         currency_code: char(3)
         source_reference: varchar(255)
+        fx_rate: numeric(18,6)
+        fx_rate_as_of: date
+        fx_rate_source: varchar(64)
     columns:
       - name: admin_distribution_id
         description: "Unique distribution identifier"
@@ -384,6 +367,12 @@ seeds:
           - not_null
       - name: source_reference
         description: "Source system reference for traceability"
+      - name: fx_rate
+        description: "Record-level FX rate expressed as fund base currency per transaction currency"
+      - name: fx_rate_as_of
+        description: "As-of date for the FX rate"
+      - name: fx_rate_source
+        description: "Origin of the FX rate data"
 
   - name: admin_expenses
     description: "Fund administrator expense transactions"
@@ -405,6 +394,9 @@ seeds:
         allocated_to_investments: varchar(255)
         created_date: date
         last_modified_date: date
+        fx_rate: numeric(18,6)
+        fx_rate_as_of: date
+        fx_rate_source: varchar(64)
     columns:
       - name: expense_id
         description: "Unique expense identifier"
@@ -415,6 +407,12 @@ seeds:
         description: "Fund identifier"
         tests:
           - not_null
+      - name: fx_rate
+        description: "Record-level FX rate expressed as fund base currency per transaction currency"
+      - name: fx_rate_as_of
+        description: "As-of date for the FX rate"
+      - name: fx_rate_source
+        description: "Origin of the FX rate data"
 
   - name: admin_fees
     description: "Fund administrator management fee calculations"
@@ -438,6 +436,9 @@ seeds:
         payment_status: varchar(50)
         created_date: date
         last_modified_date: date
+        fx_rate: numeric(18,6)
+        fx_rate_as_of: date
+        fx_rate_source: varchar(64)
     columns:
       - name: fee_id
         description: "Unique fee identifier"
@@ -448,6 +449,12 @@ seeds:
         description: "Fund identifier"
         tests:
           - not_null
+      - name: fx_rate
+        description: "Record-level FX rate expressed as fund base currency per transaction currency"
+      - name: fx_rate_as_of
+        description: "As-of date for the FX rate"
+      - name: fx_rate_source
+        description: "Origin of the FX rate data"
 
   - name: admin_nav_fund
     description: "Fund administrator fund-level NAV snapshots"

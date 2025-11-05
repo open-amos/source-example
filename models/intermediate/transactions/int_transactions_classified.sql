@@ -13,6 +13,9 @@ with capital_calls as (
         purpose as description,
         call_amount as amount,
         call_currency as currency_code,
+        fx_rate,
+        fx_rate_as_of,
+        fx_rate_source,
         call_date as date,
         'ADMIN' as source,
         capital_call_id as reference,
@@ -39,6 +42,9 @@ distributions as (
         distribution_type as description,
         distribution_amount as amount,
         distribution_currency as currency_code,
+        fx_rate,
+        fx_rate_as_of,
+        fx_rate_source,
         distribution_date as date,
         'ADMIN' as source,
         distribution_id as reference,
@@ -62,6 +68,9 @@ expenses as (
         description,
         expense_amount as amount,
         expense_currency as currency_code,
+        fx_rate,
+        fx_rate_as_of,
+        fx_rate_source,
         expense_date as date,
         'ADMIN' as source,
         invoice_number as reference,
@@ -85,6 +94,9 @@ fees as (
         'Fee period: ' || cast(fee_period_start as varchar) || ' to ' || cast(fee_period_end as varchar) as description,
         fee_amount as amount,
         fee_currency as currency_code,
+        fx_rate,
+        fx_rate_as_of,
+        fx_rate_source,
         fee_calculation_date as date,
         'ADMIN' as source,
         fee_id as reference,
@@ -142,17 +154,6 @@ fund_base_currencies as (
     from {{ ref('int_funds_unified') }}
 ),
 
--- Get FX rates
-fx_rates as (
-    select
-        rate_date,
-        base_currency,
-        quote_currency,
-        exchange_rate,
-        rate_source
-    from {{ ref('stg_ref__fx_rates') }}
-),
-
 transactions_with_resolved_ids as (
     select
         {{ dbt_utils.generate_surrogate_key(['t.source_system', 't.source_transaction_id']) }} as transaction_id,
@@ -165,13 +166,10 @@ transactions_with_resolved_ids as (
         t.description,
         t.amount,
         t.currency_code,
-        fx.exchange_rate as fx_rate,
-        case
-            when fx.exchange_rate is not null then t.amount * fx.exchange_rate
-            else null
-        end as amount_converted,
-        fx.rate_date as fx_rate_as_of,
-        fx.rate_source as fx_rate_source,
+        coalesce(t.fx_rate, case when fbc.base_currency_code = t.currency_code then 1.0 end) as fx_rate,
+        t.amount * coalesce(t.fx_rate, case when fbc.base_currency_code = t.currency_code then 1.0 end) as amount_converted,
+        coalesce(t.fx_rate_as_of, t.date) as fx_rate_as_of,
+        coalesce(t.fx_rate_source, case when fbc.base_currency_code = t.currency_code then 'NATIVE' end, 'UNKNOWN') as fx_rate_source,
         t.date,
         t.source,
         t.reference,
@@ -190,10 +188,6 @@ transactions_with_resolved_ids as (
         and t.source_instrument_id = inst.source_id
     left join fund_base_currencies fbc
         on f.fund_id = fbc.fund_id
-    left join fx_rates fx
-        on t.currency_code = fx.quote_currency
-        and fbc.base_currency_code = fx.base_currency
-        and t.date = fx.rate_date
 )
 
 select * from transactions_with_resolved_ids
