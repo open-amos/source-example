@@ -1,47 +1,61 @@
-### AMOS Source Example (dbt project)
+# AMOS
 
-AMOS helps investment managers unify data across CRM, portfolio management, fund administration, and finance to produce a consistent analytics layer. This example project ships realistic sample data and source‑aligned models that demonstrate how to connect your systems to AMOS Core.
+![image](https://img.shields.io/badge/version-0.1.0-blue?style=for-the-badge) ![image](https://img.shields.io/badge/status-proof--of--concept-yellow?style=for-the-badge) ![image](https://img.shields.io/badge/dbt-FF694B?style=for-the-badge&logo=dbt&logoColor=white)
 
-### Related Projects
+---
+[Overview](../) | [Starter](../starter) | [Core](../core) | **Source Example** | [Dashboard](../dashboard-example)
 
-- **[AMOS Core](https://github.com/open-amos/source-example)** - Canonical dimensional model
-- **[AMOS Starter](https://github.com/open-amos/starter)** – Orchestrator and entry point
+---
 
-### The problem this addresses
+# AMOS Source Example
 
-- Source schemas vary by vendor and implementation, making joins brittle
-- Key business entities (funds, portfolios, deals, entities) lack stable IDs
-- Recreating transformations per team causes drift and slows delivery
+AMOS Source Example is a collection of sample data and connectors (source‑aligned models) that demonstrate how to map operational systems to AMOS Core. It is used by [AMOS Starter](../starter) to build the end-to-end pipeline—from source systems to analytics-ready data.
 
-### How it works in this repo
+## Quick Start
 
-1. Seeds provide realistic CSVs under `seeds/`
-2. Staging models align raw sources to a common shape (`models/staging`)
-3. Intermediate models normalize and prepare for AMOS Core (`models/intermediate`)
-4. AMOS Core consumes these to build curated marts and metrics
+Install and run [Amos Starter](https://github.com/open-amos/starter) (recommended) or add as a dependency to your dbt project.
 
-### Quickstart
+## Contents
 
-```bash
-cd amos_source_example
-dbt deps
-dbt seed
-dbt build
-```
+- **Data Seeds**: Sample data for common operational systems: CRM, fund admin, portfolio management, and accounting systems.
+- **Models**: Source-aligned *staging* and *intermediate* models that demonstrate how to map operational systems to AMOS Core.
+- **Documentation and tests** for the example models.
 
-### What’s inside
+### Data Seeds
 
-- **Seeds**: realistic sample CSVs under `seeds/`
-- **Staging**: source‑aligned models in `models/staging`
-- **Intermediate**: normalized transforms in `models/intermediate`
+Seeds are stored in the `seeds` directory. The directory is organized by system and contains the following tables:
 
-### When to use this project
+- **CRM**: Companies, opportunities, stages, countries.
+- **Fund Admin**: Funds, investors, capital calls, distributions, expenses, fees, NAV fund, and NAV investment.
+- **Portfolio Management**: Instruments, valuations, facilities, company financials, countries, industries.
+- **Accounting**: Accounting journal entries.
+- **Reference**: Reference data for industry and investor type categories. Also includes the cross-reference entities table—the table that maps various source system IDs to canonical IDs, e.g. to reconcile companies from the CRM and PM systems.
 
-- To understand the source‑to‑core mapping patterns
-- To prototype your own adapters before connecting production sources
+### Staging Models
 
-### Docs
+Staging models are stored in the `models/staging` directory. Staging models are used for lightweight transformations and validation of the source data. They are organized by system and map to the source tables.
 
-See the full documentation and guides at [docs.amos.tech](https://docs.amos.tech).
+### Intermediate Models
 
+Intermediate models are stored in the `models/intermediate` directory. They are used for transformations mapping source data to AMOS Core entities. They also conduct entity resolution via the cross-reference entities table.
 
+Intermediate models are organized by entity and include companies, funds, investors, instruments, transactions, facilities, loans, share_classes, commitments, opportunities, snapshots, and cashflows.
+
+## Customization
+
+Create a new dbt project, add AMOS Core as a dependency, and use AMOS Source Example as a template to create connectors for your own source systems in a new package.
+
+## Contributing
+
+AMOS is open source and welcomes contributions. Report bugs, suggest features, add integration patterns, or submit pull requests.
+
+## Support
+
+- **Documentation**: [docs.amos.tech](https://docs.amos.tech)
+- **Issues**: GitHub Issues
+
+## Related Projects
+
+- **[AMOS Starter](../starter)** - Orchestrator and entry point
+- **[AMOS Core](../core)** - Canonical dimensional model
+- **[AMOS Dashboard](../dashboard-example)** - Example analytics and KPI dashboards built on AMOS Core
