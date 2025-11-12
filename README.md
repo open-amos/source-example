@@ -1,8 +1,5 @@
 # AMOS
 
-![image](https://img.shields.io/badge/version-0.1.0-blue?style=for-the-badge) ![image](https://img.shields.io/badge/status-proof--of--concept-yellow?style=for-the-badge) ![image](https://img.shields.io/badge/dbt-FF694B?style=for-the-badge&logo=dbt&logoColor=white)
-
----
 [Overview](https://github.com/open-amos/) | [Starter](https://github.com/open-amos/starter) | [Core](https://github.com/open-amos/core) | **Source Example** | [Dashboard](https://github.com/open-amos/dashboard-example)
 
 ---
@@ -10,6 +7,8 @@
 # AMOS Source Example
 
 AMOS Source Example is a collection of sample data and connectors (source‑aligned models) that demonstrate how to map operational systems to AMOS Core. It is used by [AMOS Starter](../starter) to build the end-to-end pipeline—from source systems to analytics-ready data.
+
+![image](https://img.shields.io/badge/version-0.1.0-blue?style=for-the-badge) ![image](https://img.shields.io/badge/status-proof--of--concept-yellow?style=for-the-badge) ![image](https://img.shields.io/badge/dbt-FF694B?style=for-the-badge&logo=dbt&logoColor=white)
 
 ## Quick Start
 
@@ -55,7 +54,6 @@ AMOS is open source and welcomes contributions. Report bugs, suggest features, a
 - **Issues**: GitHub Issues
 
 ## Related Projects
-
-- **[AMOS Starter](../starter)** - Orchestrator and entry point
+- **[AMOS Starter](../starter)** - Coordinator and entry point
 - **[AMOS Core](../core)** - Canonical dimensional model
 - **[AMOS Dashboard](../dashboard-example)** - Example analytics and KPI dashboards built on AMOS Core
