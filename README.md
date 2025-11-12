@@ -57,3 +57,8 @@ AMOS is open source and welcomes contributions. Report bugs, suggest features, a
 - **[AMOS Starter](../starter)** - Coordinator and entry point
 - **[AMOS Core](../core)** - Canonical dimensional model
 - **[AMOS Dashboard](../dashboard-example)** - Example analytics and KPI dashboards built on AMOS Core
+
+## Licensing
+
+This subproject is part of the AMOS public preview. Licensing terms will be finalized before version 1.0.
+For now, the code is shared for evaluation and feedback only. Commercial or production use requires written permission from the maintainers.
