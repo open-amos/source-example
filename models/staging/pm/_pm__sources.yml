@@ -134,7 +134,7 @@ sources:
           - name: instrument_name
             description: "Instrument name"
           - name: instrument_type
-            description: "Instrument type (EQUITY, LOAN)"
+            description: "Instrument type (EQUITY, CREDIT)"
           - name: inception_date
             description: "Instrument inception date"
           - name: termination_date
