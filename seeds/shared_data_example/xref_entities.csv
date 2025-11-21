@@ -143,3 +143,70 @@ PM,INDUSTRY,ind_1e8f514d4ca2a317,ind_1e8f514d4ca2a317,Healthcare,2020-01-01,2025
 PM,INDUSTRY,ind_5dd6ec8df562f24a,ind_5dd6ec8df562f24a,Financial Services,2020-01-01,2025-11-04
 PM,INDUSTRY,ind_35f8b7463f1ec720,ind_35f8b7463f1ec720,Infrastructure,2020-01-01,2025-11-04
 PM,INDUSTRY,ind_96c842e9da8fd2e3,ind_96c842e9da8fd2e3,Agriculture,2020-01-01,2025-11-04
+PM,COMPANY,PM-COMP-023,j9m7k392-l3kj-0j20-pt5w-xw7vy452y14u,Distressed Retail Chain,2024-01-10,2024-01-15
+PM,COMPANY,PM-COMP-024,k0n8l403-m4lk-1k31-qu6x-yx8wz563z25v,Restructured Manufacturing Co,2024-02-20,2024-03-01
+CRM,COMPANY,CRM-COMP-025,j9m7k392-l3kj-0j20-pt5w-xw7vy452y14u,Distressed Retail Chain,2024-01-10,2024-01-15
+CRM,COMPANY,CRM-COMP-026,k0n8l403-m4lk-1k31-qu6x-yx8wz563z25v,Restructured Manufacturing Co,2024-02-20,2024-03-01
+PM,INSTRUMENT,PM-INV-020,t9w6x403-v3us-0s20-pt5v-wu7vx452x03s,Distressed Retail Chain DIP Loan,2024-01-15,2024-01-15
+PM,INSTRUMENT,PM-INV-021,u0x7y514-w4vt-1t31-qu6w-xv8wy563y14t,Restructured Manufacturing Term Loan,2024-03-01,2024-03-01
+ADMIN,INSTRUMENT,ADMIN-INVT-020,t9w6x403-v3us-0s20-pt5v-wu7vx452x03s,Distressed Retail Chain DIP Loan,2024-01-15,2024-01-15
+ADMIN,INSTRUMENT,ADMIN-INVT-021,u0x7y514-w4vt-1t31-qu6w-xv8wy563y14t,Restructured Manufacturing Term Loan,2024-03-01,2024-03-01
+PM,FACILITY,PM-FAC-008,p0r7s403-q3pn-5n64-ko0q-rq2qs907s47n,Distressed Retail Chain DIP Facility,2024-01-15,2024-01-15
+PM,FACILITY,PM-FAC-009,q1s8t514-r4qo-6o75-lp1r-sr3rt018t58o,Restructured Manufacturing Facility,2024-03-01,2024-03-01
+PM,FUND,FUND-005,9374f4e8-e022-5dac-9d7f-180035c3c01a,Distressed Opportunities Fund,2022-08-15,2024-01-22
+ADMIN,FUND,FUND-007,v1z0b847-c8az-6y75-wa2c-db4ce019e80z,Direct Lending Fund I,2021-03-01,2024-01-30
+ADMIN,FUND,FUND-008,w2a1c958-d9ba-7z86-xb3d-ec5df120f91a,European Credit Opportunities,2022-06-01,2024-02-01
+PM,FUND,FUND-007,v1z0b847-c8az-6y75-wa2c-db4ce019e80z,Direct Lending Fund I,2021-09-01,2024-01-30
+PM,FUND,FUND-008,w2a1c958-d9ba-7z86-xb3d-ec5df120f91a,European Credit Opportunities,2022-11-01,2024-02-01
+CRM,FUND,CRM-FUND-direct-lending-fund-i,v1z0b847-c8az-6y75-wa2c-db4ce019e80z,Direct Lending Fund I,2021-03-01,2024-01-30
+CRM,FUND,CRM-FUND-european-credit-opportunities,w2a1c958-d9ba-7z86-xb3d-ec5df120f91a,European Credit Opportunities,2022-06-01,2024-02-01
+PM,COMPANY,PM-COMP-027,x3b2d069-e0cb-8a97-yc4e-fd6eg231g02b,Manufacturing Corp,2021-08-15,2024-01-30
+PM,COMPANY,PM-COMP-028,y4c3e170-f1dc-9b08-zd5f-ge7fh342h13c,Healthcare Services Co,2021-12-10,2024-02-01
+PM,COMPANY,PM-COMP-029,z5d4f281-g2ed-0c19-ae6g-hf8gi453i24d,Software Solutions Inc,2022-05-20,2024-02-05
+PM,COMPANY,PM-COMP-030,a6e5g392-h3fe-1d20-bf7h-ig9hj564j35e,Distribution Business LLC,2023-01-10,2024-02-10
+PM,COMPANY,PM-COMP-031,b7f6h403-i4gf-2e31-cg8i-jh0ik675k46f,Industrial Services Group,2023-07-15,2024-02-12
+PM,COMPANY,PM-COMP-032,c8g7i514-j5hg-3f42-dh9j-ki1jl786l57g,Hospitality Holdings,2023-10-20,2024-02-15
+PM,COMPANY,PM-COMP-033,d9h8j625-k6ih-4g53-ei0k-lj2km897m68h,European Logistics SA,2022-10-25,2024-02-18
+PM,COMPANY,PM-COMP-034,e0i9k736-l7ji-5h64-fj1l-mk3ln908n79i,French Retail Chain,2023-02-15,2024-02-20
+PM,COMPANY,PM-COMP-035,f1j0l847-m8kj-6i75-gk2m-nl4mo019o80j,German Manufacturing GmbH,2023-06-20,2024-02-22
+PM,COMPANY,PM-COMP-036,g2k1m958-n9lk-7j86-hl3n-om5np120p91k,UK Business Services Ltd,2023-09-25,2024-02-25
+CRM,COMPANY,CRM-COMP-027,x3b2d069-e0cb-8a97-yc4e-fd6eg231g02b,Manufacturing Corp,2021-08-15,2024-01-30
+CRM,COMPANY,CRM-COMP-028,y4c3e170-f1dc-9b08-zd5f-ge7fh342h13c,Healthcare Services Co,2021-12-10,2024-02-01
+CRM,COMPANY,CRM-COMP-029,z5d4f281-g2ed-0c19-ae6g-hf8gi453i24d,Software Solutions Inc,2022-05-20,2024-02-05
+CRM,COMPANY,CRM-COMP-030,a6e5g392-h3fe-1d20-bf7h-ig9hj564j35e,Distribution Business LLC,2023-01-10,2024-02-10
+CRM,COMPANY,CRM-COMP-031,b7f6h403-i4gf-2e31-cg8i-jh0ik675k46f,Industrial Services Group,2023-07-15,2024-02-12
+CRM,COMPANY,CRM-COMP-032,c8g7i514-j5hg-3f42-dh9j-ki1jl786l57g,Hospitality Holdings,2023-10-20,2024-02-15
+CRM,COMPANY,CRM-COMP-033,d9h8j625-k6ih-4g53-ei0k-lj2km897m68h,European Logistics SA,2022-10-25,2024-02-18
+CRM,COMPANY,CRM-COMP-034,e0i9k736-l7ji-5h64-fj1l-mk3ln908n79i,French Retail Chain,2023-02-15,2024-02-20
+CRM,COMPANY,CRM-COMP-035,f1j0l847-m8kj-6i75-gk2m-nl4mo019o80j,German Manufacturing GmbH,2023-06-20,2024-02-22
+CRM,COMPANY,CRM-COMP-036,g2k1m958-n9lk-7j86-hl3n-om5np120p91k,UK Business Services Ltd,2023-09-25,2024-02-25
+PM,INSTRUMENT,PM-INV-022,h3l2n069-o0ml-8k97-im4o-pn6oq231q02l,Manufacturing Corp Term Loan,2021-09-15,2024-01-30
+PM,INSTRUMENT,PM-INV-023,i4m3o170-p1nm-9l08-jn5p-qo7pr342r13m,Healthcare Services Term Loan,2022-01-20,2024-02-01
+PM,INSTRUMENT,PM-INV-024,j5n4p281-q2on-0m19-ko6q-rp8qs453s24n,Software Company Unitranche,2022-06-10,2024-02-05
+PM,INSTRUMENT,PM-INV-025,k6o5q392-r3po-1n20-lp7r-sq9rt564t35o,Distribution Business Term Loan,2023-02-15,2024-02-10
+PM,INSTRUMENT,PM-INV-026,l7p6r403-s4qp-2o31-mq8s-tr0su675u46p,Industrial Services Mezzanine,2023-08-01,2024-02-12
+PM,INSTRUMENT,PM-INV-027,m8q7s514-t5rq-3p42-nr9t-us1tv786v57q,Distressed Hospitality Loan,2023-11-01,2024-02-15
+PM,INSTRUMENT,PM-INV-028,n9r8t625-u6sr-4q53-os0u-vt2uw897w68r,European Logistics Term Loan,2022-11-15,2024-02-18
+PM,INSTRUMENT,PM-INV-029,o0s9u736-v7ts-5r64-pt1v-wu3vx908x79s,French Retail Chain Term Loan,2023-03-20,2024-02-20
+PM,INSTRUMENT,PM-INV-030,p1t0v847-w8ut-6s75-qu2w-xv4wy019y80t,German Manufacturing Unitranche,2023-07-10,2024-02-22
+PM,INSTRUMENT,PM-INV-031,q2u1w958-x9vu-7t86-rv3x-yw5xz120z91u,UK Business Services Second Lien,2023-10-05,2024-02-25
+ADMIN,INSTRUMENT,ADMIN-INVT-022,h3l2n069-o0ml-8k97-im4o-pn6oq231q02l,Manufacturing Corp Term Loan,2021-09-15,2024-01-30
+ADMIN,INSTRUMENT,ADMIN-INVT-023,i4m3o170-p1nm-9l08-jn5p-qo7pr342r13m,Healthcare Services Term Loan,2022-01-20,2024-02-01
+ADMIN,INSTRUMENT,ADMIN-INVT-024,j5n4p281-q2on-0m19-ko6q-rp8qs453s24n,Software Company Unitranche,2022-06-10,2024-02-05
+ADMIN,INSTRUMENT,ADMIN-INVT-025,k6o5q392-r3po-1n20-lp7r-sq9rt564t35o,Distribution Business Term Loan,2023-02-15,2024-02-10
+ADMIN,INSTRUMENT,ADMIN-INVT-026,l7p6r403-s4qp-2o31-mq8s-tr0su675u46p,Industrial Services Mezzanine,2023-08-01,2024-02-12
+ADMIN,INSTRUMENT,ADMIN-INVT-027,m8q7s514-t5rq-3p42-nr9t-us1tv786v57q,Distressed Hospitality Loan,2023-11-01,2024-02-15
+ADMIN,INSTRUMENT,ADMIN-INVT-028,n9r8t625-u6sr-4q53-os0u-vt2uw897w68r,European Logistics Term Loan,2022-11-15,2024-02-18
+ADMIN,INSTRUMENT,ADMIN-INVT-029,o0s9u736-v7ts-5r64-pt1v-wu3vx908x79s,French Retail Chain Term Loan,2023-03-20,2024-02-20
+ADMIN,INSTRUMENT,ADMIN-INVT-030,p1t0v847-w8ut-6s75-qu2w-xv4wy019y80t,German Manufacturing Unitranche,2023-07-10,2024-02-22
+ADMIN,INSTRUMENT,ADMIN-INVT-031,q2u1w958-x9vu-7t86-rv3x-yw5xz120z91u,UK Business Services Second Lien,2023-10-05,2024-02-25
+PM,FACILITY,PM-FAC-010,r3v2x069-y0wv-8u97-sw4y-zw6ya231a02v,Manufacturing Corp Facility,2021-09-15,2024-01-30
+PM,FACILITY,PM-FAC-011,s4w3y170-z1xw-9v08-tx5z-ax7zb342b13w,Healthcare Services Facility,2022-01-20,2024-02-01
+PM,FACILITY,PM-FAC-012,t5x4z281-a2yx-0w19-uy6a-by8ac453c24x,Software Company Facility,2022-06-10,2024-02-05
+PM,FACILITY,PM-FAC-013,u6y5a392-b3zy-1x20-vz7b-cz9bd564d35y,Distribution Business Facility,2023-02-15,2024-02-10
+PM,FACILITY,PM-FAC-014,v7z6b403-c4az-2y31-wa8c-da0ce675e46z,Industrial Services Facility,2023-08-01,2024-02-12
+PM,FACILITY,PM-FAC-015,w8a7c514-d5ba-3z42-xb9d-eb1df786f57a,Hospitality Holdings Facility,2023-11-01,2024-02-15
+PM,FACILITY,PM-FAC-016,x9b8d625-e6cb-4a53-yc0e-fc2eg897g68b,European Logistics Facility,2022-11-15,2024-02-18
+PM,FACILITY,PM-FAC-017,y0c9e736-f7dc-5b64-zd1f-gd3fh908h79c,French Retail Chain Facility,2023-03-20,2024-02-20
+PM,FACILITY,PM-FAC-018,z1d0f847-g8ed-6c75-ae2g-he4gi019i80d,German Manufacturing Facility,2023-07-10,2024-02-22
+PM,FACILITY,PM-FAC-019,a2e1g958-h9fe-7d86-bf3h-if5hj120j91e,UK Business Services Facility,2023-10-05,2024-02-25
