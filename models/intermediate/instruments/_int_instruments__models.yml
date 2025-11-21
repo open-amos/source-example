@@ -38,7 +38,7 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['EQUITY', 'LOAN', 'CONVERTIBLE', 'WARRANT', 'FUND_INTEREST']
+              values: ['EQUITY', 'CREDIT']
       - name: inception_date
         description: "Instrument inception date"
       - name: termination_date

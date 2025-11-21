@@ -1,6 +1,6 @@
 with instruments as (
     select * from {{ ref('int_instruments_unified') }}
-    where instrument_type = 'LOAN'
+    where instrument_type = 'CREDIT'
 ),
 
 credit_instruments as (
@@ -8,8 +8,14 @@ credit_instruments as (
         instrument_id,
         facility_id,
         -- Map to instrument_credit_type enum (TERM, REVOLVER, DDTL, BRIDGE, MEZZ)
-        -- Default to TERM for now, can be enriched from source data
-        'TERM' as instrument_credit_type,
+        -- Derive from tranche_label or security_rank
+        case
+            when lower(tranche_label) like '%revolver%' or lower(tranche_label) like '%revolving%' then 'REVOLVER'
+            when lower(tranche_label) like '%mezz%' or security_rank = 'MEZZANINE' then 'MEZZ'
+            when lower(tranche_label) like '%bridge%' then 'BRIDGE'
+            when lower(tranche_label) like '%delayed%' or lower(tranche_label) like '%ddtl%' then 'DDTL'
+            else 'TERM'
+        end as instrument_credit_type,
         tranche_label,
         commitment_amount,
         currency_code,
