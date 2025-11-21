@@ -23,7 +23,10 @@ models:
       - name: legal_name
         description: "Legal name of the fund"
       - name: type
-        description: "Fund type (e.g., Private Equity, Venture Capital, Credit)"
+        description: "Fund type - Enum: EQUITY, CREDIT"
+        tests:
+          - accepted_values:
+              values: ['EQUITY', 'CREDIT']
       - name: vintage
         description: "Vintage year of the fund"
       - name: management_fee
@@ -54,7 +57,11 @@ models:
         tests:
           - not_null
       - name: type
-        description: "Fund type (e.g., Private Equity, Venture Capital, Credit)"
+        description: "Fund type - Enum: EQUITY, CREDIT"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['EQUITY', 'CREDIT']
       - name: vintage
         description: "Vintage year of the fund"
       - name: management_fee

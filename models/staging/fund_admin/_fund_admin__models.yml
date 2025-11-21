@@ -28,7 +28,11 @@ models:
       - name: base_currency_code
         description: "Base currency code (uppercased and trimmed)"
       - name: fund_type
-        description: "Fund type classification (trimmed)"
+        description: "Fund type - Enum: EQUITY, CREDIT (uppercased and trimmed)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['EQUITY', 'CREDIT']
       - name: strategy
         description: "Investment strategy (trimmed)"
       - name: geography_focus
