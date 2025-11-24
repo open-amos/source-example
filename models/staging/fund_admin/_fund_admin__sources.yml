@@ -226,7 +226,7 @@ sources:
             investor_code: "trim(investor_code)"
             distribution_currency: "upper(trim(distribution_currency))"
             distribution_type: "trim(distribution_type)"
-            source_investment: "trim(source_investment)"
+            source_investment: "trim(cast(source_investment as text))"
             status: "trim(status)"
             fx_rate_source: "trim(fx_rate_source)"
         columns:
