@@ -1,14 +1,7 @@
 investor_type_id,name,description,kyc_category
-regulated_fi,Regulated Financial Institution,"Bank, broker-dealer, or similar entity supervised by a major regulator.",REGULATED_FI
-sovereign_wealth_or_govt,Sovereign Wealth Fund / Government Entity,State-owned fund or public authority subject to government oversight.,GOVERNMENT_ENTITY
-pension_fund,Pension Fund,Occupational or public pension scheme.,INSTITUTIONAL
-insurance_company,Insurance Company,Regulated insurer providing life or non-life insurance products.,INSTITUTIONAL
-endowment_foundation,Endowment / Foundation,Non-profit endowments and charitable foundations.,INSTITUTIONAL
-corporate_treasury,Corporate (Treasury),Operating company investing from its treasury.,INSTITUTIONAL
-asset_manager,Asset Manager,Discretionary investment manager acting for underlying clients.,INSTITUTIONAL
-fund_of_funds,Fund of Funds,Investment vehicle allocating to other funds.,INSTITUTIONAL
-family_office,Family Office,Single- or multi-family office managing private wealth.,INDIVIDUAL
-hnw_individual,High-Net-Worth Individual,Natural person investing directly; may require source-of-wealth checks.,INDIVIDUAL
-trust,Trust,Trust structure with trustees/beneficiaries; often requires EDD.,OFFSHORE_COMPLEX
-offshore_spv,Offshore SPV,Special purpose vehicle incorporated in an offshore jurisdiction.,OFFSHORE_COMPLEX
-pep_associated,PEP-Associated Entity/Individual,Politically exposed person or linked entity; requires enhanced due diligence.,PEP
+IT_PENSION,Pension Fund,Pension Fund investor type,INSTITUTIONAL
+IT_SOVEREIGN,Sovereign Wealth Fund,Sovereign Wealth Fund investor type,INSTITUTIONAL
+IT_FOF,Fund of Funds,Fund of Funds investor type,INSTITUTIONAL
+IT_FAMILY,Family Office,Family Office investor type,PROFESSIONAL
+IT_INSURER,Insurance Company,Insurance Company investor type,INSTITUTIONAL
+IT_ENDOW,Endowment / Foundation,Endowment / Foundation investor type,INSTITUTIONAL

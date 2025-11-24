@@ -1,20 +1,26 @@
-pm_facility_id,pm_fund_id,pm_borrower_company_id,facility_type,agreement_date,effective_date,maturity_date,currency_code,total_commitment,purpose
-PM-FAC-001,FUND-004,PM-COMP-016,TERM_LOAN_B,2024-01-15,2024-01-15,2032-01-15,USD,95000000,Renewable energy project financing
-PM-FAC-002,FUND-004,PM-COMP-017,TERM_LOAN_B,2024-03-01,2024-03-01,2031-03-01,USD,65000000,Water infrastructure development
-PM-FAC-003,FUND-004,PM-COMP-018,MEZZANINE,2024-06-15,2024-06-15,2031-09-01,USD,65000000,Transportation infrastructure expansion
-PM-FAC-004,FUND-004,PM-COMP-019,TERM_LOAN_B,2023-09-01,2023-09-01,2030-09-01,EUR,78000000,European power grid modernization
-PM-FAC-005,FUND-004,PM-COMP-020,TERM_LOAN_B,2024-02-01,2024-02-01,2031-02-01,GBP,52000000,UK broadband network buildout
-PM-FAC-006,FUND-004,PM-COMP-021,TERM_LOAN_B,2023-11-15,2023-11-15,2030-11-15,USD,71000000,Toll road infrastructure acquisition
-PM-FAC-007,FUND-004,PM-COMP-022,MEZZANINE,2024-04-01,2024-04-01,2031-04-01,USD,70000000,Data center infrastructure development
-PM-FAC-008,FUND-005,PM-COMP-023,DIP Facility,2024-01-15,2024-01-15,2025-01-15,USD,15000000,Debtor-in-possession financing for retail restructuring
-PM-FAC-009,FUND-005,PM-COMP-024,Senior Secured Term Loan,2024-03-01,2024-03-01,2029-03-01,USD,20000000,Post-restructuring term loan for manufacturing company
-PM-FAC-010,FUND-007,PM-COMP-027,TERM_LOAN_B,2021-09-15,2021-09-15,2028-09-15,USD,45000000,Senior secured term loan for manufacturing operations
-PM-FAC-011,FUND-007,PM-COMP-028,TERM_LOAN_B,2022-01-20,2022-01-20,2029-01-20,USD,60000000,Healthcare services expansion financing
-PM-FAC-012,FUND-007,PM-COMP-029,UNITRANCHE,2022-06-10,2022-06-10,2029-06-10,USD,35000000,Unitranche facility for software company growth
-PM-FAC-013,FUND-007,PM-COMP-030,TERM_LOAN_B,2023-02-15,2023-02-15,2030-02-15,USD,50000000,Distribution business acquisition financing
-PM-FAC-014,FUND-007,PM-COMP-031,MEZZANINE,2023-08-01,2023-08-01,2028-08-01,USD,25000000,Mezzanine financing for industrial services expansion
-PM-FAC-015,FUND-007,PM-COMP-032,TERM_LOAN_B,2023-11-01,2023-11-01,2026-11-01,USD,30000000,Distressed hospitality asset turnaround financing
-PM-FAC-016,FUND-008,PM-COMP-033,TERM_LOAN_B,2022-11-15,2022-11-15,2029-11-15,EUR,55000000,European logistics network expansion
-PM-FAC-017,FUND-008,PM-COMP-034,TERM_LOAN_B,2023-03-20,2023-03-20,2030-03-20,EUR,40000000,French retail chain refinancing
-PM-FAC-018,FUND-008,PM-COMP-035,UNITRANCHE,2023-07-10,2023-07-10,2030-07-10,EUR,48000000,German manufacturing unitranche facility
-PM-FAC-019,FUND-008,PM-COMP-036,SECOND_LIEN,2023-10-05,2023-10-05,2028-10-05,GBP,20000000,UK business services second lien financing
+pm_facility_id,pm_fund_id,pm_borrower_company_id,facility_name,facility_type,agreement_date,effective_date,total_commitment,currency_code,maturity_date,purpose,description
+PM-FAC-001,ADMIN-FUND-004,CRM-COMP-028,MIDSTREAM GAS PIPELINE CO Facility,Term Loan,2017-01-05,2017-02-02,3157817.42,EUR,2022-01-04,Growth capital,Herself people rate notice air by. Tonight compare second system environmental. Various hotel order cultural.
+PM-FAC-002,ADMIN-FUND-004,CRM-COMP-029,WESTERN LOGISTICS INTERNATIONAL Facility,Term Loan,2017-07-31,2017-08-13,2856805.14,USD,2022-07-30,Growth capital,Trial out close current. Old especially also stuff decision film.
+PM-FAC-003,ADMIN-FUND-004,CRM-COMP-030,DATA CENTER HOLDINGS Facility,Revolver,2017-03-21,2017-03-29,3360016.8,USD,2021-03-20,Working capital,Place run instead hair term skin success. Concern can when treat whose.
+PM-FAC-004,ADMIN-FUND-004,CRM-COMP-031,INDUSTRIAL SOLUTIONS INTERNATIONAL Facility,Revolver,2018-06-28,2018-07-03,4238926.34,USD,2025-06-26,Growth capital,Call paper these population. Figure begin help account bed each energy civil.
+PM-FAC-005,ADMIN-FUND-004,CRM-COMP-032,WESTERN BUSINESS SERVICES HOLDINGS Facility,Term Loan,2016-01-29,2016-02-04,3993053.55,USD,2020-01-28,Acquisition financing,Western run son price. Away field network century to foot hair who. Talk music floor vote environment business right.
+PM-FAC-006,ADMIN-FUND-005,CRM-COMP-033,DATA CENTER INFRASTRUCTURE Facility,Revolver,2019-11-08,2019-11-20,2294333.3,EUR,2023-11-07,Refinancing,Professional begin current everyone test memory. Partner cultural above indeed. Bar rather matter participant boy huge plan. Break church term under.
+PM-FAC-007,ADMIN-FUND-005,CRM-COMP-034,NORTHERN RETAIL CHAIN Facility,Term Loan,2019-03-16,2019-03-24,2925503.69,EUR,2025-03-14,Working capital,"Return style at score pretty south. Resource notice generation single on. Simply director law.
+Course very near much hold. Deep agree walk thousand."
+PM-FAC-008,ADMIN-FUND-005,CRM-COMP-035,DATA CENTER HOLDINGS Facility,Term Loan,2019-03-11,2019-03-11,2738886.55,EUR,2025-03-09,Refinancing,Trial policy happy throw final assume kind. Head interesting common early look blood. Left able analysis arrive budget.
+PM-FAC-009,ADMIN-FUND-005,CRM-COMP-036,MANUFACTURING DIVISION Facility,Revolver,2023-02-13,2023-02-23,2417895.44,EUR,2030-02-11,Refinancing,International involve effect ahead building accept current. Parent church special voice two. Threat join chance good ask drive.
+PM-FAC-010,ADMIN-FUND-005,CRM-COMP-037,INDUSTRIAL SYSTEMS DIVISION Facility,Term Loan,2019-12-26,2020-01-05,1243349.11,EUR,2026-12-24,Growth capital,"Third summer what cause. Level middle star music commercial.
+Area citizen program agree sort physical. Support top nation wind."
+PM-FAC-011,ADMIN-FUND-005,CRM-COMP-038,MANUFACTURING DIVISION Facility,Term Loan,2022-09-24,2022-10-22,2382250.95,EUR,2027-09-23,Growth capital,Check full history. Wonder green set stay. Every national a whose whether single.
+PM-FAC-012,ADMIN-FUND-006,CRM-COMP-039,CENTRAL OUTSOURCING GROUP Facility,Revolver,2025-07-14,2025-08-06,2030634.36,USD,2030-07-13,Refinancing,Pattern investment practice their. Event skin indicate suddenly like.
+PM-FAC-013,ADMIN-FUND-006,CRM-COMP-040,MANUFACTURING DIVISION Facility,Revolver,2024-07-24,2024-08-07,2487066.47,EUR,2028-07-23,Refinancing,Dinner other sell new. Debate fire improve remember call method. Foreign outside her account agent.
+PM-FAC-014,ADMIN-FUND-006,CRM-COMP-041,SOUTHERN FACILITIES MANAGEMENT HOLDINGS Facility,Term Loan,2025-02-22,2025-03-24,2531716.45,USD,2029-02-21,Acquisition financing,Talk brother charge Congress. Into thing really listen husband shake party. Agree bad exactly work begin treat.
+PM-FAC-015,ADMIN-FUND-006,CRM-COMP-042,ENGINEERING HOLDINGS Facility,Revolver,2025-03-26,2025-04-23,1974735.21,USD,2029-03-25,Growth capital,Finally but newspaper seem. Food education someone woman environmental all war. Figure happen present full certainly.
+PM-FAC-016,ADMIN-FUND-006,CRM-COMP-043,MEDDEVICE GROUP Facility,Revolver,2025-09-03,2025-09-11,3002769.57,USD,2030-09-02,Acquisition financing,Thing activity tax tell skin. Method resource how listen. Method attack interesting writer everything.
+PM-FAC-017,ADMIN-FUND-006,CRM-COMP-044,MIDSTREAM GAS PIPELINE Facility,Revolver,2023-07-12,2023-07-13,3109706.41,USD,2029-07-10,Acquisition financing,And bring continue compare. Administration reality history.
+PM-FAC-018,ADMIN-FUND-006,CRM-COMP-045,MEDSCIENCE INNOVATIONS Facility,Term Loan,2024-06-12,2024-06-21,2930991.44,USD,2031-06-11,Refinancing,Region through wall would. Space must beyond.
+PM-FAC-019,ADMIN-FUND-006,CRM-COMP-046,HEALTHSYSTEMS GROUP Facility,Revolver,2025-03-01,2025-03-08,2045863.27,USD,2031-02-28,Refinancing,"Part or vote job. Class owner local mention.
+Apply religious yet this return hand trouble. Statement get family main."
+PM-FAC-020,ADMIN-FUND-006,CRM-COMP-047,VERTEX SYSTEMS Facility,Term Loan,2025-09-23,2025-10-13,2954383.42,USD,2031-09-22,Acquisition financing,Hope value under some. According assume skill wall political send. Before off window particular.
+PM-FAC-021,ADMIN-FUND-006,CRM-COMP-048,INDUSTRIAL SOLUTIONS HOLDINGS Facility,Term Loan,2023-12-29,2024-01-01,2949487.09,USD,2028-12-27,Refinancing,Child simple professional. Develop consumer life father wife situation. Just model thing drop the character.
+PM-FAC-022,ADMIN-FUND-006,CRM-COMP-049,ENERGY SERVICES CORP Facility,Term Loan,2023-01-15,2023-02-07,1954157.34,EUR,2029-01-13,Working capital,Rather concern plant. Response he doctor stage usually recognize. Radio your throw project.

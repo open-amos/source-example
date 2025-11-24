@@ -1,19 +1,23 @@
 synonym,normalized_synonym,source_system,industry_id,confidence,effective_from,effective_to,created_at,updated_at
-Agriculture,agriculture,ADMIN,ind_96c842e9da8fd2e3,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Agriculture,agriculture,PM,ind_96c842e9da8fd2e3,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Agriculture,agriculture,CRM,ind_96c842e9da8fd2e3,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Consumer,consumer,ADMIN,ind_cb7a82c317871051,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Consumer,consumer,PM,ind_cb7a82c317871051,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Consumer,consumer,CRM,ind_cb7a82c317871051,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Financial Services,financial services,ADMIN,ind_5dd6ec8df562f24a,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Financial Services,financial services,PM,ind_5dd6ec8df562f24a,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Financial Services,financial services,CRM,ind_5dd6ec8df562f24a,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Healthcare,healthcare,ADMIN,ind_1e8f514d4ca2a317,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Healthcare,healthcare,PM,ind_1e8f514d4ca2a317,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Healthcare,healthcare,CRM,ind_1e8f514d4ca2a317,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Infrastructure,infrastructure,ADMIN,ind_35f8b7463f1ec720,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Infrastructure,infrastructure,PM,ind_35f8b7463f1ec720,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Infrastructure,infrastructure,CRM,ind_35f8b7463f1ec720,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Technology,technology,ADMIN,ind_30f7a16c51a35741,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Technology,technology,PM,ind_30f7a16c51a35741,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
-Technology,technology,CRM,ind_30f7a16c51a35741,,,,2025-10-22 22:48:15,2025-10-22 22:48:15
+Technology,technology,CRM,IND_TECH,0.71,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Technology (Purpose),technology (purpose),PM,IND_TECH,0.77,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Technology (Brother),technology (brother),CRM,IND_TECH,0.91,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Technology (Ago),technology (ago),ADMIN,IND_TECH,0.91,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Healthcare,healthcare,CRM,IND_HEALTH,0.87,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Healthcare (Site),healthcare (site),CRM,IND_HEALTH,0.71,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Healthcare (Face),healthcare (face),CRM,IND_HEALTH,0.77,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Healthcare (Election),healthcare (election),ADMIN,IND_HEALTH,0.71,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Industrials,industrials,ADMIN,IND_INDUS,0.89,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Industrials (Dog),industrials (dog),ADMIN,IND_INDUS,0.82,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Consumer,consumer,ADMIN,IND_CONS,0.78,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Consumer (Chair),consumer (chair),CRM,IND_CONS,0.92,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Consumer (Since),consumer (since),CRM,IND_CONS,0.9,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Business Services,business services,PM,IND_BUSSVCS,0.75,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Business Services (Blue),business services (blue),PM,IND_BUSSVCS,0.73,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Business Services (Require),business services (require),PM,IND_BUSSVCS,0.73,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Financial Services,financial services,ADMIN,IND_FIN,0.78,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Financial Services (Sit),financial services (sit),CRM,IND_FIN,0.91,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Financial Services (Wait),financial services (wait),ADMIN,IND_FIN,0.74,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Energy,energy,CRM,IND_ENERGY,0.86,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Energy (Offer),energy (offer),ADMIN,IND_ENERGY,0.88,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02
+Energy (Begin),energy (begin),PM,IND_ENERGY,0.87,2010-01-01,,2025-11-24 10:14:02,2025-11-24 10:14:02

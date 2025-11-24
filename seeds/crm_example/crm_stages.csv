@@ -1,10 +1,7 @@
 stage_id,name,pipeline_type,stage_order
-due_diligence,Due Diligence,crm,10
-term_sheet,Term Sheet,crm,20
-initial_review,Initial Review,crm,30
-negotiation,Negotiation,crm,40
-prospecting,Prospecting,crm,50
-declined,Declined,crm,60
-loi_signed,LOI Signed,crm,70
-on_hold,On Hold,crm,80
-committed,Committed,crm,90
+STG_SOURCED,Sourced,DEAL,1
+STG_SCREEN,Screening,DEAL,2
+STG_IC,Investment Committee,DEAL,3
+STG_TERM,Term Sheet,DEAL,4
+STG_SIGNED,Signed,DEAL,5
+STG_LOST,Lost,DEAL,6
