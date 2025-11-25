@@ -1,7 +1,9 @@
 stage_id,name,pipeline_type,stage_order
 STG_SOURCED,Sourced,DEAL,1
 STG_SCREEN,Screening,DEAL,2
-STG_IC,Investment Committee,DEAL,3
-STG_TERM,Term Sheet,DEAL,4
-STG_SIGNED,Signed,DEAL,5
-STG_LOST,Lost,DEAL,6
+STG_DILIGENCE,Due Diligence,DEAL,3
+STG_IC,Investment Committee,DEAL,4
+STG_TERM,Term Sheet,DEAL,5
+STG_SIGNED,Signed,DEAL,6
+STG_CLOSED,Closed,DEAL,7
+STG_LOST,Lost,DEAL,99
