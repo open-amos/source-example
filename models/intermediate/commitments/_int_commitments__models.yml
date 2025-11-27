@@ -75,11 +75,11 @@ models:
           - not_null
       - name: source_reference
         description: "Source system reference identifier"
-      - name: total_commitment
+      - name: committed_capital
         description: "Total commitment amount"
         tests:
           - not_null
-      - name: total_drawdowns
+      - name: called_capital
         description: "Cumulative drawdowns as of period end"
         tests:
           - not_null
