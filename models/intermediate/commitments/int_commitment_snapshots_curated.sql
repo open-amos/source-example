@@ -63,9 +63,9 @@ cumulative_drawdowns as (
         cc.fund_code,
         cc.investor_code,
         vd.period_end_date,
-        max(cc.commitment_amount) as total_commitment,
+        max(cc.commitment_amount) as committed_capital,
         max(cc.commitment_currency) as currency_code,
-        sum(cc.call_amount) as total_drawdowns,
+        sum(cc.call_amount) as called_capital,
         max(cc.source_reference) as source_reference
     from capital_calls cc
     cross join valuation_dates vd
@@ -98,9 +98,9 @@ commitment_metrics as (
         cd.fund_code,
         cd.investor_code,
         cd.period_end_date,
-        cd.total_commitment,
+        cd.committed_capital,
         cd.currency_code,
-        cd.total_drawdowns,
+        cd.called_capital,
         coalesce(cdi.total_distributions, 0) as total_distributions,
         cd.source_reference
     from cumulative_drawdowns cd
@@ -123,8 +123,8 @@ commitment_snapshots_resolved as (
         cm.currency_code,
         'ADMIN' as source,
         cm.source_reference,
-        cm.total_commitment,
-        cm.total_drawdowns,
+        cm.committed_capital,
+        cm.called_capital,
         cm.total_distributions,
         current_timestamp as created_at,
         current_timestamp as updated_at
