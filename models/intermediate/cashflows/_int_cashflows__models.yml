@@ -56,27 +56,3 @@ models:
         description: "Record last update timestamp"
         tests:
           - not_null
-
-  - name: int_company_dividend_forecasts_curated
-    description: "Curated projected dividend payments from PM sources"
-    columns:
-      - name: company_dividend_forecast_id
-        description: "Unique company dividend forecast identifier (surrogate key)"
-        tests:
-          - unique
-      - name: company_id
-        description: "Canonical company identifier"
-        tests:
-          - relationships:
-              to: ref('int_companies_unified')
-              field: company_id
-              config:
-                where: "company_dividend_forecast_id is not null"
-      - name: date
-        description: "Projected dividend payment date"
-      - name: amount
-        description: "Projected dividend amount"
-      - name: created_at
-        description: "Record creation timestamp"
-      - name: updated_at
-        description: "Record last update timestamp"
