@@ -8,7 +8,7 @@
 
 AMOS Source Example is a collection of sample data and connectors (source‑aligned models) that demonstrate how to map operational systems to AMOS Core. It is used by [AMOS Starter](../starter) to build the end-to-end pipeline—from source systems to analytics-ready data.
 
-![image](https://img.shields.io/badge/version-0.1.0-blue?style=for-the-badge) ![image](https://img.shields.io/badge/status-proof--of--concept-yellow?style=for-the-badge) ![image](https://img.shields.io/badge/dbt-FF694B?style=for-the-badge&logo=dbt&logoColor=white)
+![image](https://img.shields.io/badge/version-0.1.0-blue?style=for-the-badge) ![image](https://img.shields.io/badge/status-public--beta-yellow?style=for-the-badge) ![image](https://img.shields.io/badge/dbt-FF694B?style=for-the-badge&logo=dbt&logoColor=white)
 
 ## Quick Start
 
