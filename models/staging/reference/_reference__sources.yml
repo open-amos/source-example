@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: reference
     description: "Shared reference data for industries, investor types, FX rates, and entity cross-references"
-    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    
     schema: "{{ target.schema }}_AMOS_SHARED_DATA_EXAMPLE"
     meta:
       system_name: "Reference Data"

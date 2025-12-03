@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: fund_admin
     description: "Fund administration system source data for funds, investors, capital calls, distributions, expenses, fees, and NAV reporting"
-    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    
     schema: "{{ target.schema }}_AMOS_FUND_ADMIN_EXAMPLE"
     meta:
       system_name: "Fund Admin Vendor"

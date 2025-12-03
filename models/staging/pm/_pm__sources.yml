@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: pm
     description: "Portfolio Management system source data for investments, valuations, and company financials"
-    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    
     schema: "{{ target.schema }}_AMOS_PM_EXAMPLE"
     meta:
       system_name: "Portfolio Management Vendor"

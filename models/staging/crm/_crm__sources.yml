@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: crm
     description: "CRM system source data for companies, opportunities, and pipeline stages"
-    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    
     schema: "{{ target.schema }}_AMOS_CRM_EXAMPLE"
     meta:
       system_name: "CRM Vendor"

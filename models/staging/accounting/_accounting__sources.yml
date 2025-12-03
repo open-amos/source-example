@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: accounting
     description: "Accounting system source data for journal entries and financial transactions"
-    database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
+    
     schema: "{{ target.schema }}_AMOS_ACCOUNTING_EXAMPLE"
     meta:
       system_name: "Accounting Vendor"
