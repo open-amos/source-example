@@ -8,7 +8,6 @@ macro-paths: ["macros"]
 
 seeds:
   amos_source_example:
-    +database: "{{ env_var('DBT_RAW_DATABASE', 'RAW') }}"
     +quote_columns: false
     
     crm_example:
@@ -35,12 +34,10 @@ models:
   amos_source_example:
     staging:
       +materialized: view
-      +database: "{{ env_var('DBT_STAGING_DATABASE', 'STAGING') }}"
       +schema: staging
       +tags: ["staging"]
     
     intermediate:
       +materialized: table
-      +database: "{{ env_var('DBT_INTERMEDIATE_DATABASE', 'INTERMEDIATE') }}"
       +schema: intermediate
       +tags: ["intermediate"]
